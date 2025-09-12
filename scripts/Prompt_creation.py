@@ -209,9 +209,8 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
 
 class GemmaWrapper:
     """
-    Thin wrapper that uses the Ollama local/remote API for chat-style generation.
-    Keeps the same public interface (generate_10_prompts) so the rest of the script
-    can remain unchanged.
+    Ollama chat wrapper. Uses cfg.model_id directly (for example: 'gemma3:4b' or any Ollama model).
+    Keeps the same public interface (generate_10_prompts) so the rest of the script remains unchanged.
     """
     def __init__(self, cfg: LLMConfig, device_pref: str = "auto", verbose: bool = True):
         if not try_import_ollama():
@@ -225,6 +224,39 @@ class GemmaWrapper:
     def _approx_tokens(self, text: str) -> int:
         return max(1, len(text) // 4)
 
+    def _extract_text_from_resp(self, resp) -> str:
+        """
+        Robustly extract text content from various Ollama response shapes:
+        - {'message': {'content': "<text>"}}
+        - {'choices': [{'message': {'content': "<text>"}} , ...]}
+        - {'choices': [{'text': "<text>"}, ...]}
+        - a plain string
+        Fallback to empty string when nothing found.
+        """
+        try:
+            if isinstance(resp, str):
+                return resp or ""
+            if isinstance(resp, dict):
+                # direct message
+                if "message" in resp and isinstance(resp["message"], dict):
+                    return resp["message"].get("content", "") or ""
+                # choices list
+                if "choices" in resp and isinstance(resp["choices"], list) and resp["choices"]:
+                    first = resp["choices"][0]
+                    if isinstance(first, dict):
+                        if "message" in first and isinstance(first["message"], dict):
+                            return first["message"].get("content", "") or ""
+                        if "text" in first:
+                            return first.get("text", "") or ""
+                # some clients may return content at top-level
+                if "content" in resp:
+                    return resp.get("content", "") or ""
+                # As a last resort, stringify
+                return str(resp)
+        except Exception:
+            return ""
+        return ""
+
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
         vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} max_new={self.cfg.max_new_tokens}")
         vprint(self.verbose, f"Prompt approx tokens: ~{self._approx_tokens(user_prompt)}")
@@ -235,21 +267,24 @@ class GemmaWrapper:
         ]
 
         try:
-            # Call Ollama chat endpoint. Ollama's Python client typically returns a dict with
-            # {'message': {'content': "<text>"}}
-            resp = self.ollama.chat(
-                model=self.model_id,
-                messages=messages,
-                temperature=self.cfg.temperature,
-                max_tokens=self.cfg.max_new_tokens
-            )
+            # Use Ollama's chat API. Pass top_p if available and map max_new_tokens -> max_tokens.
+            call_kwargs = {
+                "model": self.model_id,
+                "messages": messages,
+                "temperature": float(self.cfg.temperature),
+                "max_tokens": int(self.cfg.max_new_tokens),
+            }
+            # top_p may be supported by Ollama; include it if configured
+            try:
+                call_kwargs["top_p"] = float(self.cfg.top_p)
+            except Exception:
+                pass
 
-            if isinstance(resp, dict):
-                out_text = resp.get("message", {}).get("content", "") or ""
-            else:
-                out_text = ""
+            resp = self.ollama.chat(**call_kwargs)
 
+            out_text = self._extract_text_from_resp(resp)
             prompts = parse_numbered_list(out_text)
+
             vprint(self.verbose, f"LLM returned {len(prompts)} parsed prompts.")
             return prompts
 
