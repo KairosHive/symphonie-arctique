@@ -269,21 +269,49 @@ class OllamaWrapper:
         ]
 
         try:
-            # Use Ollama's chat API. Pass top_p if available and map max_new_tokens -> max_tokens.
-            call_kwargs = {
+            # Prefer passing generation options, but Ollama client implementations differ.
+            # Build a kwargs map and retry with progressively fewer options if the client rejects them.
+            base_kwargs = {
                 "model": self.model_id,
                 "messages": messages,
+            }
+
+            gen_kwargs = {
                 "temperature": float(self.cfg.temperature),
                 "max_tokens": int(self.cfg.max_new_tokens),
             }
-            # top_p may be supported by Ollama; include it if configured
             try:
-                call_kwargs["top_p"] = float(self.cfg.top_p)
+                gen_kwargs["top_p"] = float(self.cfg.top_p)
             except Exception:
                 pass
 
-            resp = self.ollama.chat(**call_kwargs)
+            # First attempt: full set (base + gen)
+            call_kwargs = {**base_kwargs, **gen_kwargs}
+            resp = None
+            try:
+                resp = self.ollama.chat(**call_kwargs)
+            except TypeError as te:
+                # Client rejected one or more kwargs; try to recover by removing problematic keys.
+                vprint(self.verbose, f"[OLLAMA-ERR] {te} — retrying with reduced kwargs")
+                # Try removing keys in order of least importance
+                for key in ("temperature", "top_p", "max_tokens"):
+                    if key in gen_kwargs:
+                        reduced = {**base_kwargs, **{k: v for k, v in gen_kwargs.items() if k != key}}
+                        try:
+                            resp = self.ollama.chat(**reduced)
+                            break
+                        except TypeError as te2:
+                            vprint(self.verbose, f"[OLLAMA-ERR] still got: {te2}")
+                            continue
+                # Last-resort: call with only model + messages
+                if resp is None:
+                    try:
+                        resp = self.ollama.chat(**base_kwargs)
+                    except Exception as final_e:
+                        # Raise so outer except captures and logs
+                        raise final_e
 
+            # At this point resp should be populated or an exception propagated
             out_text = self._extract_text_from_resp(resp)
             prompts = parse_numbered_list(out_text)
 
