@@ -334,7 +334,7 @@ def main():
     llm_meta = None
     if not args.no_llm:
         try:
-            llm = GemmaWrapper(
+            llm = OllamaWrapper(
                 LLMConfig(
                     model_id=args.model,
                     temperature=args.temperature,
