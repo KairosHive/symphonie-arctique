@@ -1,17 +1,19 @@
-# Prompt_creation.py — Gemma-3n friendly, verbose; generates 10 prompts per section
+# Prompt_creation.py — Ollama chat-based prompt generator; generates 10 prompts per section
 # ---------------------------------------------------------------------------------
 # Usage:
 #   python Prompt_creation.py --in ../results/<clap_results>.json
 #     [--out <out.json>]
-#     [--model google/gemma-3n-e2b-it]       # supports 3n; auto-fallback to gemma-3-1b-it on 3n errors
-#     [--no-llm]                             # offline template mode
+#     [--model gemma3:4b]                   # Ollama model id (e.g. 'gemma3:4b' or any Ollama model)
+#     [--no-llm]                            # offline template mode
 #     [--max-per-cat 24] [--temperature 0.9] [--top-p 0.95] [--max-new 700]
 #     [--seed 42] [--show-per-cat 8] [--quiet]
-
+#
+# Example:
 # python Prompt_creation.py \
 #   --in ../results/song_joey__timeline_joey__chunk1p0s__top5.json \
-#   --device cuda \
-#   --model google/gemma-3n-e2b-it
+#   --model gemma3:4b
+#
+# Ollama runs inference and manages device placement (GPU/CPU) itself; no local torch or device configuration is required.
 #
 # Input JSON must be the CLAP matching output from your earlier script:
 # {
