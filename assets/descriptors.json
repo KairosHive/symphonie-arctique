@@ -1,0 +1,101 @@
+{
+  "SoundQualities": [
+    "airy","aggressive","analog","angular","articulate","attenuated","boomy","brassy","brittle","buzzy",
+    "crackling","crisp","crunchy","dark","decayed","deep","dense","distant","dry","dull",
+    "echoic","ethereal","fat","fizzy","flanged","fluttering","full-bodied","fuzzy","glassy","grainy",
+    "gritty","hollow","icy","intimate","jagged","lush","metallic","muffled","nasal","noisy",
+    "open","punchy","raspy","resonant","reverberant","ringing","rough","round","sandy","satiny",
+    "saturated","screeching","shimmering","silky","smooth","snappy","sparkling",
+    "sparse","spiky","squelchy","sizzling","strident","subtle","swelling","swishy","thin","throaty",
+    "tight","tinny","transparent","velvety","vintage","warm","wet","whispery","woody","woolly",
+    "wide","narrow","plosive","percussive","transient-rich","sustained","glitchy","granular","lo-fi","hi-fi",
+    "mono","stereo","binaural","phasey","chorused","distorted","overdriven","compressed","pumpy","gated",
+    "reedy","breathy","rumbling"
+  ],
+  "Emotions": [
+    "awe","serenity","joy","melancholy","nostalgia","longing","yearning","tenderness","compassion","empathy",
+    "love","gratitude","pride","hope","relief","amusement","curiosity","surprise","wonder","anticipation",
+    "anxiety","fear","dread","terror","panic","apprehension","anger","rage","irritation","frustration",
+    "disgust","contempt","shame","guilt","embarrassment","regret","remorse","envy","jealousy","bitterness",
+    "resentment","loneliness","isolation","despair","sadness","sorrow","grief","mourning","resignation","acceptance",
+    "calm","peace","contentment","satisfaction","confidence","bravery","courage","determination","resolve","empowerment",
+    "euphoria","ecstasy","rapture","playfulness","whimsy","mirth","delight","excitement","thrill","inspiration",
+    "reverence","humility","trust","security","comfort","soothed","relaxation","boredom","apathy","indifference",
+    "stupefaction","bewilderment","confusion","disorientation","unease","tension","suspense","urgency","impatience","restlessness",
+    "frenzy","agitation","shock","reluctance","hesitation","satiation","catharsis","release","clarity","focus"
+  ],
+  "NonHumanEntities": [
+    "wolf","polar bear","caribou","moose","elk","arctic fox","red fox","lynx","wolverine",
+    "snowshoe hare","lemming","musk ox","seal","walrus","beaver","otter","ermine","black bear",
+    "grizzly bear","whale","beluga","orca","narwhal",
+
+    "snowy owl","ptarmigan","raven","crow","bald eagle","golden eagle","falcon","loon","canada goose",
+    "gull","tern",
+
+    "salmon","trout","arctic char","cod","herring","whitefish","smelt","krill","jellyfish",
+    "octopus","squid","clam","mussel","oyster","lobster","crayfish","crab","shrimp","sea urchin",
+    "sea cucumber",
+
+    "mosquito","blackfly","dragonfly","damselfly","moth","butterfly","beetle","ant","bee","wasp",
+    "spider","tick","mite","mosquito hawk",
+
+    "spruce","pine","fir","larch","birch","aspen","willow","tamarack","cedar","juniper","alder",
+    "hemlock","maple","moss","lichen","reindeer lichen","sphagnum moss","bog rosemary","cranberry",
+    "cloudberry","blueberry","bearberry","wild rose","fireweed","labrador tea","dwarf birch","cotton grass",
+
+    "fungus","mycelium","chanterelle","morel","truffle","puffball",
+
+    "windigo","yeti","forest spirit","lake spirit","thunderbird","shape-shifter","trickster raven",
+    "dreamwalker","ice giant","aurora dancer","mermaid","dragon","unicorn","phoenix","griffin","pegasus"
+],
+
+  "CryoHydroStructures": [
+    "firn","sastrugi","graupel","rime","soft rime","hard rime","hoarfrost","depth hoar","névé","cornice",
+    "avalanche debris","snow drift","wind slab","storm slab","ice crust","sun crust","melt-freeze crust","glaze ice","black ice","verglas",
+    "nilas","pancake ice","frazil ice","grease ice","shuga","brash ice","pack ice","fast ice","ice floe","lead",
+    "polynya","pressure ridge","ice keel","bergy bit","growler","iceberg","tabular iceberg","serac","crevasse","moulin",
+    "ogive","icefall","blue ice","snow pillow","snowpack","firnspiegel","snow bridge","penitentes","suncups","cryoconite",
+    "cryoconite hole","supraglacial stream","englacial channel","subglacial tunnel","esker","kettle lake","terminal moraine","lateral moraine","medial moraine","drumlin",
+    "kame","outwash plain","braided stream","oxbow lake","meander","riffle","pool","eddy","whirlpool","whitecap",
+    "breaker","spindrift","spray","mist","sea smoke","seiche","swell","wave train","rip current","undertow",
+    "storm surge","tidal bore","estuary","delta","alluvial fan","waterfall","cascade","cataract","plunge pool","tarn",
+    "cirque lake","proglacial lake","supraglacial lake","ice shelf","ice tongue","ice dam","snow dune","snow cushion","icicle","runnel"
+  ],
+  "TemporalElements": [
+    "dawn","daybreak","sunrise","morning","forenoon","noon","afternoon","golden hour",
+    "evening","sunset","dusk","twilight","blue hour","nightfall","midnight","small hours",
+    "witching hour","predawn",
+
+    "full moon","new moon","crescent moon","gibbous moon","lunar eclipse","solar eclipse",
+    "equinox","solstice","season","spring","summer","autumn","winter",
+
+    "harvest time","planting time","tide","high tide","low tide","ebb","flood tide",
+    "cycle","phase","period","recurrence","rotation","orbit",
+
+    "moment","instant","heartbeat","blink","breath","interval","second","minute","hour",
+    "day","week","month","year","decade","century","millennium","age","epoch","era",
+
+    "Precambrian","Paleozoic","Mesozoic","Cenozoic",
+    "Cambrian","Ordovician","Silurian","Devonian","Carboniferous","Permian",
+    "Triassic","Jurassic","Cretaceous",
+    "Paleogene","Neogene","Quaternary","Holocene","Anthropocene",
+
+    "deadline","milestone","duration","timespan","lifetime","eternity","infinity",
+    "flux","transition","lull","pause","silence","linger","drift","surge","flow",
+    "flashback","foreshadow","memory","anticipation","afterglow"
+],
+
+  "Materials": [
+    "wood","oak","pine","birch","maple","cork","paper","cardboard","leather",
+    "cotton","wool","silk","linen","hemp","jute","canvas","felt","rubber","latex",
+    "silicone","epoxy","resin","amber","bone","ivory","shell","mother-of-pearl","pearl","glass",
+    "quartz","crystal","obsidian","granite","basalt","marble","limestone","sandstone","slate","chalk",
+    "clay","terra-cotta","ceramic","porcelain","stoneware","concrete","cement","asphalt","brick","adobe",
+    "plaster","gypsum","drywall","steel","iron","cast iron","wrought iron","stainless steel","carbon steel","aluminum",
+    "titanium","copper","bronze","brass","nickel","zinc","tin","lead","magnesium","tungsten",
+    "chromium","silver","gold","platinum","palladium","graphite","graphene","carbon fiber","kevlar","fiberglass"
+    ,"acrylic","polycarbonate","nylon",
+    "foam","wax","bitumen","salt","ice",
+    "snow","water","oil","grease","soap"
+  ]
+}
