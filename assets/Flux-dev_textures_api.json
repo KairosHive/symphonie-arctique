@@ -1,0 +1,157 @@
+{
+  "3": {
+    "inputs": {
+      "noise_seed": 43980291324871,
+      "steps": 25,
+      "timestep_to_start_cfg": 1,
+      "true_gs": 3.5,
+      "image_to_image_strength": 0,
+      "denoise_strength": 1,
+      "model": [
+        "49",
+        0
+      ],
+      "conditioning": [
+        "5",
+        0
+      ],
+      "neg_conditioning": [
+        "19",
+        0
+      ],
+      "latent_image": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "XlabsSampler",
+    "_meta": {
+      "title": "Xlabs Sampler"
+    }
+  },
+  "4": {
+    "inputs": {
+      "clip_name1": "sd3\\clip_l.safetensors",
+      "clip_name2": "sd3\\t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "5": {
+    "inputs": {
+      "clip_l": "cinematic high res photo from above of magical lichens,   violet blue  lichens, raw textured lichen decomposing on grainy irridescent  daying dead wood mushroom surfaces, lichen with an electric current running through it,  iridescent sheen ,  penumbra , rule of thirds, leading lines composition, serene mysterious dynamic whimsical mood",
+      "t5xxl": "cinematic high res photo from above of magical lichens,   bioluminescent  lichens, raw textured lichen decomposing on grainy irridescent  daying dead wood mushroom surfaces, lichen with an electric current running through it,  iridescent sheen ,  moonlight , rule of thirds, leading lines composition, serene mysterious dynamic whimsical mood",
+      "guidance": 4,
+      "speak_and_recognation": true,
+      "clip": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncodeFlux",
+    "_meta": {
+      "title": "CLIPTextEncodeFlux"
+    }
+  },
+  "6": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "7": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "8": {
+    "inputs": {
+      "vae_name": "flux_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "10": {
+    "inputs": {
+      "unet_name": "FLUX1\\flux-dev-fp8.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "19": {
+    "inputs": {
+      "clip_l": "watermark, logo, signature",
+      "t5xxl": "logo, watermark, signature",
+      "guidance": 4,
+      "speak_and_recognation": true,
+      "clip": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncodeFlux",
+    "_meta": {
+      "title": "CLIPTextEncodeFlux"
+    }
+  },
+  "23": {
+    "inputs": {
+      "filename_prefix": "Flux/textures",
+      "images": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "49": {
+    "inputs": {
+      "lora_name": "mjv6_lora_comfy_converted.safetensors",
+      "strength_model": 0.7000000000000001,
+      "model": [
+        "57",
+        0
+      ]
+    },
+    "class_type": "FluxLoraLoader",
+    "_meta": {
+      "title": "Load Flux LoRA"
+    }
+  },
+  "57": {
+    "inputs": {
+      "unet_name": "FLUX1\\flux1-dev-Q8_0.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF)"
+    }
+  }
+}
