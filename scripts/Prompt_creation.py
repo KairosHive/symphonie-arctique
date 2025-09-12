@@ -80,6 +80,14 @@ def load_clap_results(path: Path) -> dict:
 def auto_out_path(in_path: Path) -> Path:
     return in_path.with_name(in_path.stem + "_prompts.json")
 
+def write_out_json(path: Path, data: dict):
+    """
+    Write JSON to disk in a straightforward manner.
+    Called after each section to persist progress.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
 # ---------- pooling (collect per-section descriptor hits) ----------
 @dataclass
 class SectionPool:
@@ -131,7 +139,7 @@ class LLMConfig:
     model_id: str
     temperature: float = 0.9
     top_p: float = 0.95
-    max_new_tokens: int = 700
+    num_predict: int = 700
     seed: int = 42
 
 ARCHIVE_STYLE = (
@@ -260,7 +268,7 @@ class OllamaWrapper:
         return ""
 
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
-        vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} max_new={self.cfg.max_new_tokens}")
+        vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} num_predict={self.cfg.num_predict}")
         vprint(self.verbose, f"Prompt approx tokens: ~{self._approx_tokens(user_prompt)}")
 
         messages = [
@@ -269,49 +277,19 @@ class OllamaWrapper:
         ]
 
         try:
-            # Prefer passing generation options, but Ollama client implementations differ.
-            # Build a kwargs map and retry with progressively fewer options if the client rejects them.
-            base_kwargs = {
-                "model": self.model_id,
-                "messages": messages,
-            }
-
-            gen_kwargs = {
+            # Use Ollama chat API with options nested under 'options' and no streaming for a single response.
+            options = {
                 "temperature": float(self.cfg.temperature),
-                "max_tokens": int(self.cfg.max_new_tokens),
+                "top_p": float(self.cfg.top_p),
+                "num_predict": int(self.cfg.num_predict),
+                "seed": int(self.cfg.seed),
             }
-            try:
-                gen_kwargs["top_p"] = float(self.cfg.top_p)
-            except Exception:
-                pass
-
-            # First attempt: full set (base + gen)
-            call_kwargs = {**base_kwargs, **gen_kwargs}
-            resp = None
-            try:
-                resp = self.ollama.chat(**call_kwargs)
-            except TypeError as te:
-                # Client rejected one or more kwargs; try to recover by removing problematic keys.
-                vprint(self.verbose, f"[OLLAMA-ERR] {te} — retrying with reduced kwargs")
-                # Try removing keys in order of least importance
-                for key in ("temperature", "top_p", "max_tokens"):
-                    if key in gen_kwargs:
-                        reduced = {**base_kwargs, **{k: v for k, v in gen_kwargs.items() if k != key}}
-                        try:
-                            resp = self.ollama.chat(**reduced)
-                            break
-                        except TypeError as te2:
-                            vprint(self.verbose, f"[OLLAMA-ERR] still got: {te2}")
-                            continue
-                # Last-resort: call with only model + messages
-                if resp is None:
-                    try:
-                        resp = self.ollama.chat(**base_kwargs)
-                    except Exception as final_e:
-                        # Raise so outer except captures and logs
-                        raise final_e
-
-            # At this point resp should be populated or an exception propagated
+            resp = self.ollama.chat(
+                model=self.model_id,
+                messages=messages,
+                options=options,
+                stream=False,
+            )
             out_text = self._extract_text_from_resp(resp)
             prompts = parse_numbered_list(out_text)
 
@@ -367,7 +345,7 @@ def main():
                     model_id=args.model,
                     temperature=args.temperature,
                     top_p=args.top_p,
-                    max_new_tokens=args.max_new,
+                    num_predict=args.max_new,
                     seed=args.seed,
                 ),
                 verbose=verbose,
@@ -377,7 +355,7 @@ def main():
                 "model_id": llm.model_id,
                 "temperature": args.temperature,
                 "top_p": args.top_p,
-                "max_new_tokens": args.max_new,
+                "num_predict": args.max_new,
             }
         except Exception as e:
             vprint(verbose, f"[WARN] Could not initialize model ({e}). Falling back to --no-llm mode.")
@@ -411,7 +389,15 @@ def main():
             prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
         else:
             vprint(verbose, f"  generating with LLM [{llm.model_id}] …")
-            prompts = llm.generate_10_prompts(system_prompt, user_prompt)
+            try:
+                prompts = llm.generate_10_prompts(system_prompt, user_prompt)
+            except KeyboardInterrupt:
+                vprint(verbose, "  [INTERRUPT] Saving partial progress and exiting…")
+                write_out_json(out_path, out)
+                raise
+            except Exception as e:
+                vprint(verbose, f"  [LLM ERROR] {e}; falling back to template.")
+                prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
             if len(prompts) < 10:
                 vprint(verbose, f"  [LLM] parsed only {len(prompts)} prompts; padding with template fallbacks.")
                 prompts.extend(synth_fallback_prompts(user_prompt, need=10 - len(prompts)))
@@ -430,10 +416,11 @@ def main():
             "prompts": prompts,
             "descriptors_used": per_cat,
         })
+        write_out_json(out_path, out)
+        vprint(verbose, f"  [OK] Progress saved to: {out_path}")
 
     hprint(verbose, "Writing output")
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    write_out_json(out_path, out)
     vprint(verbose, f"[OK] Wrote prompts: {out_path}")
 
 if __name__ == "__main__":
