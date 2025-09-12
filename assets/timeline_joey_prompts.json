@@ -12,16 +12,16 @@
       "start": 0.0,
       "end": 20.0,
       "prompts": [
-        "A windswept, late afternoon scene in a rustic Nordic village: the dimly lit facades of ancient stone cottages reflected in calm waters, with fishermen's nets draped across weathered docks.",
-        "A faint mist veils the edges of a primeval forest at dawn. Leafy branches interwoven with gnarled wooden staves support an intricately carved wooden door bearing runic symbols of forgotten deities.",
-        "Within the walls of a dimly lit, 12th-century monastery: monks in worn habits and horn-rimmed spectacles transcribe illuminated manuscripts on parchment while a blazing hearth casts flickering shadows across hewn stone walls.",
-        "An elderly crone tends a lush, twilight garden amidst crumbling Norse ruins. Lavender-hued irises bloom within the crevices of crumbling statues, their ancient features slowly being reclaimed by time and nature.",
-        "A deserted fjord, blanketed in crisp winter snow: frost-tinged masts and billowing sails of ice-strewn boats are the only signs of human presence in a vast, frozen landscape at noon.",
-        "Early morning's first light dances across ripples on a tranquil forest lake. Delicate sprigs of aquatic reeds quiver on the surface as early-rising birds take flight from a copse of frosty aspen trees.",
-        "A late spring afternoon finds the air alive with life amidst the verdant canopy of an ancient, mist-shrouded primeval forest: leaf-littered forest floors beneath emerald boughs teem with nascent fern growth and new life.",
-        "Amidst morning's early haze in a snow-obliterated Nordic cityscape: stark brick church spires pierce through fog, adjacent rows of frozen windows gazed upon like stone facades as stillness stretches into daybreak.",
-        "Cobalt-blue summer twilight glows above rolling fields of ripening grain that stretch as far as the eye can see towards horizon. Amidst it stands an ancient stone windmill weathered to match the time-ravaged faces nearby peasants.",
-        "In the depths of autumnal evening's haze in a quaint, small Nordic village nestled between dense woodland: candlelight seeps from open windows, while a single lantern casts amber tones on thatched cottages facing twilight underwood forests."
+        "A faded albumen print (1860s) of the Aurora Borealis casting an ethereal glow on a still pond at mid-autumn twilight, reflected in ripples disturbed by a curious young Nanuk.",
+        "Ektachrome colorized portrait (1920) of Ahiyyaqq the Elder, wispy white locks framed against a mist-shrouded Arctic landscape, holding staff and seal whiskers adorned with ivory trinkets.",
+        "Wet collodion process photograph (1855) of the northernmost tip of Ellesmere Island, lighthouse silhouette on horizon amidst ice-locked bay, polar cairn left behind as the last crew to depart in late summer.",
+        "Film still (1942) from a discarded 16mm film reel: sunlit snowpack reflecting starkly into eyes of children at play around wooden sledge with Inupiat design etched onto hide seat",
+        "In twilight (1935), a lone trapper sets a snare on ice shelf amidst skeletal willows against the night sky; the moon overhead casting an orange-tinged glow as waterways start to freeze.",
+        "Albumen print from circa 1870s: winter scene of bundled, walking Inuit couple pass by wooden hunting shack with animal hides piled nearby – wind-blown snowflakes swirling in early January gloom.",
+        "Ink-stamped catalog record for 'Northern Lights Over Ice Pack' (19 Nov 1903): accompanying image – a faint Polaroid capture at midsummer solstice displaying wisps of luminous clouds against the star-filled skies over drifting sea ice.",
+        "Typewritten document page from an expedition's logbook: descriptive notes detailing early morning camp preparations and surrounding environment 'as the river opens, then finally unfreeze in early summer'",
+        "Ektachrome colored snapshot (1958): group of five adults at dawn pose proudly standing atop newly harvested fish traps on icy surface amidst winter dawn – ice shelves gleaming bright gold behind.",
+        "Parchment-colored document image from 'Inuit Observations 17th–19th century': illustration depicting celestial map and the alignment of sun, moon and North Star around late October with respect to auroral phenomena"
       ],
       "descriptors_used": {}
     },
@@ -30,16 +30,16 @@
       "start": 20.0,
       "end": 50.0,
       "prompts": [
-        "A morning mist shrouds the verdant valley, where wisps of cotton-like fog dance between the silver-stemmed spruce trees. Amidst the quiet stillness, a figure emerges – an elderly woodsman, cloaked in a woolen cloak, his wooden walking stick tapping out a measured rhythm against the dew-kissed earth.",
-        "A lantern casts an orange glow upon the weathered door of a secluded hermitage. Shadows writhe across the walls as the wind stirs the branches of nearby birch trees, their papery leaves rustling softly in the autumn breeze. The night air is heavy with anticipation.",
-        "The morning sunlight illuminates the delicate filigree on a 14k gold brooch set amidst the plush furnishings of a velvet-draped boudoir. Drapery billows outwards, like sea-crested waves crashing against a rockface. Soft cushions and supple furs in shades of ivory, amber, and indigo add depth to this intimate sanctuary.",
-        "The stern granite countenance of a Nordic goddess stands sentinel amidst the craggy, snow-swept mountainside. Pine saplings are dotted across the rugged terrain like skeletal brushstrokes on an etching plate. A delicate crescent moon, bathed in radiant ethereal light, pierces the sky beyond.",
-        "Shadows retreat as sunlight floods the tranquil space within an alabaster sanctuary. Faint wisps of steam waft from copper-tinted vessels bearing fresh mint leaves and crushed flowers, casting a sweet perfume through the morning air. Smooth travertine stone bears inscriptions that whisper secrets to those drawn by devotion.",
-        "Within a modest, earth-toned parlour, a woman's fingers dance with intricate stitches on a rich silk embroidery depicting the hunt of Odin in the nine realms – mythical stag and harts, fierce packhounds and battle-ghosts in whirlwind fusion. A few flickering tapers imbue the scene with warm light.",
-        "Aged cedar beams sustain the weathered eaves of a lone, snow-shrouded barn. Wind whispers secrets past its walls, where flakes pile high against a masonry door that bears a rusting iron ring inlaid with five crescent marks. This sanctuary preserves timeless memories.",
-        "In an ornate alabaster garden pavilion, verdant vines entwined about marble columns stretch towards gilded, wrought-iron lamp brackets that suspend like lanterns across the water – an evening tableau suspended mid-glow, before the stars ascend.",
-        "The silver-silken texture of dawn breaks over silhouettes in muted hue – granite sentinels amidst rugged tundra, wind-tormented sea-smoothed rocks, where glinting auroral displays merge the ethereal heavens with untamed wilderness.",
-        "Aged copper roof buckles beneath matted latticework of frost-shattered, water-glazed slates against the snow-kissed vault of a century-old, village church bell tower. As frost-stiffened icicles form translucent filigree suspended in sky-borne light, evening falls"
+        "Alders near Lake Amiik, Yukon, in early spring snowmelt: ice-puddled surface reflects willows, gray trunks silhouetted against sunburst sky with diffuse, pastel hues; mist veils nearby spruces.",
+        "Tide line etching sand beneath auroral curtains at dusk in Frobisher Bay, Baffin Island: skeletal cod lay on desolate beach as ethereal light spirals above waterline, soft focus blurring horizon line and human presence.",
+        "Crisp August morning outside Igloolik Inuit village, Nunavut Territory: snow patches still clings to willow thickets near a frozen lake where Inuit hunter tracks approach an outcrop, the rocky overhang worn from wind-whipped precipitation.",
+        "Moonlit snow forest clearing circa Lake Laber on Manitoba-Ontario borderlands; silhouetted spruces stretch like giant arrowpoints towards an arc of silver sky as stars set amidst whorls of terrestrial life—snow-dusted conifer limbs tremble under gentle breeze.",
+        "A midnight frost shroud, 1925: polar aurora displays pulsating lights above boreal terrain near Hudson Bay low tundra: luminous wisps hover low over black spruces as their frozen branches crackle beneath crystalline silence like countless diamonds on lake-shivered water.",
+        "The shores of Hudson Strait late April dusk circa 20s: willows, withering shoots, still bear autumn gold leaves, standing above sandline beach now home to ice floes and glacial chunks disarticulated by spring currents as sky transitions from amber haze into violet twilight",
+        "Semi-nomadic campers harvesting lichen near Hudson River in Quebec late-October landscape; soft hush settles amidst scattered birches & quivering aspens while warm-toned light suffuses water-bleached glacial rock with faint, ethereal aura emanating toward horizon's verdant line",
+        "Early March frost, circa Lake of the Woods, 19th century woodcut style illustration reminiscent: bare willows along shoreline where snow- blanketed pine limbs interleave above ground, all within fringed border that melts from dark cerulean blue sky into warm, golden tones.",
+        "Midwinter snow camp in 1965 Barren Lands Region (now part of Nunavut): the silhouette of Inuit snow sledge against an expansive canvas of pure winter landscape: ice-covered willow thicket at center blurs edge into deep powder; ethereal gray-white veil obscures low sun hovering near frost-brittled horizon.",
+        "Sun-kissed 1974 July scene, Churchill Manitoba coastline and surrounding boreal forest where green canopy of spruces stands beneath water's soft lap against driftwood-dotted sandy shores and wind-bent whips from skeletal lichen-covered beach as late sunlight casts auroral colors in terrestrial spectrum—blues deepened across vast northern plain."
       ],
       "descriptors_used": {}
     },
@@ -48,106 +48,16 @@
       "start": 50.0,
       "end": 80.0,
       "prompts": [
-        "A late afternoon scene in a rural Norse village, circa 1950s, featuring a wooden plow lying idle beneath an imposing spruce tree, surrounded by worn leather harnesses and tools; mist-shrouded moors beyond.",
-        "A series of candles flickering atop a hand-hewn wooden altar in a remote Fjordside cabin, dated between 50.00–80.00s; delicate seashells adorn the perimeter; weathered manuscripts spill from a nearby satchel.",
-        "A lone horse, coat glistening with dew, grazes beside an ancient birch near a deserted winter camp, circa 1955; remnants of last night's fire remain, smoke dissipating into the morning frost.",
-        "Weathered pages of an 18th-century rune manuscript spill out from beneath a wind-swept stone archway, its lintels adorned with a few faded silver filigree details; late spring foliage reclaims nearby spaces, unattended and untended for years.",
-        "A makeshift kitchen on wooden pilings above a tidal cove in the aftermath of stormy weather; galvanized cauldrons precariously perch at the center, surrounded by an intricate web of drying fishing nets; early morning sunlight still casts long shadows through cracked panes.",
-        "A series of hand-illuminated sketches depict various hunting scenarios across three worn vellum folios: snowy fir-lined mountainsides, forest depths and tundra expanses as they appeared circa the late 1950s to early 1960s; the same calligraphy repeats across margin notations in varying shades.",
-        "A dimly-lit village apothecary, circa 50.00–80.00s, contains narrow wooden shelves displaying rows of dust-dented jars with hand-painted labels; aromatic leaves dry under the light-tinged counterpane; moonlight illuminates frost patterns outside upon nearby windowsills, at 01:04AM.",
-        "Mid-morning sunlight spills into an open shed containing weathered rowing equipment near the Fjord, late June 1957; tools rest alongside dried seaweed entwined fishing lines with rusty hooks; nearby wooden staves hold several taut fishlines still awaiting dawn's hauls.",
-        "A partially snow-covered stone structure remains abandoned atop a hill overlooking the frozen expanse of Fjord ice circa February 58. Several rough-cut logs line an empty hearth, ash gray and blackened, with last winter's woodsmoke settling upon nearby ridges in a fine, gauzy film.",
-        "Glimmers of mid-day sunlight pierce early afternoon mist across dense tundra as several riders navigate unsteady wooden ladders connecting rocky outcroppings, the snow below slick and nearly translucent around frost-bitten hoof prints from what remains of last autumn's hunters"
-      ],
-      "descriptors_used": {}
-    },
-    {
-      "name": "part_04",
-      "start": 80.0,
-      "end": 109.0,
-      "prompts": [
-        "A forest glade at dawn, shrouded in mist: a lone birch tree stands amidst tangled foliage; ferns sprout from cracks in moss-carpeted boulders, where sunbeams coax green shoots to unfurl; dew glistens on cobwebs clinging to ancient limbs.",
-        "Frosty morn's silence in a village courtyard: slatted shutters cast latticed shadows on snowy stones; a wicker wheelbarrow, half-full of firewood, leans against the stone wall; beyond, snow-dusted rooftops and church spire disappear into fog.",
-        "Winter twilight settles over an ice-locked river: waterfowl congregate on fractured floes, feathers ruffled by gentle breeze; icicles droop from moss-scarred cliffs, as day succumbs to evening's dark shades.",
-        "In a rustic market, apples lie piled between stalls, amidst rustic wooden bins and bundles of herbs: scarlet woolen sweaters adorn hangers; vendor's hands move deftly among peels and seeds; behind, wooden houses rise through gathering twilight.",
-        "Riverbank scene: verdant shoreline gives way to sun-bleached driftwood; sandy banks are pocked with holes where crabs snatch morsels; seagulls hang like ghostly silhouettes in sky turned fiery at sunset.",
-        "Cottage interior at dusk: beeswax candles burn upon handmade wooden table, casting warm light on the family gathered there – son holds a tanned rabbit aloft, daughter fingers hand-carved toys – mother and father engage with booklets, the wind chimes outside singing softly.",
-        "Seagull's silhouette against evening sky as it rides thermal winds above ice-scarred lake: shoreline blurs in fading light; a school of salmon leap from rippling water as one great trout rises with expectant leaps into sunlight.",
-        "The wooden floor beneath worn shoes bears testament to village life during summer days, while through creaking doors the sounds of harvest labor emanate. Women work amidst greenery arranged by skillful hands – bunches, garlands and bouquets are formed anew each season as tradition demands.",
-        "On hillside paths, leaves crunch underfoot as traveler follows foot-worn cart track between thatched huts. The distant horizon's pale ribbon separates the inhabited valleys from a realm of ancient stones where wolves have begun to howl in summer night.",
-        "Shuttered shutters cast darkness onto a frozen village pond; wind-churned snow drifts into ridges around fir tree, while wooden ducks with glowing lantern eyes form a lonely sentry across icy ripples in an air both motionless and charged."
-      ],
-      "descriptors_used": {}
-    },
-    {
-      "name": "part_05",
-      "start": 109.0,
-      "end": 138.0,
-      "prompts": [
-        "Fog-shrouded mountainside at dawn, where wisps of cirrus cloud and granite spires evoke a realm untouched since Njord's departure in 1020 AD.",
-        "Tightly cropped portrait of Bjornsson, a grizzled weathered fisherman in his late fifties with calloused hands and piercing blue eyes.",
-        "Autumnal harvest scene at dusk on the north shore, where sheaves of grain stacked beside thatched huts stand against a deepening indigo sky with auroral sparks.",
-        "Ink-stained scriptorium within Vatnadalr Monastery walls during mid-morning in autumn 1312 AD, featuring an assortment of scribes scribbling and one scholar pacing thoughtfully.",
-        "Village elder Eir's homestead near dusk under the watchful gaze of the mountain fastness - firelight and shadow blend with her hands poised to craft a whittled wooden amulet.",
-        "Cattle drive in springtime, traversing rocky, wind-raked hills as they journey north towards pastures at Skaftefoss",
-        "Sun-bathed kitchen interior mid-July 1432 AD; an emerald-glazed vessel containing newly baked flatbread shared between two sun-singed farmhands breaking with the evening light of a single window high above.",
-        "Late-night vigil by moonlit lake beneath glinting birches – soft water lapping against silhouetted pines stands counterpoint to darkness shrouding distant peaks beyond Vagabundur Fjord.",
-        "Saddle, pack animal harness and leather-wrapped saddlebags hung amidst verdant undergrowth of spring 1278 AD; damp earth scents intermingle with soft, pale sunbeams diffusing mist through trees near the hidden water source – hidden fastness.",
-        "Mid-day prayer meeting within secluded hillside burial site's overgrown church ruin - broken masonry laced together at a hunched shoulder by an unseen breeze stirs dead leaves around stone cairns nearby – autumn 1346 AD"
-      ],
-      "descriptors_used": {}
-    },
-    {
-      "name": "part_06",
-      "start": 138.0,
-      "end": 168.0,
-      "prompts": [
-        "A forest glade at dawn, shrouded in mist: gnarled tree trunks arise like skeletal fingers from earth, amidst tangles of moss-shrouded boughs; an eagle soars into ascending sun.",
-        "In a snow-swept town square, figures in rustic attire stand arrayed around a bronze statue: villagers, reenactors in historical garb, and cloaked travelers; stone facades glisten with crystalline moisture",
-        "Frosted windowpanes reflect the morning's diffused light as a solitary traveler in worn leather satchel approaches an overgrown entrance of an abandoned monastery: foliage wraps crumbling stone, hinting hidden chambers beyond",
-        "Mid-morning sunbeams illuminate intricate details on stained glass windows in a centuries-old chapel: multihued shards cast prismatic patterns within the chamber; robed priest enters procession, veiled candles held high",
-        "Woods at twilight – dappled forest shadows elongate on trunks and underbrush as an anthropomorphized dryad emerges from silvery birch bark shelter – fingers stained with earth and sap.",
-        "Snow-covered fir-line backdrop frames figures of a winter hunt scene: riders, archer in furs, track the fleeing creature – auroral colors painting atmospheric wisps behind retreating horsemen",
-        "Rustic wooden door on a summer morning reveals aperture onto unvisited field path – sunflowers, ears and seeds ripe for harvesting stretching above horizon line at farmer's rustic gate.",
-        "At a late evening ferry landing, rowing crew secures worn craft: wooden pier's dark silhouettes stretch beneath water-drenched planks, reflecting sky ablaze with ripened oranges",
-        "On a frost-lit autumn night, cloaked form creeps within the shadow of ancient Yew sapling where branches form sculptural columns of leaves and wood shroud mortal vigilance",
-        "Vines and gourd-laden lattice entrance reveals a sun-kissed courtyard scene in summer: inhabitants gathered – elderly matriarch overseeing gathering – beneath an ancient fig, fruit-laden branches swaying in soft breeze"
-      ],
-      "descriptors_used": {}
-    },
-    {
-      "name": "part_07",
-      "start": 168.0,
-      "end": 198.0,
-      "prompts": [
-        "A sepia-toned photograph of a fjord's tranquil surface, where sunlight dances across rippled water as mist-shrouded mountains loom in the background, taken during an 1865 mid-morning.",
-        "In the dimly lit parlor of a village tavern, patrons gather around a hearth while an elderly musician plucks the strings of his violin on a cold winter's eve circa 1880. Snowflakes swirl outside, their gentle patter accompanied by the lonesome melody.",
-        "A photograph taken in 1875 during a spring equinox celebration in a sun-dappled clearing deep within an ancient forest: two women dressed in traditional attire face each other as they engage in a ritualistic dance beneath branches heavy with leaves.",
-        "The rugged coastline of northern Norway on an overcast afternoon around 1890, where a group of seamen in worn rain gear trudge through the sandy beach, their gaze cast upon the dark waters beyond.",
-        "In the cramped confines of a village apothecary around 1885: a pharmacist, flanked by wooden cabinets and shelves bearing glass jars of assorted potions and dried botanicals, peers at a handwritten prescription scribbled on a small note of paper.",
-        "The interior of a family bakery circa 1900, where steam billows from the back of a wood-fired oven as two siblings knead dough with yeast-scented sponges in hand; outside, late morning sunlight glints upon snow-covered fields stretching towards distant hills.",
-        "A still photograph captured during a harvest moon on the banks of an Alaskan river in 1895: silhouettes of shadowy figures huddle around a lantern-lit raft as night descends upon a serene stretch of water.",
-        "In a tranquil garden shaded by willows and poplars on an overcast evening around 1868, three friends converse among flowerbeds heavy with late summer blooms while behind them a door lies slightly ajar, revealing the soft luminescence from within.",
-        "A photograph from a forest scene during the 1890s winter solstice: against a deep blue sky an elderly man stands by the base of a massive fir tree as he grooms its gnarled branches in silence.",
-        "In a small church nave on a bright late afternoon circa 1878, sunlight filters through stained glass panes to illuminate three children clustered at their grandparents' feet, engrossed in listening to the whispered tale from a nearby illuminated manuscript."
-      ],
-      "descriptors_used": {}
-    },
-    {
-      "name": "part_08",
-      "start": 198.0,
-      "end": 231.0,
-      "prompts": [
-        "A sepia-toned photograph of a mist-shrouded fjord, 198.00–231.00s; low-angle sunlight casting long shadows on water-stained rocks and peeling wooden docks.",
-        "A catalogued image of frost etched on window panes of an ice-house in morning light; time-lapse evidence of nocturnal visits by small, mouse-like creatures; a notation scribbled 'mid-January' and underlined.",
-        "An annotated photograph of birch trees with white bark glistening against grey winter sky; marginalia 'Frost depths -8.3 cm at 205.00s.'",
-        "A low-key image of wooden tools arranged on stone workbench, illuminated only by the faint moonlight; adjacent notation reading 'time-stamped gear for fishing trip during celestial alignments'; handwritten in calligraphic script.",
-        "Documented picture of rime encrustation forming at lake's edge in early morning light; the notation next to it 'ice sheets' scribbled with ruler measurements; time-stamp partially erased.",
-        "A high contrast, grainy image of stone statues depicting forest spirits set amongst fallen leaves and autumnal flora; catalog label detailing exact dates of the rituals associated with them written on reverse side; date handwritten in red.",
-        "Documented illustration showing late evening landscape lit up by flickering candles and oil lanterns placed along village walkways, as mist envelops distant mountain peaks and forests within the 215.00–219.00 time bracket.",
-        "A sepia-toned photograph featuring ancient oak tree branches stretching above water's surface of a shallow lake during mid-spring season; its leafy foliage reflected across ripples to create sense of symmetry in scene; margin written with observation 'sun-baked moss, slight rippling of surface -210.00s'.",
-        "Catalogued black and white image depicting evening light casting long shadows along edges of riverbank, upon rocks worn smooth by gentle current, where night- active small mammals gather near dusk within specified date range.",
-        "Documented, muted-toned photograph capturing a frozen waterfall set against late autumn background at a time corresponding to exacting calendar notations for astronomical alignments."
+        "A young Inuk woman, her face a map of wrinkles from years of working in the Canadian wilderness, is depicted sitting on a worn parka at the edge of a mist-shrouded forest lake (Wet collodion process; Ektachrome colorization), fishing line strung out before her. The surrounding landscape is one of primordial beauty, as if time has stood still.",
+        "A row of hand-hewn wooden totem poles stands sentinel against the backdrop of a dense boreal forest (Albumen print texture; soft film grain) in Northern Canada. Their intricately carved forms seem to hum with an otherworldly energy. A spruce tree branches over them, casting long shadows on the ground below.",
+        "The faint light of dawn breaks upon a scene of bustling activity at an Inuit encampment (Typonneled; Marginalia). Children in sealskin clothing run wildly about while their mothers busily attend to preparing the day's hunt. In the center stands a lone figure – likely a respected elder – overseeing this early morning ritual.",
+        "An expanse of Arctic tundra unfolds like an endless canvas of iced turquoise and frost-whitened grasses (Filmed in early autumn light; slight crema-toned contrast), punctuated by small outcroppings of rock that dot the horizon like ice-bound stones. Scattered snow patches glisten in late sunlight.",
+        "Dwellers from a past epoch are depicted within an atmospheric still life, centered around the prized resource – carved stone. One woman leans on an ornate totem pole (Rich color rendition; slightly overprinted) while her companion tends an infant swaddled tightly in a moss and furs-wrapped cradle. All face toward the same unseen light source.",
+        "On an almost forgotten ice-slicked trail leading deep into boreal wilderness, faint impressions of feet from centuries ago suggest travelers ventured forth into lands where few have walked since the end times (Dappled shadows, worn paths; 50–60% gray). No sign exists to reveal which direction was ahead.",
+        "Sun's first rays illuminate the frosty morning glories – etched delicately on small glass panels. It becomes clear these images capture scenes where early Inuk settlements were built and lived within a fragile boundary between man-made order (Flecks from dry negatives; film-like quality) and wild untouched forest.",
+        "Within the silence of this northern winter, people gather around the glow emanating from their encampment's hearth to warm each other during frigid times. There exists only muted whispers carried by cold air and warmth, though not all details are discernible under dark shadows that stretch through icy mist and cover most details within an old photo.",
+        "Here, a rugged Arctic wind forces snow across vast expanses of flat frozen plains until, as though a moment in the lifeblood, it pauses just beyond small wooden markers used to demarcate the limits of encampment (Low-tonal contrast of muted blues; warm hues for campfires).",
+        "Photographed from an overhead angle over partially frosted-over wooden surfaces at this Inuit settlement during morning after nightfall, one catches a moment of time – frozen within its frame. Early risers emerge outside of habitations wearing worn clothing, while in contrast smoke rises above nearby tents."
       ],
       "descriptors_used": {}
     }

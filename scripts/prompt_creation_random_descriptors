@@ -52,7 +52,7 @@
 
 from __future__ import annotations
 
-import argparse, json, random, sys, time
+import argparse, json, random, sys, time, re
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -87,6 +87,27 @@ def write_out_json(path: Path, data: dict):
     """
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+# ---------- default assets and global descriptors ----------
+SCRIPT_DIR = Path(__file__).resolve().parent
+ASSETS_DIR = (SCRIPT_DIR / ".." / "assets").resolve()
+DEFAULT_DESCRIPTORS = ASSETS_DIR / "descriptors.json"
+
+def load_global_descriptors(path: Path) -> Dict[str, List[str]]:
+    """
+    Load a simple mapping {category: [descriptor, ...]} from JSON.
+    Non-string items are filtered out.
+    """
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict):
+        raise ValueError("Global descriptors JSON must be an object mapping categories to lists.")
+    out: Dict[str, List[str]] = {}
+    for k, v in data.items():
+        if isinstance(v, list):
+            strs = [str(x).strip() for x in v if str(x).strip()]
+            if strs:
+                out[str(k)] = strs
+    return out
 
 # ---------- pooling (collect per-section descriptor hits) ----------
 @dataclass
@@ -143,9 +164,9 @@ class LLMConfig:
     seed: int = 42
 
 ARCHIVE_STYLE = (
-    "Style: early 20th-century archival documentation; recolorized and reconditioned archival photography; "
+    "Style: early 20th-century archival documentation; sepia tonality; paper texture; "
     "typewritten captions; catalog stamps and marginalia; soft film grain; subdued contrast; "
-    "measured, objective phrasing; film grain and paper wear; albumen print texture; ektachrome colorization; wet collodion process"
+    "measured, objective phrasing; no brand names; no camera jargon."
 )
 
 def make_user_prompt_for_section(section_name: str, start: float, end: float, by_category: Dict[str, List[str]]) -> str:
@@ -314,16 +335,72 @@ class OllamaWrapper:
     def _extract_prompts(self, resp) -> List[str]:
         """
         Try to parse a JSON object with {'prompts': [...]} first (Ollama JSON/structured outputs),
-        then fall back to free-text parsing.
+        tolerate code fences or surrounding text, then fall back to free-text parsing.
         """
-        text = self._extract_text_from_resp(resp)
-        try:
-            data = json.loads(text)
-            if isinstance(data, dict) and isinstance(data.get("prompts"), list):
-                return [str(x).strip() for x in data["prompts"] if str(x).strip()][:10]
-        except Exception:
-            pass
-        return parse_numbered_list(text)
+        raw = self._extract_text_from_resp(resp)
+
+        def strip_fences(s: str) -> str:
+            s = s.strip()
+            if s.startswith("```"):
+                s = re.sub(r"^```(?:json)?\s*", "", s, flags=re.IGNORECASE)
+                s = re.sub(r"\s*```$", "", s)
+            return s.strip()
+
+        def try_load(s: str):
+            try:
+                return json.loads(s)
+            except Exception:
+                return None
+
+        def extract_balanced_json(s: str):
+            # scan for first balanced {...} taking quotes/escapes into account
+            n = len(s)
+            i = 0
+            while i < n:
+                if s[i] == "{":
+                    depth = 0
+                    in_str = False
+                    esc = False
+                    for j in range(i, n):
+                        ch = s[j]
+                        if in_str:
+                            if esc:
+                                esc = False
+                            elif ch == "\\":
+                                esc = True
+                            elif ch == "\"":
+                                in_str = False
+                        else:
+                            if ch == "\"":
+                                in_str = True
+                            elif ch == "{":
+                                depth += 1
+                            elif ch == "}":
+                                depth -= 1
+                                if depth == 0:
+                                    candidate = s[i:j + 1]
+                                    obj = try_load(candidate)
+                                    if isinstance(obj, dict):
+                                        return obj
+                                    break
+                    i += 1
+                else:
+                    i += 1
+            return None
+
+        text = strip_fences(raw)
+        # direct load
+        data = try_load(text)
+        if isinstance(data, str):
+            data = try_load(strip_fences(data))
+        if not isinstance(data, dict):
+            data = extract_balanced_json(text)
+
+        if isinstance(data, dict) and isinstance(data.get("prompts"), list):
+            return [str(x).strip() for x in data["prompts"] if str(x).strip()][:10]
+
+        # fallback to free-text parsing
+        return parse_numbered_list(raw)
 
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
         vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} num_predict={self.cfg.num_predict}")
@@ -388,6 +465,7 @@ def main():
     ap.add_argument("--temperature", type=float, default=1.2)
     ap.add_argument("--top-p", type=float, default=0.95)
     ap.add_argument("--max-new", type=int, default=700)
+    ap.add_argument("--descriptors", type=Path, default=DEFAULT_DESCRIPTORS, help="Global descriptors JSON used when sections have no per-chunk matches")
     ap.add_argument("--show-per-cat", type=int, default=8)
     ap.add_argument("--quiet", action="store_true")
 
@@ -401,6 +479,7 @@ def main():
     vprint(verbose, f"Model request: {args.model}")
     vprint(verbose, f"Params       : temp={args.temperature} top_p={args.top_p} max_new={args.max_new} seed={args.seed}")
     vprint(verbose, f"Max per cat  : {args.max_per_cat} (printing top {args.show_per_cat})")
+    vprint(verbose, f"Descriptors  : {args.descriptors}")
 
     hprint(verbose, "Loading results")
     data = load_clap_results(args.inp)
@@ -455,8 +534,16 @@ def main():
             vprint(verbose, f"    - {cat:<22} | unique={len(ranked):<3} | total hits={sum(counter.values()):<3} | top: {top_str}{' ...' if more>0 else ''}")
 
         per_cat = summarize_pool(pool, max_per_category=args.max_per_cat)
+        # Fallback to global descriptors when none were collected from sections/chunks
+        if sum(len(v) for v in per_cat.values()) == 0:
+            try:
+                global_desc = load_global_descriptors(args.descriptors)
+                per_cat = {k: global_desc[k][:args.max_per_cat] for k in sorted(global_desc.keys(), key=str.lower)}
+                vprint(verbose, f"  [fallback] using global descriptors from: {args.descriptors}")
+            except Exception as e:
+                vprint(verbose, f"  [fallback] failed to load global descriptors ({e})")
         user_prompt = make_user_prompt_for_section(pool.name, pool.start, pool.end, per_cat)
-        system_prompt = "You are a meticulous archivist-poet. Turn descriptor lists into concise, evocative scene prompts that feel like historical records in a canadian/inuit nordic world full of native cosmogony and animate forces of nature."
+        system_prompt = "You are a meticulous archivist-poet. Turn descriptor lists into concise, evocative scene prompts that feel like historical records in a nordic world full of mythology and animate forces of nature."
 
         if args.no_llm:
             mode_note = "offline template mode"
