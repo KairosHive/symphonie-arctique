@@ -212,7 +212,7 @@ class GemmaWrapper:
     Ollama chat wrapper. Uses cfg.model_id directly (for example: 'gemma3:4b' or any Ollama model).
     Keeps the same public interface (generate_10_prompts) so the rest of the script remains unchanged.
     """
-    def __init__(self, cfg: LLMConfig, device_pref: str = "auto", verbose: bool = True):
+    def __init__(self, cfg: LLMConfig, verbose: bool = True):
         if not try_import_ollama():
             raise RuntimeError("ollama not installed. pip install ollama")
         import ollama
@@ -308,13 +308,6 @@ def main():
     ap.add_argument("--max-new", type=int, default=700)
     ap.add_argument("--show-per-cat", type=int, default=8)
     ap.add_argument("--quiet", action="store_true")
-    ap.add_argument(
-        "--device",
-        type=str,
-        default="auto",
-        choices=["auto", "cuda", "cpu", "mps"],
-        help="Compatibility option; may be ignored when using Ollama. Kept for callers that expect a device flag."
-    )
 
     args = ap.parse_args()
 
@@ -347,7 +340,6 @@ def main():
                     max_new_tokens=args.max_new,
                     seed=args.seed,
                 ),
-                device_pref=args.device,
                 verbose=verbose,
             )
 
