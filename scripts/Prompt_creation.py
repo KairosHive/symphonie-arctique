@@ -207,7 +207,7 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
         prompts.append(f"{section_name} ({time_s}) — Old archive photograph; {ARCHIVE_STYLE.lower()} Motifs: {picks_str}.")
     return prompts
 
-class GemmaWrapper:
+class OllamaWrapper:
     """
     Ollama chat wrapper. Uses cfg.model_id directly (for example: 'gemma3:4b' or any Ollama model).
     Keeps the same public interface (generate_10_prompts) so the rest of the script remains unchanged.
