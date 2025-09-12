@@ -162,7 +162,7 @@ def make_user_prompt_for_section(section_name: str, start: float, end: float, by
         "Given the descriptor lists per category, compose TEN diverse image prompts that each feel like a "
         "single visual narrative scene from an old archive. Combine elements from multiple categories in each prompt. "
         "Vary location, subject, composition, and time-of-day across the set. Keep each prompt 25–60 words. "
-        "Avoid first-person. Do not number the prompts inside the text (we will number externally)."
+        "Avoid first-person. If there are no descriptors, still produce ten creative prompts guided by the section name and time window."
     )
 
     return (
@@ -172,23 +172,37 @@ def make_user_prompt_for_section(section_name: str, start: float, end: float, by
         "Descriptors:\n"
         f"{blocks_str}\n\n"
         "Output format:\n"
-        "1) <prompt one>\n"
-        "2) <prompt two>\n"
-        "...\n"
-        "10) <prompt ten>\n"
-        "Only write the prompts."
+        "Return a JSON object with a key \"prompts\" whose value is an array of exactly 10 strings.\n"
+        "Example:\n"
+        "{ \"prompts\": [\"<prompt one>\", \"<prompt two>\", \"...\", \"<prompt ten>\"] }\n"
+        "Do not include any extra text before or after the JSON."
     )
 
 def parse_numbered_list(text: str) -> List[str]:
     lines = [l.strip() for l in (text or "").splitlines()]
     items, curr = [], []
     for ln in lines:
-        # detect "1) ..." or "1. ..."
-        if any(ln.startswith(f"{i})") or ln.startswith(f"{i}.") for i in range(1, 12)):
+        # detect "1) ..." or "1. ..." or "1:" or "1 - ..."
+        if any(
+            ln.startswith(f"{i})") or
+            ln.startswith(f"{i}.") or
+            ln.startswith(f"{i}:") or
+            ln.startswith(f"{i} -")
+            for i in range(1, 12)
+        ):
             if curr:
                 items.append(" ".join(curr).strip())
                 curr = []
-            ln2 = ln.split(")", 1)[-1] if ")" in ln else ln.split(".", 1)[-1]
+            if ")" in ln:
+                ln2 = ln.split(")", 1)[-1]
+            elif "." in ln:
+                ln2 = ln.split(".", 1)[-1]
+            elif ":" in ln:
+                ln2 = ln.split(":", 1)[-1]
+            elif " - " in ln:
+                ln2 = ln.split(" - ", 1)[-1]
+            else:
+                ln2 = ln
             curr.append(ln2.strip())
         else:
             if ln:
@@ -297,6 +311,20 @@ class OllamaWrapper:
         except Exception:
             return ""
 
+    def _extract_prompts(self, resp) -> List[str]:
+        """
+        Try to parse a JSON object with {'prompts': [...]} first (Ollama JSON/structured outputs),
+        then fall back to free-text parsing.
+        """
+        text = self._extract_text_from_resp(resp)
+        try:
+            data = json.loads(text)
+            if isinstance(data, dict) and isinstance(data.get("prompts"), list):
+                return [str(x).strip() for x in data["prompts"] if str(x).strip()][:10]
+        except Exception:
+            pass
+        return parse_numbered_list(text)
+
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
         vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} num_predict={self.cfg.num_predict}")
         vprint(self.verbose, f"Prompt approx tokens: ~{self._approx_tokens(user_prompt)}")
@@ -307,22 +335,37 @@ class OllamaWrapper:
         ]
 
         try:
-            # Use Ollama chat API with options nested under 'options' and no streaming for a single response.
+            # Use Ollama chat API with structured output (JSON schema) and no streaming.
             options = {
                 "temperature": float(self.cfg.temperature),
                 "top_p": float(self.cfg.top_p),
                 "num_predict": int(self.cfg.num_predict),
                 "seed": int(self.cfg.seed),
             }
+            schema = {
+                "type": "object",
+                "properties": {
+                    "prompts": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "minItems": 10,
+                        "maxItems": 10
+                    }
+                },
+                "required": ["prompts"]
+            }
             resp = self.client.chat(
                 model=self.model_id,
                 messages=messages,
                 options=options,
+                format=schema,
                 stream=False,
                 keep_alive="20m",
             )
-            out_text = self._extract_text_from_resp(resp)
-            prompts = parse_numbered_list(out_text)
+            prompts = self._extract_prompts(resp)
+            if len(prompts) == 0:
+                raw = self._extract_text_from_resp(resp)
+                vprint(self.verbose, f"[LLM DEBUG] Empty parse. Raw content (first 200): {raw[:200]!r}")
 
             vprint(self.verbose, f"LLM returned {len(prompts)} parsed prompts.")
             return prompts
@@ -415,8 +458,8 @@ def main():
         user_prompt = make_user_prompt_for_section(pool.name, pool.start, pool.end, per_cat)
         system_prompt = "You are a meticulous archivist-poet. Turn descriptor lists into concise, evocative scene prompts that feel like historical records in a nordic world full of mythology and animate forces of nature."
 
-        if args.no_llm or sum(len(v) for v in per_cat.values()) == 0:
-            mode_note = "offline template mode" if args.no_llm else "empty descriptors -> template mode"
+        if args.no_llm:
+            mode_note = "offline template mode"
             vprint(verbose, f"  generating ({mode_note})")
             prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
         else:
