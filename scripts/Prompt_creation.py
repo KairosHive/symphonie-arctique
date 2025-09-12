@@ -180,7 +180,7 @@ def make_user_prompt_for_section(section_name: str, start: float, end: float, by
     )
 
 def parse_numbered_list(text: str) -> List[str]:
-    lines = [l.strip() for l in text.splitlines()]
+    lines = [l.strip() for l in (text or "").splitlines()]
     items, curr = [], []
     for ln in lines:
         # detect "1) ..." or "1. ..."
@@ -195,7 +195,25 @@ def parse_numbered_list(text: str) -> List[str]:
                 curr.append(ln)
     if curr:
         items.append(" ".join(curr).strip())
-    return [x for x in items if x][:10]
+    items = [x for x in items if x]
+    if not items:
+        # Try bullet list style
+        bullets = [ln[1:].strip() for ln in lines if ln.startswith("-") or ln.startswith("*")]
+        if bullets:
+            items = bullets
+        else:
+            # Split by blank lines as paragraphs
+            paras, para = [], []
+            for ln in lines:
+                if ln == "":
+                    if para:
+                        paras.append(" ".join(para).strip()); para = []
+                else:
+                    para.append(ln)
+            if para:
+                paras.append(" ".join(para).strip())
+            items = paras if paras else ([text.strip()] if (text or "").strip() else [])
+    return items[:10]
 
 def synth_fallback_prompts(context_hint: str, need: int) -> List[str]:
     base = "sepia, archival record, catalog stamp, paper wear, subdued contrast, typewritten caption"
@@ -227,6 +245,7 @@ class OllamaWrapper:
             raise RuntimeError("ollama not installed. pip install ollama")
         import ollama
         self.ollama = ollama
+        self.client = ollama.Client(timeout=600)
         self.cfg = cfg
         self.verbose = verbose
         self.model_id = cfg.model_id
@@ -240,17 +259,28 @@ class OllamaWrapper:
         - {'message': {'content': "<text>"}}
         - {'choices': [{'message': {'content': "<text>"}} , ...]}
         - {'choices': [{'text': "<text>"}, ...]}
+        - ChatResponse objects with .message.content (from ollama python client)
         - a plain string
         Fallback to empty string when nothing found.
         """
         try:
+            # plain string
             if isinstance(resp, str):
                 return resp or ""
+            # objects from the ollama python client
+            if hasattr(resp, "message"):
+                msg = getattr(resp, "message")
+                if isinstance(msg, dict):
+                    return msg.get("content", "") or ""
+                if hasattr(msg, "content"):
+                    return getattr(msg, "content") or ""
+            if hasattr(resp, "response"):
+                # for generate endpoint compatibility
+                return getattr(resp, "response") or ""
+            # dict-based responses
             if isinstance(resp, dict):
-                # direct message
                 if "message" in resp and isinstance(resp["message"], dict):
                     return resp["message"].get("content", "") or ""
-                # choices list
                 if "choices" in resp and isinstance(resp["choices"], list) and resp["choices"]:
                     first = resp["choices"][0]
                     if isinstance(first, dict):
@@ -258,14 +288,14 @@ class OllamaWrapper:
                             return first["message"].get("content", "") or ""
                         if "text" in first:
                             return first.get("text", "") or ""
-                # some clients may return content at top-level
                 if "content" in resp:
                     return resp.get("content", "") or ""
-                # As a last resort, stringify
-                return str(resp)
+            # last resort
+            if hasattr(resp, "content"):
+                return getattr(resp, "content") or ""
+            return str(resp)
         except Exception:
             return ""
-        return ""
 
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
         vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} num_predict={self.cfg.num_predict}")
@@ -284,11 +314,12 @@ class OllamaWrapper:
                 "num_predict": int(self.cfg.num_predict),
                 "seed": int(self.cfg.seed),
             }
-            resp = self.ollama.chat(
+            resp = self.client.chat(
                 model=self.model_id,
                 messages=messages,
                 options=options,
                 stream=False,
+                keep_alive="20m",
             )
             out_text = self._extract_text_from_resp(resp)
             prompts = parse_numbered_list(out_text)
@@ -384,8 +415,9 @@ def main():
         user_prompt = make_user_prompt_for_section(pool.name, pool.start, pool.end, per_cat)
         system_prompt = "You are a meticulous archivist-poet. Turn descriptor lists into concise, evocative scene prompts that feel like historical records in a nordic world full of mythology and animate forces of nature."
 
-        if args.no_llm:
-            vprint(verbose, "  generating (offline template mode)")
+        if args.no_llm or sum(len(v) for v in per_cat.values()) == 0:
+            mode_note = "offline template mode" if args.no_llm else "empty descriptors -> template mode"
+            vprint(verbose, f"  generating ({mode_note})")
             prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
         else:
             vprint(verbose, f"  generating with LLM [{llm.model_id}] …")
