@@ -296,10 +296,10 @@ class GemmaWrapper:
 
 # ---------- main ----------
 def main():
-    ap = argparse.ArgumentParser(description="Generate 10 Gemma prompts per section from CLAP descriptor results.")
+    ap = argparse.ArgumentParser(description="Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.")
     ap.add_argument("--in", dest="inp", type=Path, required=True, help="CLAP results JSON (from CLAP_extractor)")
     ap.add_argument("--out", type=Path, default=None, help="Output prompts JSON (default: <in>_prompts.json)")
-    ap.add_argument("--model", type=str, default="google/gemma-3n-e2b-it", help="HF model id (3n supported)")
+    ap.add_argument("--model", type=str, default="gemma3:4b", help="Ollama model id (e.g. 'gemma3:4b' or any Ollama model)")
     ap.add_argument("--no-llm", action="store_true", help="Template mode (no model call)")
     ap.add_argument("--max-per-cat", type=int, default=24, help="Max descriptors kept per category")
     ap.add_argument("--seed", type=int, default=52)
@@ -313,7 +313,7 @@ def main():
         type=str,
         default="auto",
         choices=["auto", "cuda", "cpu", "mps"],
-        help="Where to run the model/generation. 'cuda' forces GPU; 'auto' lets HF decide."
+        help="Compatibility option; may be ignored when using Ollama. Kept for callers that expect a device flag."
     )
 
     args = ap.parse_args()
