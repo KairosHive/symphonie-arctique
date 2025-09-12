@@ -117,9 +117,9 @@ def summarize_pool(pool: SectionPool, max_per_category: int = 24) -> Dict[str, L
     return out
 
 # ---------- LLM helpers ----------
-def try_import_transformers() -> bool:
+def try_import_ollama() -> bool:
     try:
-        import transformers  # noqa: F401
+        import ollama  # noqa: F401
         return True
     except Exception:
         return False
@@ -209,192 +209,54 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
 
 class GemmaWrapper:
     """
-    Handles Gemma-3n (processor-based) and regular Gemma chat models.
-    Falls back from 3n to 3-1b if generation raises a per-layer/shape error.
+    Thin wrapper that uses the Ollama local/remote API for chat-style generation.
+    Keeps the same public interface (generate_10_prompts) so the rest of the script
+    can remain unchanged.
     """
     def __init__(self, cfg: LLMConfig, device_pref: str = "auto", verbose: bool = True):
-        if not try_import_transformers():
-            raise RuntimeError("transformers not installed. pip install transformers accelerate safetensors")
-        import torch
-        self.torch = torch
+        if not try_import_ollama():
+            raise RuntimeError("ollama not installed. pip install ollama")
+        import ollama
+        self.ollama = ollama
         self.cfg = cfg
         self.verbose = verbose
-        self._is_3n = "gemma-3n" in cfg.model_id.lower()
-
-        # Resolve device preference
-        if device_pref == "auto":
-            if torch.cuda.is_available():
-                self.device_str = "cuda"
-            elif getattr(torch.backends, "mps", None) and torch.backends.mps.is_available():
-                self.device_str = "mps"
-            else:
-                self.device_str = "cpu"
-        else:
-            self.device_str = device_pref
-
-        self.runtime_device = torch.device(
-            "cuda:0" if self.device_str == "cuda"
-            else ("mps" if self.device_str == "mps" else "cpu")
-        )
-        vprint(self.verbose, f"Device preference resolved to: {self.runtime_device}")
-
-        ok = self._load_model(cfg.model_id)
-        if not ok:
-            raise RuntimeError("Failed to load any model.")
-
-    def _load_model(self, mid: str) -> bool:
-        try:
-            if "gemma-3n" in mid.lower():
-                from transformers import AutoProcessor, Gemma3nForConditionalGeneration
-                hprint(self.verbose, f"Loading model {mid}")
-
-                # Choose dtype + placement
-                if self.device_str == "cuda":
-                    dtype = self.torch.bfloat16 if self.torch.cuda.is_bf16_supported() else self.torch.float16
-                    device_map = {"": 0}  # force full model on GPU0
-                    self.model = Gemma3nForConditionalGeneration.from_pretrained(
-                        mid, device_map=device_map, torch_dtype=dtype
-                    )
-                elif self.device_str == "mps":
-                    # Load on CPU then move to MPS (common HF pattern)
-                    self.model = Gemma3nForConditionalGeneration.from_pretrained(
-                        mid, device_map={"": "cpu"}, torch_dtype=self.torch.float16
-                    ).to("mps")
-                else:  # cpu
-                    self.model = Gemma3nForConditionalGeneration.from_pretrained(
-                        mid, device_map={"": "cpu"}, torch_dtype=self.torch.float32
-                    )
-
-                self.processor = AutoProcessor.from_pretrained(mid)
-                self.tokenizer = getattr(self.processor, "tokenizer", None)
-                self.model_id = mid
-                self._is_3n = True
-                vprint(self.verbose, f"Model ready: {mid} | device={self.runtime_device} | dtype={self.model.dtype} (3n)")
-
-            else:
-                from transformers import AutoModelForCausalLM, AutoTokenizer
-                hprint(self.verbose, f"Loading model {mid}")
-
-                if self.device_str == "cuda":
-                    dtype = self.torch.bfloat16 if self.torch.cuda.is_bf16_supported() else self.torch.float16
-                    device_map = {"": 0}
-                    self.model = AutoModelForCausalLM.from_pretrained(
-                        mid, device_map=device_map, torch_dtype=dtype
-                    )
-                elif self.device_str == "mps":
-                    self.model = AutoModelForCausalLM.from_pretrained(
-                        mid, device_map={"": "cpu"}, torch_dtype=self.torch.float16
-                    ).to("mps")
-                else:
-                    self.model = AutoModelForCausalLM.from_pretrained(
-                        mid, device_map={"": "cpu"}, torch_dtype=self.torch.float32
-                    )
-
-                self.processor = None
-                self.tokenizer = AutoTokenizer.from_pretrained(mid)
-                self.model_id = mid
-                self._is_3n = False
-                vprint(self.verbose, f"Model ready: {mid} | device={self.runtime_device} | dtype={self.model.dtype}")
-
-            try:
-                self.torch.manual_seed(self.cfg.seed)
-            except Exception:
-                pass
-            return True
-
-        except Exception as e:
-            vprint(self.verbose, f"[LOAD-ERR] {mid}: {e}")
-            if "gemma-3n" in mid.lower():
-                return self._load_model("google/gemma-3-1b-it")
-            return False
+        self.model_id = cfg.model_id
 
     def _approx_tokens(self, text: str) -> int:
         return max(1, len(text) // 4)
 
-    def _build_inputs(self, system_prompt: str, user_prompt: str):
-        if self._is_3n:
-            messages = [
-                {"role": "system", "content": system_prompt.strip()},
-                {"role": "user", "content": user_prompt.strip()},
-            ]
-            chat = self.processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
-            inputs = self.processor(
-                text=[chat],
-                return_tensors="pt",
-                padding=True
-            ).to(self.runtime_device)  # <-- send to requested device
-            vprint(self.verbose, f"Built 3n inputs on {self.runtime_device}: "
-                                 f"input_ids.shape={tuple(inputs['input_ids'].shape)}")
-            return inputs
-        else:
-            msgs = [
-                {"role": "system", "content": system_prompt.strip()},
-                {"role": "user", "content": user_prompt.strip()},
-            ]
-            text = None
-            if self.tokenizer is not None:
-                try:
-                    chat = self.tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=True)
-                    text = chat
-                except Exception:
-                    pass
-            if text is None:
-                text = (system_prompt + "\n\n" + user_prompt).strip()
-            return self.tokenizer([text], return_tensors="pt").to(self.runtime_device)
-
     def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
         vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} max_new={self.cfg.max_new_tokens}")
         vprint(self.verbose, f"Prompt approx tokens: ~{self._approx_tokens(user_prompt)}")
-        vprint(self.verbose, f"Generating on device: {self.runtime_device} | dtype={self.model.dtype}")
 
-        inputs = self._build_inputs(system_prompt, user_prompt)
-
-        pad_id = None
-        if getattr(self, "tokenizer", None) is not None:
-            pad_id = getattr(self.tokenizer, "pad_token_id", None) or getattr(self.tokenizer, "eos_token_id", None)
-        if pad_id is None:
-            pad_id = getattr(self.model.config, "pad_token_id", None) or getattr(self.model.config, "eos_token_id", None) or 2
+        messages = [
+            {"role": "system", "content": system_prompt.strip()},
+            {"role": "user", "content": user_prompt.strip()},
+        ]
 
         try:
-            gen = self.model.generate(
-                **inputs,
-                do_sample=True,
+            # Call Ollama chat endpoint. Ollama's Python client typically returns a dict with
+            # {'message': {'content': "<text>"}}
+            resp = self.ollama.chat(
+                model=self.model_id,
+                messages=messages,
                 temperature=self.cfg.temperature,
-                top_p=self.cfg.top_p,
-                max_new_tokens=self.cfg.max_new_tokens,
-                pad_token_id=pad_id,
-                repetition_penalty=1.1,
+                max_tokens=self.cfg.max_new_tokens
             )
-        except Exception as e:
-            if self._is_3n:
-                vprint(self.verbose, f"[3n-generate] error: {e}\nFalling back to google/gemma-3-1b-it and retrying …")
-                self._load_model("google/gemma-3-1b-it")
-                inputs = self._build_inputs(system_prompt, user_prompt)
-                gen = self.model.generate(
-                    **inputs,
-                    do_sample=True,
-                    temperature=self.cfg.temperature,
-                    top_p=self.cfg.top_p,
-                    max_new_tokens=self.cfg.max_new_tokens,
-                    pad_token_id=pad_id,
-                    repetition_penalty=1.1,
-                )
+
+            if isinstance(resp, dict):
+                out_text = resp.get("message", {}).get("content", "") or ""
             else:
-                raise
+                out_text = ""
 
-        if self._is_3n and getattr(self, "processor", None) is not None and hasattr(self.processor, "tokenizer"):
-            tok = self.processor.tokenizer
-            out_text = tok.decode(gen[0], skip_special_tokens=True)
-        else:
-            out_text = self.tokenizer.decode(gen[0], skip_special_tokens=True)
+            prompts = parse_numbered_list(out_text)
+            vprint(self.verbose, f"LLM returned {len(prompts)} parsed prompts.")
+            return prompts
 
-        if "assistant" in out_text.lower():
-            parts = out_text.split("\n")
-            out_text = "\n".join(parts[-60:])
-
-        prompts = parse_numbered_list(out_text)
-        vprint(self.verbose, f"LLM returned {len(prompts)} parsed prompts.")
-        return prompts
+        except Exception as e:
+            vprint(self.verbose, f"[OLLAMA-ERR] {e}")
+            # Let the caller handle fallback to template mode by raising
+            raise
 
 
 # ---------- main ----------
