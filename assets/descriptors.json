@@ -25,29 +25,33 @@
     "frenzy","agitation","shock","reluctance","hesitation","satiation","catharsis","release","clarity","focus"
   ],
   "NonHumanEntities": [
-    "wolf","polar bear","caribou","moose","elk","arctic fox","red fox","lynx","wolverine",
-    "snowshoe hare","lemming","musk ox","seal","walrus","beaver","otter","ermine","black bear",
-    "grizzly bear","whale","beluga","orca","narwhal",
+      "Sedna the Sea Mother with hair tangled in currents", "Qalupalik lurking under the ice with green skin",
+      "Nanurluk the giant polar bear spirit", "Tupilaq, avenger made of bones and sinew", 
+      "Silap Inua, the breath of the world", "Torngarsuk, great sky spirit with shifting forms",
+      "Moon Man descending with bone drum", "Sun Woman fleeing across the sky", 
+      "Amarok the giant lone wolf of the tundra", "Qivittoq, the one who wanders into the mountains",
+      "Aningat, the mooSnlit trickster", "Shaman’s helping spirits in bird and fish forms",
+      "Little People (Ingnersuit) dancing on stones", "Shadow caribou crossing between worlds", 
+      "Aurora as souls playing with skull-ball", "Sky-fox painting trails of northern light",
+      "Ice giants cracking glaciers with laughter", "Whale spirits guiding hunters in dreams", 
+      "Angakkuit’s drum echo summoning ancestors", "Seal-woman slipping out of her skin at night",
 
-    "snowy owl","ptarmigan","raven","crow","bald eagle","golden eagle","falcon","loon","canada goose",
-    "gull","tern",
+      "Clock of ivory tusks melting in snow", "Mirror of black ice with no reflection", 
+      "Labyrinth carved into drifting pack-ice", "Bone masks whispering riddles through cracks",
+      "Frozen sun bleeding pale light into the sea", "Dream-birds carrying amulets of soapstone", 
+      "Skeleton fish weaving constellations under ice", "Moon fractured into silver shards",
+      "Sea flowing uphill in silence", "Stone inukshuk walking with shadow steps",
 
-    "salmon","trout","arctic char","cod","herring","whitefish","smelt","krill","jellyfish",
-    "octopus","squid","clam","mussel","oyster","lobster","crayfish","crab","shrimp","sea urchin",
-    "sea cucumber",
+      "Harpoon sparks falling like snowflakes", "Bridge of smoke crossing a frozen bay", 
+      "Stone giants with glacier hearts", "Shadow wolves devouring the horizon", 
+      "Storm-drums beating inside the aurora", "Hourglass of seal-fat dripping stars",
+      "Antlered spirits wrapped in frost-fire", "Whispering skulls buried in snowbanks",
+      "Ice statues breathing fog into the night",
 
-    "mosquito","blackfly","dragonfly","damselfly","moth","butterfly","beetle","ant","bee","wasp",
-    "spider","tick","mite","mosquito hawk",
-
-    "spruce","pine","fir","larch","birch","aspen","willow","tamarack","cedar","juniper","alder",
-    "hemlock","maple","moss","lichen","reindeer lichen","sphagnum moss","bog rosemary","cranberry",
-    "cloudberry","blueberry","bearberry","wild rose","fireweed","labrador tea","dwarf birch","cotton grass",
-
-    "fungus","mycelium","chanterelle","morel","truffle","puffball",
-
-    "windigo","yeti","forest spirit","lake spirit","thunderbird","shape-shifter","trickster raven",
-    "dreamwalker","ice giant","aurora dancer","mermaid","dragon","unicorn","phoenix","griffin","pegasus"
-],
+      "River of knives beneath the floe", "Veins of glowing blue ice", "Masks of faceless seers carved in driftwood",
+      "Runes etched on caribou bones floating in darkness", "Echoes of forgotten drum songs",
+      "Frost-flowers blooming from bones in the tundra"
+  ],
 
   "CryoHydroStructures": [
     "firn","sastrugi","graupel","rime","soft rime","hard rime","hoarfrost","depth hoar","névé","cornice",
@@ -67,7 +71,7 @@
     "witching hour","predawn",
 
     "full moon","new moon","crescent moon","gibbous moon","lunar eclipse","solar eclipse",
-    "equinox","solstice","season","spring","summer","autumn","winter",
+    "equinox","solstice", "winter",
 
     "harvest time","planting time","tide","high tide","low tide","ebb","flood tide",
     "cycle","phase","period","recurrence","rotation","orbit",
@@ -93,8 +97,7 @@
     "clay","terra-cotta","ceramic","porcelain","stoneware","concrete","cement","asphalt","brick","adobe",
     "plaster","gypsum","drywall","steel","iron","cast iron","wrought iron","stainless steel","carbon steel","aluminum",
     "titanium","copper","bronze","brass","nickel","zinc","tin","lead","magnesium","tungsten",
-    "chromium","silver","gold","platinum","palladium","graphite","graphene","carbon fiber","kevlar","fiberglass"
-    ,"acrylic","polycarbonate","nylon",
+    "chromium","silver","gold","platinum","palladium","graphite","graphene","fiberglass",
     "foam","wax","bitumen","salt","ice",
     "snow","water","oil","grease","soap"
   ]
