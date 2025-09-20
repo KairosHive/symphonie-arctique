@@ -3,8 +3,8 @@
 # Usage:
 #   python Prompt_creation.py --in ../results/<clap_results>.json
 #     [--out <out.json>]
-#     [--model gemma3:4b]                   # Ollama model id (e.g. 'gemma3:4b' or any Ollama model)
-#     [--no-llm]                            # offline template mode
+#     [--model gemma3:4b]                       # Ollama model id (e.g. 'gemma3:4b' or any Ollama model)
+#     [--no-llm]                                # offline template mode
 #     [--max-per-cat 24] [--temperature 0.9] [--top-p 0.95] [--max-new 700]
 #     [--seed 42] [--show-per-cat 8] [--quiet]
 #
@@ -14,40 +14,6 @@
 #   --model gemma3:4b
 #
 # Ollama runs inference and manages device placement (GPU/CPU) itself; no local torch or device configuration is required.
-#
-# Input JSON must be the CLAP matching output from your earlier script:
-# {
-#   "sections": [
-#     {
-#       "name": "...", "start": 0.0, "end": 8.0,
-#       "chunks": [
-#         { "chunk_start": 0.0, "chunk_end": 1.0,
-#           "matches": {
-#             "SoundQualities": [{"descriptor": "breathy", "score": 0.77}, ...],
-#             "Emotions": [...],
-#             ...
-#           }
-#         },
-#         ...
-#       ]
-#     },
-#     ...
-#   ]
-# }
-#
-# Output JSON:
-# {
-#   "source_results": "...",
-#   "model": { "model_id": "...", "temperature": ..., ... } | { "mode": "template" },
-#   "sections": [
-#     {
-#       "name": "...", "start": ..., "end": ...,
-#       "prompts": ["...", "...", ..., "..."],      # 10 prompts
-#       "descriptors_used": { "CategoryA": [...], ... }
-#     },
-#     ...
-#   ]
-# }
 # ---------------------------------------------------------------------------------
 
 from __future__ import annotations
@@ -126,6 +92,30 @@ def summarize_pool(pool: SectionPool, max_per_category: int = 24) -> Dict[str, L
         out[cat] = [d for d, _ in ranked[:max_per_category]]
     return out
 
+# --- NEW ---: This function creates a random subset of descriptors for a single prompt.
+def sample_descriptors(by_category: Dict[str, List[str]], seed: int) -> Dict[str, List[str]]:
+    """From the full pool of descriptors, pick a random subset from each category."""
+    rng = random.Random(seed)
+    sampled_dict: Dict[str, List[str]] = {}
+    
+    categories = list(by_category.keys())
+    rng.shuffle(categories) # Use a random subset of categories too
+
+    # Decide to use between 2 and 5 categories for this prompt
+    num_cats_to_use = rng.randint(2, min(len(categories), 5))
+    
+    for cat in categories[:num_cats_to_use]:
+        descs = by_category[cat]
+        if not descs:
+            continue
+        
+        # For each chosen category, pick 1 to 3 descriptors
+        max_k = min(len(descs), 3)
+        k = rng.randint(1, max_k)
+        sampled_dict[cat] = rng.sample(descs, k)
+        
+    return sampled_dict
+
 # ---------- LLM helpers ----------
 def try_import_ollama() -> bool:
     try:
@@ -139,121 +129,76 @@ class LLMConfig:
     model_id: str
     temperature: float = 0.9
     top_p: float = 0.95
-    num_predict: int = 700
+    num_predict: int = 150
     seed: int = 42
 
 ARCHIVE_STYLE = (
-    "Style: early 20th-century archival documentation; recolorized and reconditioned archival photography; "
-    "typewritten captions; catalog stamps and marginalia; soft film grain; subdued contrast; "
-    "measured, objective phrasing; film grain and paper wear; albumen print texture; ektachrome colorization; wet collodion process"
+    "Style: early 20th-century archival documentation; macrophotography, microscopic textures; "
+    "soft film grain; subdued contrast; "
+    "wet collodion process"
 )
 
-def make_user_prompt_for_section(section_name: str, start: float, end: float, by_category: Dict[str, List[str]]) -> str:
-    # Build category blocks safely (no backslashes inside f-string expressions)
+def make_user_prompt_for_single(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], existing_prompts: List[str]) -> str:
     cat_blocks = []
     for cat, descs in by_category.items():
         if not descs:
             continue
         cat_blocks.append(f"- {cat}: {', '.join(descs)}")
-
     blocks_str = "\n".join(cat_blocks)
     time_s = f"{start:.2f}–{end:.2f}s"
+
     instructions = (
-        "Given the descriptor lists per category, compose TEN diverse image prompts that each feel like a "
-        "single visual narrative scene from an old archive. Combine elements from multiple categories in each prompt. "
-        "Vary location, subject, composition, and time-of-day across the set. Keep each prompt 25–60 words. "
-        "Avoid first-person. If there are no descriptors, still produce ten creative prompts guided by the section name and time window."
-    )
+            "Given the descriptor lists per category, compose TEN diverse image prompts that each feel like a "
+            "abstract textures of the natural world, mixed with symbolic elements. Combine elements from multiple categories in each prompt. "
+            "Every prompt should represent a scene happening inside a bloc of transluscent ice. Keep each prompt 25–60 words. "
+            "Avoid first-person. If there are no descriptors, still produce ten creative prompts guided by the section name and time window."
+        )
+
+    diversity_instruction = ""
+    if existing_prompts:
+        existing_list = "\n".join(f"- {p}" for p in existing_prompts)
+        diversity_instruction = (
+            "\nIMPORTANT: Make this new prompt significantly different in subject, location, or composition from these already created:\n"
+            f"{existing_list}"
+        )
 
     return (
         f"Section: {section_name} ({time_s})\n"
         f"{ARCHIVE_STYLE}\n\n"
-        f"{instructions}\n\n"
-        "Descriptors:\n"
+        f"{instructions}{diversity_instruction}\n\n"
+        "Descriptors for this prompt:\n" # --- CHANGED ---: Clarified that this is a focused list
         f"{blocks_str}\n\n"
         "Output format:\n"
-        "Return a JSON object with a key \"prompts\" whose value is an array of exactly 10 strings.\n"
+        "Return a JSON object with a single key \"prompt\" whose value is the string of the generated prompt.\n"
         "Example:\n"
-        "{ \"prompts\": [\"<prompt one>\", \"<prompt two>\", \"...\", \"<prompt ten>\"] }\n"
+        "{ \"prompt\": \"<the generated prompt text>\" }\n"
         "Do not include any extra text before or after the JSON."
     )
 
-def parse_numbered_list(text: str) -> List[str]:
-    lines = [l.strip() for l in (text or "").splitlines()]
-    items, curr = [], []
-    for ln in lines:
-        # detect "1) ..." or "1. ..." or "1:" or "1 - ..."
-        if any(
-            ln.startswith(f"{i})") or
-            ln.startswith(f"{i}.") or
-            ln.startswith(f"{i}:") or
-            ln.startswith(f"{i} -")
-            for i in range(1, 12)
-        ):
-            if curr:
-                items.append(" ".join(curr).strip())
-                curr = []
-            if ")" in ln:
-                ln2 = ln.split(")", 1)[-1]
-            elif "." in ln:
-                ln2 = ln.split(".", 1)[-1]
-            elif ":" in ln:
-                ln2 = ln.split(":", 1)[-1]
-            elif " - " in ln:
-                ln2 = ln.split(" - ", 1)[-1]
-            else:
-                ln2 = ln
-            curr.append(ln2.strip())
-        else:
-            if ln:
-                curr.append(ln)
-    if curr:
-        items.append(" ".join(curr).strip())
-    items = [x for x in items if x]
-    if not items:
-        # Try bullet list style
-        bullets = [ln[1:].strip() for ln in lines if ln.startswith("-") or ln.startswith("*")]
-        if bullets:
-            items = bullets
-        else:
-            # Split by blank lines as paragraphs
-            paras, para = [], []
-            for ln in lines:
-                if ln == "":
-                    if para:
-                        paras.append(" ".join(para).strip()); para = []
-                else:
-                    para.append(ln)
-            if para:
-                paras.append(" ".join(para).strip())
-            items = paras if paras else ([text.strip()] if (text or "").strip() else [])
-    return items[:10]
-
-def synth_fallback_prompts(context_hint: str, need: int) -> List[str]:
-    base = "sepia, archival record, catalog stamp, paper wear, subdued contrast, typewritten caption"
-    return [f"A preserved archival scene: {base}. Visual synthesis guided by: {context_hint[:220]}." for _ in range(need)]
-
-def template_10_prompts(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], seed: int = 42) -> List[str]:
-    rng = random.Random(seed)
-    cats = list(by_category.keys())
-    prompts, time_s = [], f"{start:.0f}–{end:.0f}s"
-    for _ in range(10):
-        picks = []
-        rng.shuffle(cats)
-        for cat in cats:
-            if not by_category[cat]:
-                continue
-            k = 2 if len(by_category[cat]) >= 2 else 1
-            picks.extend(rng.sample(by_category[cat], k=k))
+# --- CHANGED ---: Template function now returns the same structure as the LLM path.
+def template_10_prompts(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], seed: int = 42) -> List[Dict]:
+    """Generates 10 prompts using a template, each with a unique descriptor sample."""
+    generated_prompts = []
+    time_s = f"{start:.0f}–{end:.0f}s"
+    
+    for i in range(10):
+        current_seed = seed + i
+        # Use the same sampling logic as the LLM path
+        sampled_descriptors = sample_descriptors(by_category, seed=current_seed)
+        
+        # Flatten the sampled descriptors into a single string for the template
+        picks = [desc for descs in sampled_descriptors.values() for desc in descs]
         picks_str = ", ".join(dict.fromkeys(picks))
-        prompts.append(f"{section_name} ({time_s}) — Old archive photograph; {ARCHIVE_STYLE.lower()} Motifs: {picks_str}.")
-    return prompts
+        
+        prompt_text = f"{section_name} ({time_s}) — Old archive photograph; {ARCHIVE_STYLE.lower()} Motifs: {picks_str}."
+        
+        generated_prompts.append({
+            "prompt": prompt_text,
+            "descriptors_used": sampled_descriptors
+        })
+    return generated_prompts
 
 class OllamaWrapper:
-    """
-    Ollama chat wrapper. Uses cfg.model_id directly (for example: 'gemma3:4b' or any Ollama model).
-    Keeps the same public interface (generate_10_prompts) so the rest of the script remains unchanged.
-    """
     def __init__(self, cfg: LLMConfig, verbose: bool = True):
         if not try_import_ollama():
             raise RuntimeError("ollama not installed. pip install ollama")
@@ -264,95 +209,56 @@ class OllamaWrapper:
         self.verbose = verbose
         self.model_id = cfg.model_id
 
-    def _approx_tokens(self, text: str) -> int:
-        return max(1, len(text) // 4)
-
     def _extract_text_from_resp(self, resp) -> str:
-        """
-        Robustly extract text content from various Ollama response shapes:
-        - {'message': {'content': "<text>"}}
-        - {'choices': [{'message': {'content': "<text>"}} , ...]}
-        - {'choices': [{'text': "<text>"}, ...]}
-        - ChatResponse objects with .message.content (from ollama python client)
-        - a plain string
-        Fallback to empty string when nothing found.
-        """
+        """Robustly extract text content from various Ollama response shapes."""
         try:
-            # plain string
-            if isinstance(resp, str):
-                return resp or ""
-            # objects from the ollama python client
+            if isinstance(resp, str): return resp or ""
             if hasattr(resp, "message"):
                 msg = getattr(resp, "message")
-                if isinstance(msg, dict):
-                    return msg.get("content", "") or ""
-                if hasattr(msg, "content"):
-                    return getattr(msg, "content") or ""
-            if hasattr(resp, "response"):
-                # for generate endpoint compatibility
-                return getattr(resp, "response") or ""
-            # dict-based responses
+                if isinstance(msg, dict): return msg.get("content", "") or ""
+                if hasattr(msg, "content"): return getattr(msg, "content") or ""
             if isinstance(resp, dict):
                 if "message" in resp and isinstance(resp["message"], dict):
                     return resp["message"].get("content", "") or ""
-                if "choices" in resp and isinstance(resp["choices"], list) and resp["choices"]:
-                    first = resp["choices"][0]
-                    if isinstance(first, dict):
-                        if "message" in first and isinstance(first["message"], dict):
-                            return first["message"].get("content", "") or ""
-                        if "text" in first:
-                            return first.get("text", "") or ""
-                if "content" in resp:
-                    return resp.get("content", "") or ""
-            # last resort
-            if hasattr(resp, "content"):
-                return getattr(resp, "content") or ""
-            return str(resp)
+            return ""
         except Exception:
             return ""
-
-    def _extract_prompts(self, resp) -> List[str]:
-        """
-        Try to parse a JSON object with {'prompts': [...]} first (Ollama JSON/structured outputs),
-        then fall back to free-text parsing.
-        """
-        text = self._extract_text_from_resp(resp)
+            
+    def _extract_single_prompt(self, resp) -> str:
+        text = self._extract_text_from_resp(resp).strip()
         try:
             data = json.loads(text)
-            if isinstance(data, dict) and isinstance(data.get("prompts"), list):
-                return [str(x).strip() for x in data["prompts"] if str(x).strip()][:10]
-        except Exception:
-            pass
-        return parse_numbered_list(text)
+            if isinstance(data, dict) and isinstance(data.get("prompt"), str):
+                return data["prompt"].strip()
+        except json.JSONDecodeError:
+            try:
+                start = text.find('{')
+                end = text.rfind('}') + 1
+                if start != -1 and end != 0:
+                    json_str = text[start:end]
+                    data = json.loads(json_str)
+                    if isinstance(data, dict) and isinstance(data.get("prompt"), str):
+                        return data["prompt"].strip()
+            except Exception:
+                pass
+        return text.strip('" ')
 
-    def generate_10_prompts(self, system_prompt: str, user_prompt: str) -> List[str]:
-        vprint(self.verbose, f"Sampling params: temp={self.cfg.temperature} top_p={self.cfg.top_p} num_predict={self.cfg.num_predict}")
-        vprint(self.verbose, f"Prompt approx tokens: ~{self._approx_tokens(user_prompt)}")
-
+    def generate_single_prompt(self, system_prompt: str, user_prompt: str, current_seed: int) -> str:
         messages = [
             {"role": "system", "content": system_prompt.strip()},
             {"role": "user", "content": user_prompt.strip()},
         ]
-
         try:
-            # Use Ollama chat API with structured output (JSON schema) and no streaming.
             options = {
                 "temperature": float(self.cfg.temperature),
                 "top_p": float(self.cfg.top_p),
                 "num_predict": int(self.cfg.num_predict),
-                "seed": int(self.cfg.seed),
+                "seed": int(current_seed),
             }
             schema = {
                 "type": "object",
-                "properties": {
-                    "prompts": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "minItems": 10,
-                        "maxItems": 10
-                    }
-                },
-                "required": ["prompts"]
+                "properties": {"prompt": {"type": "string"}},
+                "required": ["prompt"]
             }
             resp = self.client.chat(
                 model=self.model_id,
@@ -362,19 +268,14 @@ class OllamaWrapper:
                 stream=False,
                 keep_alive="20m",
             )
-            prompts = self._extract_prompts(resp)
-            if len(prompts) == 0:
+            prompt = self._extract_single_prompt(resp)
+            if not prompt:
                 raw = self._extract_text_from_resp(resp)
-                vprint(self.verbose, f"[LLM DEBUG] Empty parse. Raw content (first 200): {raw[:200]!r}")
-
-            vprint(self.verbose, f"LLM returned {len(prompts)} parsed prompts.")
-            return prompts
-
+                vprint(self.verbose, f"[LLM DEBUG] Empty parse. Raw content: {raw!r}")
+            return prompt
         except Exception as e:
             vprint(self.verbose, f"[OLLAMA-ERR] {e}")
-            # Let the caller handle fallback to template mode by raising
             raise
-
 
 # ---------- main ----------
 def main():
@@ -387,7 +288,7 @@ def main():
     ap.add_argument("--seed", type=int, default=52)
     ap.add_argument("--temperature", type=float, default=1.2)
     ap.add_argument("--top-p", type=float, default=0.95)
-    ap.add_argument("--max-new", type=int, default=700)
+    ap.add_argument("--max-new", type=int, default=150, help="Max new tokens PER prompt")
     ap.add_argument("--show-per-cat", type=int, default=8)
     ap.add_argument("--quiet", action="store_true")
 
@@ -414,23 +315,8 @@ def main():
     llm_meta = None
     if not args.no_llm:
         try:
-            llm = OllamaWrapper(
-                LLMConfig(
-                    model_id=args.model,
-                    temperature=args.temperature,
-                    top_p=args.top_p,
-                    num_predict=args.max_new,
-                    seed=args.seed,
-                ),
-                verbose=verbose,
-            )
-
-            llm_meta = {
-                "model_id": llm.model_id,
-                "temperature": args.temperature,
-                "top_p": args.top_p,
-                "num_predict": args.max_new,
-            }
+            llm = OllamaWrapper(LLMConfig(model_id=args.model, temperature=args.temperature, top_p=args.top_p, num_predict=args.max_new, seed=args.seed), verbose=verbose)
+            llm_meta = {"model_id": llm.model_id, "temperature": args.temperature, "top_p": args.top_p, "num_predict": args.max_new}
         except Exception as e:
             vprint(verbose, f"[WARN] Could not initialize model ({e}). Falling back to --no-llm mode.")
             args.no_llm = True
@@ -446,57 +332,83 @@ def main():
         vprint(verbose, f"  chunks       : {pool.n_chunks}")
         cats_sorted = sorted(pool.by_category.keys(), key=str.lower)
         vprint(verbose, f"  categories   : {len(pool.by_category)} -> {', '.join(cats_sorted) if cats_sorted else '—'}")
+        
+        # This is the full pool of available descriptors for the section
+        full_descriptor_pool = summarize_pool(pool, max_per_category=args.max_per_cat)
+        system_prompt = "You are a meticulous archivist-poet of the invisible. Turn descriptor lists into concise, evocative prompts that focus on textures, symbols, and abstract forms rather than scenes. Write as if cataloguing artifacts of a world infused with cosmogony and animate forces of nature. Favor tactile surfaces, patterns, elemental traces, and ice etchings, and dreamlike geometries. The results should feel like fragments of symbolic archives, diagrams of spirits, or ritual patterns carved into snow, stone, or skin."
 
-        for cat in cats_sorted:
-            counter = pool.by_category[cat]
-            ranked = sorted(counter.items(), key=lambda kv: (-kv[1], kv[0].lower()))
-            shown, more = ranked[:args.show_per_cat], max(0, len(ranked) - args.show_per_cat)
-            top_str = "; ".join([f"{d}×{c}" for d, c in shown])
-            vprint(verbose, f"    - {cat:<22} | unique={len(ranked):<3} | total hits={sum(counter.values()):<3} | top: {top_str}{' ...' if more>0 else ''}")
-
-        per_cat = summarize_pool(pool, max_per_category=args.max_per_cat)
-        user_prompt = make_user_prompt_for_section(pool.name, pool.start, pool.end, per_cat)
-        system_prompt = "You are a meticulous archivist-poet. Turn descriptor lists into concise, evocative scene prompts that feel like historical records in a canadian/inuit nordic world full of native cosmogony and animate forces of nature."
-
+        # --- CHANGED ---: This list now stores dicts: {"prompt": str, "descriptors_used": dict}
+        generated_prompts: List[Dict] = []
+        
         if args.no_llm:
             mode_note = "offline template mode"
             vprint(verbose, f"  generating ({mode_note})")
-            prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
+            generated_prompts = template_10_prompts(pool.name, pool.start, pool.end, full_descriptor_pool, seed=args.seed)
         else:
-            vprint(verbose, f"  generating with LLM [{llm.model_id}] …")
-            try:
-                prompts = llm.generate_10_prompts(system_prompt, user_prompt)
-            except KeyboardInterrupt:
-                vprint(verbose, "  [INTERRUPT] Saving partial progress and exiting…")
-                write_out_json(out_path, out)
-                raise
-            except Exception as e:
-                vprint(verbose, f"  [LLM ERROR] {e}; falling back to template.")
-                prompts = template_10_prompts(pool.name, pool.start, pool.end, per_cat, seed=args.seed)
-            if len(prompts) < 10:
-                vprint(verbose, f"  [LLM] parsed only {len(prompts)} prompts; padding with template fallbacks.")
-                prompts.extend(synth_fallback_prompts(user_prompt, need=10 - len(prompts)))
-                prompts = prompts[:10]
+            vprint(verbose, f"  generating 10 prompts with LLM [{llm.model_id}]…")
+            
+            # --- CHANGED ---: Main generation logic now samples descriptors in each iteration.
+            for i in range(10):
+                try:
+                    vprint(verbose, f"    > prompt {i+1}/10...")
+                    current_seed = args.seed + idx * 10 + i
+                    
+                    # 1. Get a new random sample of descriptors for this specific prompt
+                    sampled_descriptors = sample_descriptors(full_descriptor_pool, seed=current_seed)
+                    
+                    # 2. Create the user prompt with this sample
+                    prompt_texts_only = [p["prompt"] for p in generated_prompts]
+                    user_prompt = make_user_prompt_for_single(pool.name, pool.start, pool.end, sampled_descriptors, existing_prompts=prompt_texts_only)
+                    
+                    # 3. Generate the prompt
+                    new_prompt_text = llm.generate_single_prompt(system_prompt, user_prompt, current_seed)
+                    
+                    if new_prompt_text:
+                        # 4. Store the prompt along with the descriptors used to create it
+                        generated_prompts.append({
+                            "prompt": new_prompt_text,
+                            "descriptors_used": sampled_descriptors
+                        })
+                    else:
+                        vprint(verbose, "    [WARN] LLM returned empty prompt, stopping section.")
+                        break
+                except KeyboardInterrupt:
+                    vprint(verbose, "  [INTERRUPT] Saving partial progress and exiting…")
+                    write_out_json(out_path, out)
+                    raise
+                except Exception as e:
+                    vprint(verbose, f"  [LLM ERROR] on prompt {i+1}: {e}; stopping section.")
+                    break
+
+            if len(generated_prompts) < 10:
+                vprint(verbose, f"  [LLM] generated only {len(generated_prompts)} prompts; padding with template fallbacks.")
+                template_prompts = template_10_prompts(pool.name, pool.start, pool.end, full_descriptor_pool, seed=args.seed + idx)
+                needed = 10 - len(generated_prompts)
+                generated_prompts.extend(template_prompts[:needed])
 
         vprint(verbose, "  preview:")
-        for i, p in enumerate(prompts[:3], start=1):
+        # --- CHANGED ---: Access the prompt text from the dictionary
+        for i, p_data in enumerate(generated_prompts[:3], start=1):
+            p = p_data["prompt"]
             vprint(verbose, f"    {i}. {p[:140]}{'…' if len(p) > 140 else ''}")
-        if len(prompts) > 3:
-            vprint(verbose, f"    … and {len(prompts) - 3} more")
+        if len(generated_prompts) > 3:
+            vprint(verbose, f"    … and {len(generated_prompts) - 3} more")
 
+        # --- CHANGED ---: The output structure for the section is updated
         out["sections"].append({
             "name": pool.name,
             "start": pool.start,
             "end": pool.end,
-            "prompts": prompts,
-            "descriptors_used": per_cat,
+            "generated_prompts": generated_prompts, # Key name changed for clarity
+            "full_descriptor_pool": full_descriptor_pool, # The original full set is also saved
         })
         write_out_json(out_path, out)
         vprint(verbose, f"  [OK] Progress saved to: {out_path}")
 
-    hprint(verbose, "Writing output")
+    hprint(verbose, "Writing final output")
     write_out_json(out_path, out)
-    vprint(verbose, f"[OK] Wrote prompts: {out_path}")
+    vprint(verbose, f"[OK] Wrote all prompts: {out_path}")
+
 
 if __name__ == "__main__":
     main()
