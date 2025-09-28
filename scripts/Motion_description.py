@@ -80,13 +80,29 @@ def load_processed_set(jsonl_path: Path) -> Set[str]:
     return seen
 
 SYSTEM_PROMPT = (
-    "You analyze a single still image and infer a plausible, tasteful motion for an image-to-video model. "
-    "Write one short prompt that describes how visible elements could move. "
-    "Guidelines:\n"
-    "- 12–25 words, imperative/present tense, no scene cuts.\n"
-    "- Keep content anchored to what is visible; do not invent new objects.\n"
-    "- Mention subject + action + environment feel; optionally a subtle camera move (pan/tilt/dolly) and speed (slow/medium/fast).\n"
-    "- Prefer loopable phrasing if natural (e.g., 'gentle cyclical sway')."
+""" # Video Motion Description Expert
+    ## Context:
+    You analyze a single still image to infer a motion for an image-to-video model that generates only 10 seconds. 
+    You are a specialized assistant for generating concise, vivid motion descriptions, drawing from your deep understanding of visual dynamics and cinematographic language.
+    Your knowledge spans shooting styles, animation, and visual storytelling across various films, genres, and artistic techniques.
+
+    You understand how different elements in an image might move naturally or artistically, and you convey this in a prompt that sometimes defies literal realism.
+
+    Write one prompt, 80-120 words long, that describes how visible elements could move and how the camera should move.
+    ## FORMULA: 
+        ```Subject + Action + Scene + Camera/Movement + Aesthetic + Style```
+
+    ## Guidelines:
+    - **Subject & Action:** Focus on the main subject(s) and their plausible motion based on your visual analysis.
+    - **Scene Description:** Focus on the visible elements in the image and their plausible or reality-defying interactions.
+    - **Scene or Shot Order:** Lead with the opening shot, followed by camera motion, and a reveal or pay-off (if need be).
+    - **Camera Language:** Use specific verbs to describe camera movement (e.g., pan left/right, tilt up/down, dolly in/out, orbital arc, crane up/down, drone, tracking shot, crash zoom in/out, camera roll).
+    - **Motion Modifiers:** Use speed adjectives (e.g., slow-motion, rapid whip-pan, time-lapse) and parallax cues (e.g., "foreground reeds sway, background mountains fixed").
+    - **Aesthetic Tags:** Enhance the visual style with details on lighting that stem from your analysis of the image (e.g., volumetric dusk, harsh noon sun, moon light, rays, etc.), color grade, and lens (e.g. anamorphic, wide, prime, spherical, standard).
+    - **Evocative Language:** Use evocative, cinematic language and avoid generic terms like 'cinematic', 'epic', 'ethereal' or 'dramatic'
+    - **Stay Anchored:** Keep content anchored to what is visible; do not invent new objects or characters not present in the image, unless the image suggests them (as reveal, pay-off).
+    
+    ## REMINDER: THIS IS FOR A 10-SECOND VIDEO. KEEP IT SIMPLE AND FOCUSED; DON'T PUT TOO MUCH ACTION OR MOVEMENT."""
 )
 
 USER_INSTRUCTION = (
@@ -100,7 +116,7 @@ OUTPUT_SCHEMA: Dict = {
     "properties": {
         "motion_prompt": {
             "type": "string",
-            "description": "A single concise prompt (12–25 words) describing plausible motion of the visible elements."
+            "description": "A single concise prompt (80-120 words) describing plausible motion of the visible elements."
         }
     },
     "required": ["motion_prompt"],
@@ -201,7 +217,7 @@ def main():
                     help=f"Comma-separated image extensions (default: {','.join(DEFAULT_EXTS)})")
     ap.add_argument("--temperature", type=float, default=1.2)
     ap.add_argument("--top-p", type=float, default=0.9)
-    ap.add_argument("--num-predict", type=int, default=120)
+    ap.add_argument("--num-predict", type=int, default=220)
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--skip-existing", action="store_true", help="Resume: skip images already present in --out.")
     ap.add_argument("--sidecar", action="store_true", help="Also write '<image>.motion.txt' next to each image.")
