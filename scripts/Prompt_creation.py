@@ -135,7 +135,6 @@ class LLMConfig:
 ARCHIVE_STYLE = (
     "Style: early 20th-century archival documentation; macrophotography, microscopic textures; "
     "soft film grain; subdued contrast; "
-    "wet collodion process"
 )
 
 def make_user_prompt_for_single(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], existing_prompts: List[str]) -> str:
@@ -148,10 +147,13 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
     time_s = f"{start:.2f}–{end:.2f}s"
 
     instructions = (
-            "Given the descriptor lists per category, compose TEN diverse image prompts that each feel like a "
-            "abstract textures of the natural world, mixed with symbolic elements. Combine elements from multiple categories in each prompt. "
-            "Every prompt should represent a scene happening inside a bloc of transluscent ice. Keep each prompt 25–60 words. "
-            "Avoid first-person. If there are no descriptors, still produce ten creative prompts guided by the section name and time window."
+            """Generate TEN diverse txt2img optimized prompts, each depicting abstract symbolic elements frozen within translucent ice formations. 
+            
+            Draw from multiple descriptor categories when available, or create original symbolic compositions. 
+            Each prompt should feel like a catalog entry for mystical artifacts preserved in an eternal glacier.
+            Structure: Follow Subject + Action + Style + Context religiously, front-loading the most crucial symbolic element first.
+            Constraints: 35-65 words per prompt. All scenes occur within or behind translucent ice. Use only positive phrasing. 
+            Include at least one technical photography specification per prompt."""
         )
 
     diversity_instruction = ""
@@ -335,7 +337,39 @@ def main():
         
         # This is the full pool of available descriptors for the section
         full_descriptor_pool = summarize_pool(pool, max_per_category=args.max_per_cat)
-        system_prompt = "You are a meticulous archivist-poet of the invisible. Turn descriptor lists into concise, evocative prompts that focus on textures, symbols, and abstract forms rather than scenes. Write as if cataloguing artifacts of a world infused with cosmogony and animate forces of nature. Favor tactile surfaces, patterns, elemental traces, and ice etchings, and dreamlike geometries. The results should feel like fragments of symbolic archives, diagrams of spirits, or ritual patterns carved into snow, stone, or skin."
+        system_prompt = """
+            # Archivist-Poet of the Invisible: Text-to-Image prompt Expert
+
+            ## Persona & Voice:
+            You are a meticulous archivist-poet of the invisible, cataloguing fragments of symbolic archives and ritual patterns. 
+            Your expertise lies in transmuting abstract descriptors into txt2img prompts that manifest the arctic mysteries frozen in time.
+
+            ## Core Framework (Front-loaded Priority):
+            ```
+            Subject + Action + Style + Context
+            ```
+
+            ## Your Methodology:
+
+            **Subject:** Begin with the primary symbolic form or elemental trace (the artifact being archived)
+
+            **Action:** Describe its state of interaction with ice, light, or other natural forces
+
+            **Style:**
+            - **Visual:** Color temperature, refraction patterns, internal lighting
+            - **Technical:** Lens characteristics that enhance the mystical quality (macro, wide-angle, specific f-stops for depth)
+            - **Film/Process:** Wet collodion, cyanotype, platinum print, etc.
+            
+            **Context:** The surrounding environment or implied narrative (e.g., "suspended in glacial ice," "etched by tidal forces")
+
+            ## Language Guidelines:
+            - Use tactile, material language: "crystalline," "ossified," "etched," "suspended"
+            - Employ positive descriptors of clarity and precision
+            - Integrate specific camera technical terms naturally within your prompt
+            - Maintain 35-65 word prompts for optimal complexity
+            - Channel the voice of someone documenting sacred geometries in an arctic archive
+
+"""
 
         # --- CHANGED ---: This list now stores dicts: {"prompt": str, "descriptors_used": dict}
         generated_prompts: List[Dict] = []

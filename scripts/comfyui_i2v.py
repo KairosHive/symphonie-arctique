@@ -104,9 +104,8 @@ def clean_motion_prompt(text: str) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Queue ComfyUI image-to-video generation prompts.")
     parser.add_argument("--server", type=str, default="127.0.0.1:8188", help="Address of the ComfyUI server.")
-    parser.add_argument("--prompts", type=str, default="assets/motion_prompts.jsonl", help="Path to the motion prompts JSONL file.")
+    parser.add_argument("--prompts", type=str, default="assets/fine-tuned_prompts-06.jsonl", help="Path to the motion prompts JSONL file.")
     parser.add_argument("--workflow", type=str, default="assets/video_wan2_2_14B_i2v.json", help="Path to the ComfyUI I2V API workflow.")
-    # --- FIX: Added argument for the server-side footage directory ---
     parser.add_argument("--footage_dir", type=str, required=True, help="Absolute path to the 'footage' directory on the ComfyUI server's filesystem.")
     parser.add_argument("--metadata", type=str, default="./output/i2v_metadata.json", help="Path for the output metadata file.")
     parser.add_argument("--frames", type=int, default=25, help="Number of frames to generate for each video.")
@@ -136,7 +135,12 @@ def main():
 
     # 2. Iterate through each prompt in the JSONL file
     total_prompts = len(prompts_data)
-    for i, prompt_data in enumerate(prompts_data):
+    # randomize order of (index of) prompts to get a better variety if interrupted
+    prompt_indices = list(range(total_prompts))
+    random.shuffle(prompt_indices)
+
+    for i in prompt_indices:
+        prompt_data = prompts_data[i]
         motion_prompt = prompt_data.get('motion_prompt')
         relative_image_path = prompt_data.get('image_rel')
         image_name = prompt_data.get('image_name', f'unknown_image_{i}')
@@ -150,8 +154,6 @@ def main():
 
         print(f"\n({i+1}/{total_prompts}) Processing Image: {image_name}")
         print(f"  > Motion Prompt: {motion_prompt[:100]}...")
-
-        # --- FIX: Construct the full server path using the new argument ---
         # This replaces backslashes with forward slashes for cross-platform compatibility. "/")
         # The path must be understandable by the server, not the client running this script.
         server_image_path = os.path.join(args.footage_dir, relative_image_path)
