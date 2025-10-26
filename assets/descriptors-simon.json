@@ -1,0 +1,101 @@
+{
+  "SoundQualities": [
+    "airy","articulate","attenuated","brassy","brittle",
+    "dark","decayed","deep","dense","distant","echoic","ethereal","glassy","grainy",
+    "gritty","hollow","icy","intimate","metallic","muffled","noisy",
+    "open","resonant","reverberant","ringing","rough",
+    "saturated","screeching","shimmering",
+    "sparse","strident","subtle","swelling","swishy","thin",
+    "transparent","velvety","warm","wet","whispery","woody","woolly",
+    "wide","percussive","sustained","rumbling"
+  ],
+  "Emotions": [
+    "awe","serenity","melancholy","nostalgia","longing","yearning","compassion","empathy",
+    "love","gratitude","hope","wonder","anticipation","apprehension","anger","shame","guilt","regret","remorse",
+    "loneliness","isolation","sadness","sorrow","grief","mourning","resignation","acceptance",
+    "calm","resolve","reverence","humility","trust","stupefaction","bewilderment","confusion","disorientation",
+	"unease","tension","suspense","urgency","impatience","restlessness",
+    "frenzy","agitation","shock","reluctance","hesitation"
+  ],
+
+  "CryoHydroStructures": [
+    "firn","sastrugi","graupel","rime","soft rime","hard rime","hoarfrost","depth hoar","névé","cornice",
+    "avalanche debris","snow drift","wind slab","storm slab","ice crust","sun crust","melt-freeze crust","glaze ice","black ice","verglas",
+    "nilas","pancake ice","frazil ice","grease ice","shuga","brash ice","pack ice","fast ice","ice floe","lead",
+    "polynya","pressure ridge","ice keel","bergy bit","growler","iceberg","tabular iceberg","serac","crevasse","moulin",
+    "ogive","icefall","blue ice","snow pillow","snowpack","firnspiegel","snow bridge","penitentes","suncups","cryoconite",
+    "cryoconite hole","supraglacial stream","englacial channel","subglacial tunnel","esker","kettle lake","terminal moraine","lateral moraine","medial moraine","drumlin",
+    "kame","outwash plain","braided stream","oxbow lake","meander","riffle","pool","eddy","whirlpool","whitecap",
+    "breaker","spindrift","spray","mist","sea smoke","seiche","swell","wave train","rip current","undertow",
+    "storm surge","tidal bore","estuary","delta","alluvial fan","waterfall","cascade","cataract","plunge pool","tarn",
+    "cirque lake","proglacial lake","supraglacial lake","ice shelf","ice tongue","ice dam","snow dune","snow cushion","icicle","runnel"
+  ],
+  "TemporalElements": [
+    "dawn","daybreak","sunrise","morning","forenoon","noon","afternoon","golden hour",
+    "evening","sunset","dusk","twilight","blue hour","nightfall","midnight","small hours",
+    "witching hour","predawn",
+
+    "full moon","new moon","crescent moon","gibbous moon","lunar eclipse","solar eclipse",
+    "equinox","solstice", "winter",
+
+    "harvest time","planting time","tide","high tide","low tide","ebb","flood tide",
+    "cycle","phase","period","recurrence","rotation","orbit",
+
+    "moment","instant","heartbeat","blink","breath","interval","second","minute","hour",
+    "day","week","month","year","decade","century","millennium","age","epoch","era",
+
+    "Precambrian","Paleozoic","Mesozoic","Cenozoic",
+    "Cambrian","Ordovician","Silurian","Devonian","Carboniferous","Permian",
+    "Triassic","Jurassic","Cretaceous",
+    "Paleogene","Neogene","Quaternary","Holocene","Anthropocene",
+
+    "deadline","milestone","duration","timespan","lifetime","eternity","infinity",
+    "flux","transition","lull","pause","silence","linger","drift","surge","flow",
+    "flashback","foreshadow","memory","anticipation","afterglow"
+],
+
+  "Materials": [
+    "wood","oak","pine","birch","maple","cork","paper","cardboard","leather",
+    "cotton","wool","silk","linen","hemp","jute","canvas","felt","rubber","latex",
+    "silicone","epoxy","resin","amber","bone","ivory","shell","mother-of-pearl","pearl","glass",
+    "quartz","crystal","obsidian","granite","basalt","marble","limestone","sandstone","slate","chalk",
+    "clay","terra-cotta","ceramic","porcelain","stoneware","concrete","cement","asphalt","brick","adobe",
+    "plaster","gypsum","drywall","steel","iron","cast iron","wrought iron","stainless steel","carbon steel","aluminum",
+    "titanium","copper","bronze","brass","nickel","zinc","tin","lead","magnesium","tungsten",
+    "chromium","silver","gold","platinum","palladium","graphite","graphene","fiberglass",
+    "foam","wax","bitumen","salt","ice",
+    "snow","water","oil","grease","soap"
+  ],
+
+  "DistanceDepthMemory": [
+	"distance","interval","detachment","reach","horizon","past","trace","depth","layer","drift","remnant","extension",
+	"expanse","horizon","span","gap","stretch","remoteness","separation","elsewhere","faraway","periphery",
+	"border","frontier","terrain","landscape","vastness","displacement","detour","passage","route",
+	"stillness","vastness","glimmer","shimmer","tundra","wind","frost","beyond",
+	
+	"echo","reverberation","resonance","fade","whisper","murmur","hum","drift","attenuation",
+	"vibration","wave","propagation","reflection","transmission","threshold","veil","blur","trace","aftersound",
+	"hush","delay","decay","memory","trace","drift","persistence","interval","duration","lag","recurrence","erosion","remanence","silence",
+	
+	"strata","sediment","layer","core","crust","mantle","bedrock","abyss","cavern","fissure","trench","chasm","deposit","erosion",
+	"compression","pressure","depth","fold","subduction",
+	
+	"memory","imprint","recollection","afterimage","nostalgia","ghost","residue","vestige","blur","haze","return","reverie","haunting","lapse"
+],
+
+  "ClimateChange": [
+	"heat","melt","drift","thaw","collapse","ignition","blaze","drought","surge","tipping","seep","linger","ripple","unravel",
+	"acceleration","extraction","depletion","growth","consumption","excess","overflow","combustion","industry",
+	"speed","expansion","accelerationism","exploitation",
+	"erosion","degradation","desertification","acidification","pollution","sediment","smoke","carbon","fossil","resource",
+	"transition","rupture","flux","unraveling","instability","displacement","migration","upheaval","adaptation","transformation",
+	"burn","fever","haze","horizon","aftermath","ember","dusk","season","cycle","slowness",
+	"horizon","tide","tundra","moss","meltwater","permafrost","mist","silt","shore","flow",
+	"hush","breath","tremor","shiver","stillness","ache","veil"
+],
+
+  "Empathy": [
+	"trust","care","support","presence","understanding","dialogue","attention","openness","sharing","compassion","patience",
+	"connection","listening","warmth","response","reflection","encouragement","closeness","respect","attunement","dialogue"
+]
+}
