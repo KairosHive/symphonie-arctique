@@ -1,0 +1,2402 @@
+{
+  "source_results": "results\\song_simon_cut__timeline_simon__chunk1p0s__top5.json",
+  "model": {
+    "model_id": "hermes3:8b",
+    "temperature": 1.2,
+    "top_p": 0.95,
+    "num_predict": 150
+  },
+  "sections": [
+    {
+      "name": "part_01",
+      "start": 0.0,
+      "end": 36.0,
+      "generated_prompts": [
+        {
+          "prompt": "A leaden cryohydroskeletal fragment, its icy sheen glimmering with ghostly era imprints, rests suspended in a subdued contrast macrophotographic study. Delicate microscopic textures emanate an aura of surreal hush, captured on soft film grain platinum print. The subject: a cryptid arboreal chimeric being, tendriled branches melding into translucent wing membranes, silent sentinel amidst temporal archives.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "hush"
+            ],
+            "CryoHydroStructures": [
+              "lead"
+            ],
+            "TemporalElements": [
+              "era"
+            ],
+            "DistanceDepthMemory": [
+              "memory",
+              "glimmer",
+              "ghost"
+            ]
+          }
+        },
+        {
+          "prompt": "A shimmering auroral sylph, its ethereal body sculpted from dancing plasma, interweaves spectral dendrites with prismatic ice shards. This ephemeral fusion captures celestial whispers on vintage cyanotype, its soft aquatint revealing microscopic cosmic motes in subdued illumination. Encased in a weathered brass casing filled with polynya-flecked memories of arctic silence, this crystalline sentinel stands guard over the temporal archives of hope.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "glimmer",
+              "remnant",
+              "detour"
+            ],
+            "SoundQualities": [
+              "ringing",
+              "brassy"
+            ],
+            "Emotions": [
+              "empathy",
+              "hope",
+              "melancholy"
+            ],
+            "Materials": [
+              "cement",
+              "tin",
+              "plaster"
+            ],
+            "CryoHydroStructures": [
+              "nilas",
+              "polynya"
+            ]
+          }
+        },
+        {
+          "prompt": "A quivering miredophinx, its spectral body etched in resurfaced tarn facets, weaves lamenting tendrils with refracted remorse. Soft film grain captures this mournful dance on antique photograms, revealing microscopic filigree of inner grief. Housed within an obsidian coffer imbued with echoes of drowned whispers, this sorrowful guardian watches over the secret archives of buried regret.",
+          "descriptors_used": {
+            "Emotions": [
+              "shame",
+              "remorse"
+            ],
+            "DistanceDepthMemory": [
+              "memory"
+            ],
+            "CryoHydroStructures": [
+              "tarn"
+            ]
+          }
+        },
+        {
+          "prompt": "A murmuration of spectral swans, their bodies composed from shimmering iridium, weave a tapestry of interlaced sorrow through verdant ruins. Their strident cries etch lamentations into weathered linen shreds, capturing this emotional mosaic on soft platinum prints with subdued contrast. Beneath an ancient olive tree shedding autumn leaves, they take flight in the aftermath, wings reflecting the lingering hope of hidden glimmers in their microscopic plumes. This aerial chorus forms a temporal archive of empathetic resonance among scattered moss fragments, preserved in myopic minds by f/22 depth and eternal memory.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "rough",
+              "sustained",
+              "strident"
+            ],
+            "Materials": [
+              "linen"
+            ],
+            "ClimateChange": [
+              "aftermath",
+              "moss"
+            ],
+            "Emotions": [
+              "suspense",
+              "empathy",
+              "hope"
+            ],
+            "DistanceDepthMemory": [
+              "glimmer",
+              "memory"
+            ]
+          }
+        },
+        {
+          "prompt": "A luminous bioluminescent seirene, its iridescent body composed of shimmering nickel scales, sails serene through the smoke and ash, tendrils trailing whispers of calm compassion in the combustion cycle's aftermath. Soft film grain captures this spectral passage on antique photograms, revealing microscopic details etched into weathered cork fragments suspended in sepia tones. The subject: a cryptid tidal guardian, its body forged from recrystallized volcanic glass, stands sentinel amidst scattered memories along the shore, lensing depth and interval through f/5.6 mastery in the hushed archive of suspended hope.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "cycle",
+              "combustion",
+              "tide"
+            ],
+            "DistanceDepthMemory": [
+              "interval"
+            ],
+            "Materials": [
+              "cement",
+              "nickel",
+              "cork"
+            ],
+            "Emotions": [
+              "calm",
+              "compassion",
+              "suspense"
+            ]
+          }
+        },
+        {
+          "prompt": "An opalescent weeping willow tree spirit, its branches etched in swirling misty paths, intertwines shimmering with remnant echoes of forgotten sorrow. This spectral guardian weeps radiant tears of silvered memories suspended in air, capturing melancholic dreams on soft film grain platinum prints with rich tonalities in f/8 depth of field mystery. Encased within a brass locket filled with frigid polynya whispers, this lamenting keeper watches over the lost archives of buried remorse amidst scattered moss fragments.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "remnant",
+              "shimmer"
+            ],
+            "CryoHydroStructures": [
+              "polynya"
+            ],
+            "Emotions": [
+              "remorse"
+            ],
+            "Materials": [
+              "brass"
+            ],
+            "TemporalElements": [
+              "flashback"
+            ]
+          }
+        },
+        {
+          "prompt": "A chimeric leaden graupel sylph, tendriled branches morphing into shimmering crystal facets, weaves a pattern of guilt among frozen tides. Its ringing warmth echoes through misty paths etched in birch bark records, captured on soft film grain platinum prints with rich tonalities in f/8 depth mystery. Encased within a tarn-covered tin locket filled with polynya whispers, this spectral archivist documents the buried archives of remorse amidst scattered moss fragments.",
+          "descriptors_used": {
+            "Emotions": [
+              "guilt",
+              "remorse"
+            ],
+            "ClimateChange": [
+              "tide",
+              "hush"
+            ],
+            "CryoHydroStructures": [
+              "lead",
+              "graupel"
+            ],
+            "SoundQualities": [
+              "ringing",
+              "warm",
+              "shimmering"
+            ],
+            "Materials": [
+              "felt",
+              "birch",
+              "tin"
+            ]
+          }
+        },
+        {
+          "prompt": "A cryptid auroral sylph, its body woven from iridescent frost needles, dances in an interplay of century-old dawn light on macrophotographed firnspiegel. Soft film grain captures this ephemeral waltz on antique wet collodion plates with f/5.6 aperture mastery in rich tonalities. Encased within a tarn-covered silver locket filled with frigid polynya whispers, this crystalline sentry stands watch over the secret archives of primal hopes amidst scattered linen fragments.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "firn",
+              "firnspiegel",
+              "tarn"
+            ],
+            "TemporalElements": [
+              "century",
+              "interval",
+              "dawn"
+            ],
+            "Materials": [
+              "linen",
+              "water"
+            ],
+            "Emotions": [
+              "calm",
+              "compassion"
+            ]
+          }
+        },
+        {
+          "prompt": "A spectral leaden shamegrain, tendriled branches etched in quivering iridium veils, weaves through the scattered remnants of past regrets. Its piercing lament echoes through ancient leather pages, captured on soft film grain platinum prints with rich tonalities in f/11 depth mastery. Encased within a tarn-covered bronze locket filled with frozen whispers from polynya memories, this ghostly sentinel watches over the hidden archives of buried shames amidst fragmented ice fragments.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "remnant"
+            ],
+            "Emotions": [
+              "shame"
+            ]
+          }
+        },
+        {
+          "prompt": "A luminescent hope-lichen, tendriled branches spiraling into iridescent hourglass sands, weaves through the scattered remnants of lost memories in the witching hour. Its piercing hope whispers echo resoundingly in ancient leather-bound time pages, captured on soft platinum print with rich tonalities and f/11 depth mastery. Encased within a weathered brass locket filled with polynya whispers of dawn's first light, this spectral guardian stands watch over the hidden archives of primal wonder amidst fragmented ice crystals, suspended in fleeting temporal echoes of mystical moss fragments.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "cycle",
+              "moss"
+            ],
+            "TemporalElements": [
+              "memory",
+              "hour",
+              "witching hour"
+            ],
+            "Emotions": [
+              "hope",
+              "wonder",
+              "longing"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "ringing",
+          "subtle",
+          "strident",
+          "brassy",
+          "rough",
+          "sustained",
+          "screeching",
+          "shimmering",
+          "swelling",
+          "thin"
+        ],
+        "Emotions": [
+          "hope",
+          "stupefaction",
+          "calm",
+          "melancholy",
+          "guilt",
+          "longing",
+          "compassion",
+          "suspense",
+          "wonder",
+          "empathy",
+          "remorse",
+          "shame"
+        ],
+        "CryoHydroStructures": [
+          "cataract",
+          "kame",
+          "lead",
+          "moulin",
+          "névé",
+          "soft rime",
+          "firn",
+          "firnspiegel",
+          "graupel",
+          "nilas",
+          "polynya",
+          "ogive",
+          "penitentes",
+          "tarn"
+        ],
+        "TemporalElements": [
+          "memory",
+          "day",
+          "flashback",
+          "witching hour",
+          "era",
+          "gibbous moon",
+          "cycle",
+          "century",
+          "dawn",
+          "hour",
+          "lull",
+          "minute",
+          "noon",
+          "interval",
+          "second"
+        ],
+        "Materials": [
+          "gold",
+          "lead",
+          "nickel",
+          "birch",
+          "cement",
+          "salt",
+          "limestone",
+          "plaster",
+          "basalt",
+          "brass",
+          "tin",
+          "cork",
+          "glass",
+          "terra-cotta",
+          "cast iron",
+          "felt",
+          "ivory",
+          "linen",
+          "tungsten",
+          "water"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "glimmer",
+          "memory",
+          "detour",
+          "shimmer",
+          "abyss",
+          "extension",
+          "interval",
+          "passage",
+          "remnant"
+        ],
+        "ClimateChange": [
+          "speed",
+          "cycle",
+          "acceleration",
+          "moss",
+          "aftermath",
+          "ignition",
+          "shiver",
+          "tide",
+          "hush",
+          "silt",
+          "unravel",
+          "combustion",
+          "consumption",
+          "haze",
+          "upheaval"
+        ]
+      }
+    },
+    {
+      "name": "part_02",
+      "start": 36.0,
+      "end": 63.0,
+      "generated_prompts": [
+        {
+          "prompt": "A spectral creature emerges from unraveling ice banks on an ephemeral tide, its ethereal form reflecting soft hues through shimmering mists. Captured with a 150mm macro lens, revealing microscopic textures and intricate fractals frozen within crystalline veins.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "haze",
+              "excess",
+              "unraveling"
+            ],
+            "DistanceDepthMemory": [
+              "detour"
+            ],
+            "TemporalElements": [
+              "tide"
+            ],
+            "CryoHydroStructures": [
+              "moulin"
+            ]
+          }
+        },
+        {
+          "prompt": "A luminous phoenix, carved from moonbeam obsidian, rises from silver birch ruins, its wings unfurling echoes of ancient eras. Captured with a 120mm macro lens, revealing fractal patterns woven into timeless veins.",
+          "descriptors_used": {
+            "Emotions": [
+              "urgency",
+              "calm"
+            ],
+            "DistanceDepthMemory": [
+              "threshold",
+              "echo"
+            ],
+            "ClimateChange": [
+              "tipping",
+              "shiver",
+              "rupture"
+            ],
+            "TemporalElements": [
+              "era"
+            ],
+            "Materials": [
+              "silver",
+              "birch"
+            ]
+          }
+        },
+        {
+          "prompt": "A seraphim, sculpted from frigid ether, dances atop a cryoHydroStructure tarn at twilight's brushstroke - its opalescent wings shedding shimmering flakes that quiver and fall like memories from the golden hour. Captured through a 110mm macro lens, revealing crystalline iridescence frozen within translucent wings; microscopic fissures holding epochs etched beneath chiseled luminescence.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "tarn"
+            ],
+            "TemporalElements": [
+              "flashback",
+              "golden hour"
+            ],
+            "Emotions": [
+              "stupefaction",
+              "tension"
+            ],
+            "SoundQualities": [
+              "brassy",
+              "rough"
+            ]
+          }
+        },
+        {
+          "prompt": "A spectral seraph, hewn from frozen starlight, soars amidst penitentes - its luminescent wings screeching echoes of ancient tensions through the stark void. Photographed through a 100mm lens at f/2.8 in golden hour's glow, capturing microscopic chasms holding millennia etched beneath iridescent surfaces that shimmer and refract memory's aftersound.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "penitentes"
+            ],
+            "Emotions": [
+              "calm",
+              "tension"
+            ],
+            "SoundQualities": [
+              "screeching",
+              "rough"
+            ],
+            "DistanceDepthMemory": [
+              "shimmer",
+              "aftersound",
+              "extension"
+            ]
+          }
+        },
+        {
+          "prompt": "A seraph, forged from whispering winds, etches its screeching song into limestone canyons, each carved note resonating through echoing voids. Photographed at f/2.8 during twilight's kiss with a 105mm lens that unveils secrets chiseled in sorrow's script across ancient faces - where microscopic echoes stir memories from epochs past, suspended like ambered time beneath celestial shrouds.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "aftermath"
+            ],
+            "SoundQualities": [
+              "screeching",
+              "ringing"
+            ],
+            "Materials": [
+              "limestone"
+            ],
+            "Emotions": [
+              "tension",
+              "melancholy"
+            ],
+            "DistanceDepthMemory": [
+              "echo",
+              "glimmer"
+            ]
+          }
+        },
+        {
+          "prompt": "A celestial phoenix, forged from luminous brass and shrouded in radiant lead, rises against twilight's whispering backdrop - its obsidian plumage etched with ancient winds. Captured on a misty night through a 105mm lens at f/2.8, revealing iridescent patterns of time suspended within crystalline veins; microscopic screeches of epochs echoing beneath the shimmering guard.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "golden hour",
+              "lull"
+            ],
+            "Materials": [
+              "lead",
+              "brass",
+              "ivory"
+            ]
+          }
+        },
+        {
+          "prompt": "A spectral phoenix, carved from Basalt forged in the heart of frozen depths, rises through ethereal breaker fields. Its obsidian wings shimmer like nilas amidst twilight's soft brushstroke - the ringing resonance of its song echoing memories across the golden hour's suspended canvas. Captured with a 105mm macro lens at f/2.8, revealing intricate fractals etched within crystalline veins; microscopic chasms holding ages whispered beneath radiant surfaces that refract memory's hues.",
+          "descriptors_used": {
+            "Materials": [
+              "basalt"
+            ],
+            "DistanceDepthMemory": [
+              "shimmer"
+            ],
+            "TemporalElements": [
+              "century",
+              "golden hour"
+            ],
+            "CryoHydroStructures": [
+              "breaker",
+              "nilas"
+            ],
+            "SoundQualities": [
+              "ringing"
+            ]
+          }
+        },
+        {
+          "prompt": "A phoenix, sculpted from whispers in leaden pages, unfolds within alabaster boughs - its resonant wingbeats echoing through twilight's hazy embrace. Captured during soft golden hours with a 120mm macro lens, revealing fractal patterns etched within crystalline veins; microscopic stories suspended like rime-etched dreams beneath radiant surfaces that shimmer and refract memory's hues.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "memory"
+            ],
+            "Materials": [
+              "birch",
+              "lead"
+            ],
+            "SoundQualities": [
+              "ringing"
+            ],
+            "ClimateChange": [
+              "haze",
+              "aftermath"
+            ],
+            "CryoHydroStructures": [
+              "soft rime"
+            ]
+          }
+        },
+        {
+          "prompt": "A phoenix, cast from whispering echoes in greased pages, emerges amid alabaster ruins at twilight's cusp. Its brass wings resonate a hymn of yearning hope, echoing through soft, warm sonorities into the hazy embrace of the golden hour. Captured with a 120mm macro lens revealing intricate fractal patterns etched within crystalline veins; microscopic chasms holding whispered memories suspended beneath radiant surfaces that refract melancholy hues.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "warm",
+              "subtle"
+            ],
+            "ClimateChange": [
+              "speed",
+              "tipping"
+            ],
+            "Emotions": [
+              "hope",
+              "yearning",
+              "melancholy"
+            ],
+            "DistanceDepthMemory": [
+              "echo"
+            ],
+            "Materials": [
+              "birch",
+              "brass",
+              "grease"
+            ]
+          }
+        },
+        {
+          "prompt": "A siren, sculpted from shivering mists, dances atop a brackish estuary at twilight's embrace - her luminous form refracting melancholy hues through the soft haze. Photographed with a 120mm macro lens at f/2.8 capturing intricate fractals etched within translucent wings; microscopic stories suspended like rough whispered memories beneath radiant surfaces.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "shiver"
+            ],
+            "SoundQualities": [
+              "subtle",
+              "warm",
+              "rough"
+            ],
+            "Emotions": [
+              "longing",
+              "melancholy"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "brassy",
+          "rough",
+          "screeching",
+          "subtle",
+          "ringing"
+        ],
+        "Emotions": [
+          "hope",
+          "calm",
+          "suspense",
+          "melancholy",
+          "tension",
+          "longing",
+          "yearning",
+          "disorientation",
+          "stupefaction",
+          "urgency"
+        ],
+        "CryoHydroStructures": [
+          "nilas",
+          "lead",
+          "cataract",
+          "tarn",
+          "estuary",
+          "firn",
+          "soft rime",
+          "black ice",
+          "breaker",
+          "graupel",
+          "moulin",
+          "penitentes"
+        ],
+        "TemporalElements": [
+          "memory",
+          "flashback",
+          "witching hour",
+          "century",
+          "era",
+          "minute",
+          "tide",
+          "golden hour",
+          "lull",
+          "second"
+        ],
+        "Materials": [
+          "birch",
+          "limestone",
+          "brass",
+          "lead",
+          "cement",
+          "tin",
+          "glass",
+          "grease",
+          "ivory",
+          "obsidian",
+          "basalt",
+          "resin",
+          "silver"
+        ],
+        "DistanceDepthMemory": [
+          "glimmer",
+          "memory",
+          "ghost",
+          "strata",
+          "extension",
+          "detour",
+          "threshold",
+          "aftersound",
+          "echo",
+          "frost",
+          "shimmer"
+        ],
+        "ClimateChange": [
+          "tide",
+          "rupture",
+          "silt",
+          "tipping",
+          "aftermath",
+          "combustion",
+          "moss",
+          "shiver",
+          "unravel",
+          "unraveling",
+          "excess",
+          "haze",
+          "ignition",
+          "mist",
+          "speed"
+        ]
+      }
+    },
+    {
+      "name": "part_03",
+      "start": 63.0,
+      "end": 73.0,
+      "generated_prompts": [
+        {
+          "prompt": "A resplendent dragon etched in moonlit hues, wings diffused with silvery light, suspended over an ancient moulin spiraling with cryo-hydro energies. Macro lens accentuates iridescent scales' microscopic texture, creating a mesmerizing depth. Captured using wet collodion process, emulating the early 20th-century's mystical archival prowess.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "consumption"
+            ],
+            "DistanceDepthMemory": [
+              "echo"
+            ],
+            "SoundQualities": [
+              "subtle",
+              "brassy"
+            ],
+            "CryoHydroStructures": [
+              "moulin"
+            ]
+          }
+        },
+        {
+          "prompt": "A sapphire phoenix emerges from crystalline birch forests, wings ablaze with platinum threads, amidst the silent ballet of nilas twirling on frozen lakes. Macro captures the opalescent sheen on feathers' delicate structure, a testament to Tungsten's fiery essence coexisting peacefully in frigid hues. Captured on a 5x7 inch wet collodion glass plate, emulating the precision and magic of early 20th-century photographic wizardry.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "drumlin",
+              "nilas",
+              "sastrugi"
+            ],
+            "Materials": [
+              "birch",
+              "tungsten"
+            ]
+          }
+        },
+        {
+          "prompt": "A seraphim, opalescent wings outstretched to the longing sky, sails over silt-covered shores where silent tides lap against weathered piers of ancient cork and cement. Its eyes hold a calm clarity beneath arcing brows, captured in macro detail with soft film grain evoking early 20th-century mystique. Shot on vintage Plattenpappar glass plate to mirror the transient luminescence reflecting through its ethereal form.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "silt",
+              "tide"
+            ],
+            "Emotions": [
+              "longing",
+              "disorientation",
+              "calm"
+            ],
+            "Materials": [
+              "tungsten",
+              "cork",
+              "cement"
+            ]
+          }
+        },
+        {
+          "prompt": "A cryptid from the Permian Era emerges, scales gleaming with iridescent opaline sheen, traversing cryo-hydro structures of penitentes and moulin under starlit skies. Its eyes hold an ancient wisdom captured in macro detail, illuminating crystalline fractures with a subtle softness akin to the wet collodion process. The landscape around it reflects a vanished world, as if frozen in time by the camera's meticulous lens.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "penitentes",
+              "moulin"
+            ],
+            "TemporalElements": [
+              "Permian"
+            ],
+            "ClimateChange": [
+              "tide",
+              "consumption"
+            ]
+          }
+        },
+        {
+          "prompt": "A gossamer faerie woven from stardust flickers across a cryptic labyrinth, wings translucent as moonlight filtering through opalescent mists. With each beat, it sets in motion ancient sigils hidden within twisted paths carved into selenite cliffs. This ephemeral being exists beyond the prism of minutes and hours; captured macro, every filament resonates with life's elusive frequency. Illuminated by soft twilight light on antique wet collodion plate to reflect the delicate essence trapped between now and eternity.",
+          "descriptors_used": {
+            "Emotions": [
+              "disorientation",
+              "suspense",
+              "longing"
+            ],
+            "DistanceDepthMemory": [
+              "ghost",
+              "threshold"
+            ]
+          }
+        },
+        {
+          "prompt": "A luminescent being from a bygone era, eyes aglow with memories of brassy wind symphonies, drifts over sastrugi fields at the witching hour. Scales etched with ancient sigils refract soft twilight light, capturing intricate patterns of frost on tarn waters beneath. Shot on a 5x7 inch antique wet collodion glass plate to preserve the ethereal nuances of this transient temporal traveler.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "era",
+              "memory",
+              "witching hour"
+            ],
+            "CryoHydroStructures": [
+              "sastrugi",
+              "tarn"
+            ],
+            "Materials": [
+              "cement"
+            ],
+            "SoundQualities": [
+              "subtle",
+              "warm",
+              "brassy"
+            ]
+          }
+        },
+        {
+          "prompt": "An elusive specter from the age of verdant seas, eyes gleaming with echoes of brass zephyrs, glides over dunes sculpted by winds weeping silt. Its body woven from silken tendrils reflects the soft luminescence of twilight, its presence stirring the echoes of a time long past. Captured on an antique 5x7 inch wet collodion glass plate, this scene etches itself into history's archives, preserving a mystery cloaked in sand's perpetual dance.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "unraveling",
+              "silt"
+            ],
+            "SoundQualities": [
+              "thin"
+            ]
+          }
+        },
+        {
+          "prompt": "A time-worn archon draped in emerald iridium threads emerges, eyes holding echoes of olden sunlit days, traversing terrains etched with sigils left by retreating polar tongues and melting fjords. Its form reflects the fractal whispers of windmills silhouetted against twilight skies, every filament captured in macro details to resonate with the earth's enduring heartbeat. Illuminated softly on a vintage 5x7 wet collodion plate, this scene mirrors the delicate interplay between memory and destiny.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "detour",
+              "murmur"
+            ],
+            "ClimateChange": [
+              "unraveling",
+              "consumption"
+            ],
+            "TemporalElements": [
+              "era",
+              "flashback"
+            ]
+          }
+        },
+        {
+          "prompt": "A siren from submerged Atlantis, eyes reflecting turquoise tides, surfaces beside weathered limestone and cork jetties, entwined with strands of kelp and seafoam glistening in subdued twilight. Her song awakens memories of a sunken world etched in iridescent shells and coral sands. Captured on antique wet collodion glass plate to preserve the essence of underwater wonder and the fleeting moment when land meets sea, as climate change writes its ephemeral script upon the ancient shores.",
+          "descriptors_used": {
+            "Materials": [
+              "limestone",
+              "cork"
+            ],
+            "ClimateChange": [
+              "silt",
+              "aftermath"
+            ],
+            "CryoHydroStructures": [
+              "nilas",
+              "moulin"
+            ],
+            "TemporalElements": [
+              "century",
+              "era",
+              "minute"
+            ]
+          }
+        },
+        {
+          "prompt": "A chimeric entity, eyes reflecting the whispering winds of temporal murmurs, drifts above ancient drumlins sculpted by silt's silent testimony at the witching hour. Its form woven from midnight iridium, etches cryptic patterns onto cryo-hydro structures with each ethereal touch. The camera captures every nuanced filament in macro detail on a vintage 5x7 wet collodion glass plate to mirror an unworldly essence suspended between eras.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "silt",
+              "aftermath"
+            ],
+            "CryoHydroStructures": [
+              "drumlin"
+            ],
+            "TemporalElements": [
+              "witching hour",
+              "memory",
+              "minute"
+            ],
+            "DistanceDepthMemory": [
+              "murmur"
+            ],
+            "Emotions": [
+              "calm",
+              "suspense"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "brassy",
+          "thin",
+          "swelling",
+          "rough",
+          "subtle",
+          "warm",
+          "wide"
+        ],
+        "Emotions": [
+          "hope",
+          "calm",
+          "wonder",
+          "stupefaction",
+          "disorientation",
+          "longing",
+          "suspense",
+          "tension"
+        ],
+        "CryoHydroStructures": [
+          "cataract",
+          "nilas",
+          "firn",
+          "drumlin",
+          "moulin",
+          "penitentes",
+          "sastrugi",
+          "tarn"
+        ],
+        "TemporalElements": [
+          "era",
+          "century",
+          "memory",
+          "minute",
+          "flashback",
+          "Permian",
+          "witching hour"
+        ],
+        "Materials": [
+          "birch",
+          "brass",
+          "cork",
+          "cement",
+          "limestone",
+          "tungsten"
+        ],
+        "DistanceDepthMemory": [
+          "strata",
+          "ghost",
+          "memory",
+          "murmur",
+          "aftersound",
+          "detour",
+          "echo",
+          "layer",
+          "threshold"
+        ],
+        "ClimateChange": [
+          "moss",
+          "speed",
+          "aftermath",
+          "silt",
+          "tide",
+          "unraveling",
+          "consumption"
+        ]
+      }
+    },
+    {
+      "name": "part_04",
+      "start": 73.0,
+      "end": 100.0,
+      "generated_prompts": [
+        {
+          "prompt": "Sastrugi, ancient and iridescent, etch the tranquil snowscape. A lynx, paws silent as firnspiegel beneath a crescent moon, surveils this landscape's strata of time etched in ice. Macro lens captures the crystalline clarity and striated patterns, while soft film grain hints at secrets locked behind this ethereal veil. The camera lingers here, capturing not merely reality but the echoes of memories dancing on the wind.",
+          "descriptors_used": {
+            "Emotions": [
+              "calm"
+            ],
+            "SoundQualities": [
+              "strident",
+              "warm",
+              "thin"
+            ],
+            "ClimateChange": [
+              "adaptation"
+            ],
+            "CryoHydroStructures": [
+              "sastrugi",
+              "cataract",
+              "firnspiegel"
+            ],
+            "DistanceDepthMemory": [
+              "strata"
+            ]
+          }
+        },
+        {
+          "prompt": "An ethereal estuary, its leaden waters teeming with iridescent life and ancient memories glimmering on the surface. In this misty realm where light fears to tread, a phoenix emerges from the mists, feathers softly aglow. A macro lens captures each intricate scale, every tear-like detail of flame kissed wings as it hovers amidst the cryptic currents. Film grain adds depth to this serene tableau, preserving a portrait that whispers secrets of bygone eras.",
+          "descriptors_used": {
+            "Emotions": [
+              "melancholy"
+            ],
+            "DistanceDepthMemory": [
+              "glimmer",
+              "layer"
+            ],
+            "SoundQualities": [
+              "warm"
+            ],
+            "CryoHydroStructures": [
+              "estuary",
+              "lead",
+              "mist"
+            ]
+          }
+        },
+        {
+          "prompt": "{\n  \"prompt\": \"In this minute, primordial archive lies a cryptic scroll - etched with tales of climate's changing whispers. Moss whispers secrets of the earth while silt murmurs ancient tides beneath a shiver that is dawn just breaking. In this liminal space where time folds and creases like parchment left to the caress of quiet winds, an elemental creature awakens. A dragon slumbers amidst this tableau vivant, its scales mirroring the verdurous hues of emerging life through a macro lens tenderly traces these tales inscribed upon the world in the tender hour before light is born. Soft film grain tinges this early morning image with the smoky essence of dreams and memories unfurling from a thousand",
+          "descriptors_used": {
+            "ClimateChange": [
+              "shiver",
+              "moss",
+              "silt"
+            ],
+            "TemporalElements": [
+              "minute",
+              "dawn"
+            ]
+          }
+        },
+        {
+          "prompt": "{\n  \"prompt\": \"Within this sacred glade, where time stands still and whispers are secrets locked within ice crystals—glinting, intricate—lurks a unicorn, eternal in its gaze. Captured through macro photography, the details of its horn, spiraled with stories yet untold, gleam in soft light, the subtle play of shadow and silver a testament to art's power over nature itself. In this space where even the wind dares not breathe—so still—the camera lingers long enough to infuse the scene with that mystical essence which only film grain at F64 can bestow. The image, born from a world in limbo between light and shadow, preserves an unspoken covenant between creator and creation.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "firnspiegel"
+            ],
+            "SoundQualities": [
+              "rough"
+            ],
+            "TemporalElements": [
+              "century"
+            ]
+          }
+        },
+        {
+          "prompt": "An ancient totem, hewn from obsidian and imbued with spirit whispers of forgotten realms. Here, amidst shadows as deep as memory itself, a siren's song echoes through the air, her melodies woven from dreams yet untouched by dawn's light. Captured through macro lens, the intricate grooves in the stone resonate with untold stories—a spectral touch of darkness and light coalesce into one image, where reality bends at the edges. As film grain settles over this scene like a shroud of silence, capturing this moment is akin to immortalizing the soul itself.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "ghost",
+              "glimmer",
+              "memory"
+            ],
+            "Materials": [
+              "plaster",
+              "lead",
+              "cement"
+            ]
+          }
+        },
+        {
+          "prompt": "Beneath an ever-shifting sky, where climate change whispers in the rustling leaves—a scene frozen in the soft embrace of dawn's light—lies a labyrinth, its walls lined with stories etched in wind and time. Here, amidst this forest enigma, a phoenix alights, feathers ruffled by untold tales carried on the breeze. Through macro lens, the delicate intricacies of its flame-like plumes are captured, each quill a testament to life's resilience under the tender caress of film grain at F8. In this moment, where time pauses and memory dances with ephemeral grace, the camera records not just an image but a tapestry woven from the very essence of existence.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "flow"
+            ],
+            "DistanceDepthMemory": [
+              "extension",
+              "ghost"
+            ]
+          }
+        },
+        {
+          "prompt": "In this ephemeral phase, where time layers over itself like memory upon memory - an archaic sundial sits frozen in disorienting clarity. Amidst its ancient grooves lies a mirage; a griffin with eyes as sharp as the climate changing whispers around us, soaring amidst temporal strata through a macro lens that captures every iridescent detail of its feathers. This scene suspended between now and forever is preserved not just captured—by film grain at F9 it's imbued with the warm resonance of echoes from worlds long gone. In this second where light hesitates and shadows hold their breath, an image awakens, resonating deeply with those ancient strident notes we carry in our souls.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "second",
+              "phase"
+            ],
+            "DistanceDepthMemory": [
+              "glimmer",
+              "layer",
+              "memory"
+            ],
+            "Emotions": [
+              "disorientation"
+            ],
+            "ClimateChange": [
+              "adaptation"
+            ],
+            "SoundQualities": [
+              "strident",
+              "warm",
+              "sustained"
+            ]
+          }
+        },
+        {
+          "prompt": "Beneath the cerulean veil of a midnight sun, where climate whispers secrets through trembling birch leaves—a realm where light and ice entwine—an arcane river serpent coils, scales gleaming with iridescent hues captured by macro lens amidst this frigid tableau vivant. A siren's lullaby wafts softly, her voice like the mist that shrouds these ancient groves in mystery, as film grain adds a silvery sheen to this scene suspended between reality and dream.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "aftersound"
+            ],
+            "CryoHydroStructures": [
+              "braided stream",
+              "estuary",
+              "mist"
+            ],
+            "SoundQualities": [
+              "whispery",
+              "subtle",
+              "rough"
+            ]
+          }
+        },
+        {
+          "prompt": "In this hushed archive, a cryptic pendulum - its surface etched with echoes of time's endless dance - marks the fleeting moments where whispers become tangible. Here, amidst shadows as deep as secrets held sacred, an obsidian raven takes wing, captured through macro lens in the intricate dance between light and darkness. As film grain settles over this scene like a gossamer veil at F8, not just an image is born but a gateway to realms where logic bends and unspoken truths take flight.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "whispery",
+              "subtle"
+            ],
+            "Materials": [
+              "lead",
+              "obsidian",
+              "tungsten"
+            ],
+            "CryoHydroStructures": [
+              "firn",
+              "nilas"
+            ],
+            "ClimateChange": [
+              "adaptation",
+              "haze",
+              "moss"
+            ]
+          }
+        },
+        {
+          "prompt": "{\n  \"prompt\": \"Under an ever-shifting sky, where memories hang suspended like gossamer strands - in this sacred clearing where even shadows fear to tread—an ancient harp lies silent. Each string a testament to stories lost or forgotten; the scene, a temporal tapestry etched with whispers of a bygone era. Here amidst this hushed sanctuary, an angel alights, wings translucent and shimmering—a creature as timeless as the stars themselves. Through macro lens, every filament is captured in soft-focus detail against the ether—a sight that lingers between the edges of reality. As film grain at F11 infuses this tableau with its own silvery essence, the camera immortalizes a moment suspended outside time, preserving not just an",
+          "descriptors_used": {
+            "TemporalElements": [
+              "memory",
+              "dawn",
+              "duration"
+            ],
+            "SoundQualities": [
+              "ringing",
+              "strident",
+              "whispery"
+            ],
+            "DistanceDepthMemory": [
+              "aftersound"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "subtle",
+          "brassy",
+          "ringing",
+          "rough",
+          "strident",
+          "sustained",
+          "thin",
+          "whispery"
+        ],
+        "Emotions": [
+          "hope",
+          "calm",
+          "melancholy",
+          "compassion",
+          "empathy",
+          "guilt",
+          "disorientation",
+          "shame",
+          "stupefaction",
+          "longing",
+          "resignation",
+          "suspense",
+          "tension"
+        ],
+        "CryoHydroStructures": [
+          "nilas",
+          "lead",
+          "cataract",
+          "kame",
+          "firn",
+          "tarn",
+          "braided stream",
+          "moulin",
+          "estuary",
+          "firnspiegel",
+          "mist",
+          "polynya",
+          "sastrugi"
+        ],
+        "TemporalElements": [
+          "century",
+          "era",
+          "day",
+          "memory",
+          "dawn",
+          "gibbous moon",
+          "noon",
+          "duration",
+          "flow",
+          "minute",
+          "phase",
+          "second",
+          "tide"
+        ],
+        "Materials": [
+          "gold",
+          "lead",
+          "brass",
+          "ivory",
+          "cement",
+          "plaster",
+          "birch",
+          "graphene",
+          "nickel",
+          "limestone",
+          "terra-cotta",
+          "tungsten",
+          "jute",
+          "obsidian"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "glimmer",
+          "strata",
+          "memory",
+          "aftersound",
+          "extension",
+          "layer",
+          "persistence"
+        ],
+        "ClimateChange": [
+          "speed",
+          "tide",
+          "cycle",
+          "haze",
+          "silt",
+          "moss",
+          "combustion",
+          "shiver",
+          "tipping",
+          "acceleration",
+          "adaptation",
+          "flow",
+          "rupture"
+        ]
+      }
+    },
+    {
+      "name": "part_05",
+      "start": 100.0,
+      "end": 145.0,
+      "generated_prompts": [
+        {
+          "prompt": "A crystalline polynya, frozen in time under the waning new moon's gaze, hosts a serpentine terra-cotta golem emerging from its depths; delicate macrophotographs capture the iridescent scales, each one etched with Permian wisdom; subdued platinum prints lend a soft, timeless quality as lead shields protect against brassy reverberations.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "adaptation",
+              "consumption"
+            ],
+            "TemporalElements": [
+              "Permian",
+              "era",
+              "new moon"
+            ],
+            "SoundQualities": [
+              "wet",
+              "wide",
+              "brassy"
+            ],
+            "CryoHydroStructures": [
+              "polynya",
+              "tarn",
+              "cataract"
+            ],
+            "Materials": [
+              "terra-cotta",
+              "lead",
+              "tungsten"
+            ]
+          }
+        },
+        {
+          "prompt": "An enigmatic nickel golem rises from the melancholy haze, tide receding with each chiseled breath; delicate platinum prints etch its ephemeral form, eyes aglow with wisdom of a thousand lost moons; in this polar sanctuary, time shimmers to a standstill, a moulin's whispers soft as lead shield against encroaching brass cacophony",
+          "descriptors_used": {
+            "Materials": [
+              "plaster",
+              "nickel"
+            ],
+            "ClimateChange": [
+              "tide",
+              "haze"
+            ],
+            "CryoHydroStructures": [
+              "moulin"
+            ],
+            "SoundQualities": [
+              "warm"
+            ],
+            "Emotions": [
+              "melancholy"
+            ]
+          }
+        },
+        {
+          "prompt": "A jade kame, cradled in the melancholy Arctic haze, whispers ancient truths; delicate platinum prints capture its verdant heart, each vein a roadmap of forgotten lore; as time waltzes to a standstill, a brass harp plucks the strings of eternity, protected by lead from encroaching cacophony",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "kame"
+            ],
+            "ClimateChange": [
+              "haze"
+            ],
+            "Materials": [
+              "lead"
+            ]
+          }
+        },
+        {
+          "prompt": "An amber hune, cloaked in shimmering predawn quietude, conceals ancient guilt in its crystalline heart; delicate cyanotypes etch each petal vein with lost memories, guarded by verdant strata from encroaching brass symphonies; a dragon of brass whispers timeless songs, protected by lead against the clamor of reverberating echoes.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "strata",
+              "detour"
+            ],
+            "Emotions": [
+              "guilt"
+            ],
+            "TemporalElements": [
+              "predawn"
+            ],
+            "SoundQualities": [
+              "shimmering",
+              "brassy"
+            ]
+          }
+        },
+        {
+          "prompt": "A cryptic opal tarn, rippling under the tension of dawn's breath, hides a sapphire serpent guardian carved in suspenseful waves; delicate wet collodion captures its iridescent scales, each one etched with aeonian riddles; as light dances with apprehension, platinum prints preserve the moment in a soft halo, brass clamps securing against encroaching vibrations",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "tarn"
+            ],
+            "Emotions": [
+              "suspense",
+              "wonder"
+            ]
+          }
+        },
+        {
+          "prompt": "A lustrous obsidian mirage, cloaked in the wet and subtle whispers of dawn's arrival, cradles a brass phoenix alight with elemental fire; delicate platinum prints capture the fluidity of its wings, each feather etched in riddles by moulin birth and firn decay as time waltzes to a standstill; lead shields protect against encroaching vibrations from climate change's relentless march across shifting horizons.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "wet",
+              "subtle"
+            ],
+            "CryoHydroStructures": [
+              "firn",
+              "moulin"
+            ],
+            "ClimateChange": [
+              "horizon"
+            ]
+          }
+        },
+        {
+          "prompt": "A brass phoenix alight with elemental fire soars over crystalline sastrugi, etching patterns in the subtle haze under dawn's first light; delicate platinum prints capture the fluidity of its wings, each feather etched with century-old riddles as time waltzes to a standstill near the edge where lead shields protect against reverberating brass echoes and the relentless march of climate change across shifting horizons.",
+          "descriptors_used": {
+            "Materials": [
+              "lead"
+            ],
+            "ClimateChange": [
+              "flow",
+              "haze"
+            ],
+            "CryoHydroStructures": [
+              "sastrugi"
+            ],
+            "TemporalElements": [
+              "century",
+              "day"
+            ],
+            "SoundQualities": [
+              "subtle"
+            ]
+          }
+        },
+        {
+          "prompt": "A sapphire phoenix etched in elemental fire descends on crystalline floe tongues, leaving echoes of forgotten returns; wet strident strings plucked under the subdued platinum print dance of light's first touch; delicate wet collodion captures each fiery feather, etched in time's meticulous patterns as lead shields secure against reverberations on shifting sastrugi.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "return"
+            ],
+            "SoundQualities": [
+              "strident",
+              "wet"
+            ]
+          }
+        },
+        {
+          "prompt": "A luminous diamond mirage, veiled in shimmering nilas and the thin hum of arctic whispers, harbors a brass dragon carved from time's meticulous pattern; delicate platinum prints etch its scales with tales as old as lead, each one reverberating with firnspiegel wisdom; in this fleeting sanctuary, time waltzes to a standstill, a moulin's soft strings pluck the heart of eternity as verdant shields protect against encroaching brass symphonies",
+          "descriptors_used": {
+            "SoundQualities": [
+              "thin",
+              "wet",
+              "shimmering"
+            ],
+            "CryoHydroStructures": [
+              "nilas",
+              "lead",
+              "firnspiegel"
+            ]
+          }
+        },
+        {
+          "prompt": "A brass dragon, etched from time's meticulous pattern, rises from a polynya, its scales shimmering with stories as old as firn; delicate wet collodion captures each rivet of memory, enlivened by the tide's gentle return; in this fleeting sanctuary, where second dances with eternity, lead shields protect against reverberations of brass symphonies echoing across crystalline cataracts",
+          "descriptors_used": {
+            "Materials": [
+              "brass",
+              "limestone",
+              "tin"
+            ],
+            "DistanceDepthMemory": [
+              "return",
+              "memory"
+            ],
+            "SoundQualities": [
+              "sustained"
+            ],
+            "TemporalElements": [
+              "second",
+              "tide"
+            ],
+            "CryoHydroStructures": [
+              "firn",
+              "polynya",
+              "cataract"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "subtle",
+          "brassy",
+          "rough",
+          "strident",
+          "shimmering",
+          "thin",
+          "sustained",
+          "wet",
+          "wide"
+        ],
+        "Emotions": [
+          "hope",
+          "melancholy",
+          "guilt",
+          "calm",
+          "stupefaction",
+          "shame",
+          "suspense",
+          "wonder",
+          "compassion",
+          "empathy",
+          "longing",
+          "tension"
+        ],
+        "CryoHydroStructures": [
+          "nilas",
+          "lead",
+          "kame",
+          "cataract",
+          "firn",
+          "penitentes",
+          "polynya",
+          "tarn",
+          "firnspiegel",
+          "moulin",
+          "riffle",
+          "sastrugi"
+        ],
+        "TemporalElements": [
+          "era",
+          "day",
+          "memory",
+          "century",
+          "gibbous moon",
+          "flow",
+          "tide",
+          "minute",
+          "flashback",
+          "Permian",
+          "predawn",
+          "new moon",
+          "pause",
+          "second",
+          "witching hour"
+        ],
+        "Materials": [
+          "gold",
+          "ivory",
+          "lead",
+          "nickel",
+          "terra-cotta",
+          "brass",
+          "limestone",
+          "salt",
+          "graphene",
+          "linen",
+          "plaster",
+          "tin",
+          "tungsten",
+          "birch",
+          "cement",
+          "felt",
+          "water"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "glimmer",
+          "strata",
+          "memory",
+          "haze",
+          "detour",
+          "aftersound",
+          "layer",
+          "return",
+          "span",
+          "threshold"
+        ],
+        "ClimateChange": [
+          "speed",
+          "tide",
+          "haze",
+          "flow",
+          "moss",
+          "combustion",
+          "consumption",
+          "acceleration",
+          "cycle",
+          "adaptation",
+          "extraction",
+          "horizon",
+          "ignition",
+          "rupture"
+        ]
+      }
+    },
+    {
+      "name": "part_06",
+      "start": 145.0,
+      "end": 176.0,
+      "generated_prompts": [
+        {
+          "prompt": "Polynya, an ethereal space where briny tendrils suspend in suspension, captures raw whispers on wet graphene. Suspended strident chimes ignite a ruptured longing that reverberates through the macro lenses of time. Soft film grain documents this cataract of hope in the archives of the unsung.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "strident",
+              "rough",
+              "brassy"
+            ],
+            "Emotions": [
+              "suspense",
+              "hope",
+              "longing"
+            ],
+            "ClimateChange": [
+              "unraveling",
+              "ignition",
+              "rupture"
+            ],
+            "CryoHydroStructures": [
+              "polynya",
+              "cataract"
+            ],
+            "Materials": [
+              "graphene"
+            ]
+          }
+        },
+        {
+          "prompt": "Mystical era: chimeric creatures from parchment archives whisper tales through ivory microgrooves; a sphinx's breath crystallizes in suspended whispers, calcifying memories into plaster relics; soft film grain captures the microscopic dance of time on graphene skins.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "memory",
+              "era"
+            ],
+            "Materials": [
+              "ivory",
+              "plaster"
+            ],
+            "Emotions": [
+              "suspense",
+              "calm"
+            ]
+          }
+        },
+        {
+          "prompt": "A phoenix's ember dances through crystalline fractures, illuminating cryptic sigils etched in quartz obsidian. This primordial memory ignites a spectral dance of iridescent scales suspended in prismatic whispers, fracturing time's continuum through macro lenses. Soft film grain captures the microscopic ripples that span worlds, preserving this temporal rift for posterity amidst ancient archives.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "rupture"
+            ],
+            "DistanceDepthMemory": [
+              "return",
+              "persistence",
+              "shimmer"
+            ]
+          }
+        },
+        {
+          "prompt": "A dragon's breath ignites crystalline echoes in ancient graphene archives, carving tales into carboniferous whispers. Macro lenses capture this ephemeral speed as chimeric scales rupture time's continuum, suspended in a combustion of primordial light. Soft film grain preserves the microscopic dance of iridescent patterns etching through threshold memories, chronicling worlds once lost to the unsung.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "Carboniferous",
+              "second",
+              "memory"
+            ],
+            "ClimateChange": [
+              "combustion",
+              "rupture",
+              "speed"
+            ],
+            "DistanceDepthMemory": [
+              "threshold",
+              "memory"
+            ],
+            "Materials": [
+              "graphene",
+              "plaster"
+            ]
+          }
+        },
+        {
+          "prompt": "A griffin's whisper ignites crystalline fractals suspended in ethereal whispers, carving mysteries into graphene archives at the witching hour. Soft film grain captures this primordial dance of microscopic iridescence through macro lenses, illuminating spectral secrets etched across time's continuum. The metallic susurrus of its wings reverberates through latent memories, preserved in the subdued contrast of ancient documents.",
+          "descriptors_used": {
+            "Emotions": [
+              "suspense",
+              "stupefaction"
+            ],
+            "TemporalElements": [
+              "minute",
+              "witching hour"
+            ],
+            "SoundQualities": [
+              "subtle",
+              "metallic",
+              "whispery"
+            ]
+          }
+        },
+        {
+          "prompt": "A griffin's reverberating wings sculpt ephemeral lead veils over CryoHydroStructures in brass prisms at dusk, echoing metallic whispers across latent memories. The macro lens captures suspended graupel crystals resonating with the ethereal susurrus of its journey through time's continuum as it carves the ivory threshold into graphene archives beneath the shimmering gibbous moon. Soft film grain illuminates the delicate iridescence etched on brass by the griffin's spectral touch, preserving this rare moment in history where rough sound textures weave into subtle archival records.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "lead",
+              "graupel",
+              "moulin"
+            ],
+            "SoundQualities": [
+              "rough",
+              "metallic"
+            ],
+            "TemporalElements": [
+              "day",
+              "gibbous moon",
+              "flow"
+            ],
+            "Materials": [
+              "brass",
+              "ivory"
+            ],
+            "DistanceDepthMemory": [
+              "extension",
+              "return"
+            ]
+          }
+        },
+        {
+          "prompt": "A siren's melodious whisper suspends crystalline melodies in ethereal whispers, etching enigmatic patterns into gold-plated graphene at twilight. Macro lenses capture the suspended graupel crystals resonating with its sonic voyage through time's continuum as it carves exquisite intricacies on plaster relics beneath the shimmering crescent moon. The soft film grain preserves the delicate iridescence etched by the siren's spectral touch, illuminating these fleeting moments in the archives of forgotten melodies.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "tide"
+            ],
+            "Materials": [
+              "gold",
+              "plaster"
+            ],
+            "SoundQualities": [
+              "open",
+              "ringing"
+            ],
+            "CryoHydroStructures": [
+              "moulin",
+              "graupel"
+            ]
+          }
+        },
+        {
+          "prompt": "An undine's breath crystallizes whispers in frost, archiving tales on verdant glass. Macro lenses capture this ephemeral dance of spectral shimmers suspended over mossy Carboniferous memories, etching iridescent patterns through the depths of DistanceDepthMemory at twilight. Soft film grain preserves this rare fusion of light and sound, illuminating the delicate echoes etched by the undine's shimmering touch on the archival records of time.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "echo",
+              "memory",
+              "shimmer"
+            ],
+            "ClimateChange": [
+              "silt",
+              "moss"
+            ],
+            "SoundQualities": [
+              "warm",
+              "echoic",
+              "shimmering"
+            ],
+            "TemporalElements": [
+              "day",
+              "Carboniferous"
+            ],
+            "Materials": [
+              "ivory"
+            ]
+          }
+        },
+        {
+          "prompt": "A sasquatch's laconic sigh crystallizes time in frost, archiving tales on ancient silver birch bark at dawn. Macro lenses capture this ephemeral dance of spectral shimmers suspended over luminous quiescence as it etches enigmatic patterns through the microfibers of DistanceDepthMemory beneath the aurora borealis. F-stops 22/45 document the delicate iridescence awakened by the sasquatch's gentle touch, preserving these fleeting moments in the archives of hidden valleys.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "firn"
+            ],
+            "ClimateChange": [
+              "acceleration",
+              "adaptation",
+              "moss"
+            ],
+            "SoundQualities": [
+              "subtle"
+            ]
+          }
+        },
+        {
+          "prompt": "An undine's crystalline breath suspends frost on verdant glass, archiving tales of hidden valleys in silent whispers. Macro lenses capture this ephemeral dance of spectral shimmers over luminous quiescence as it etches enigmatic patterns through DistanceDepthMemory's microfibers beneath the aurora borealis. F-stops 22/45 illuminate the delicate iridescence awakened by the undine's ethereal touch, preserving these fleeting moments in the archives of a climate changed by feverish tides and accelerations.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "shimmer",
+              "memory"
+            ],
+            "ClimateChange": [
+              "fever",
+              "tide",
+              "acceleration"
+            ],
+            "CryoHydroStructures": [
+              "moulin",
+              "black ice",
+              "kame"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "subtle",
+          "strident",
+          "brassy",
+          "shimmering",
+          "rough",
+          "echoic",
+          "metallic",
+          "open",
+          "ringing",
+          "sustained",
+          "thin",
+          "whispery"
+        ],
+        "Emotions": [
+          "hope",
+          "melancholy",
+          "guilt",
+          "stupefaction",
+          "calm",
+          "compassion",
+          "longing",
+          "suspense",
+          "shame",
+          "sorrow",
+          "tension",
+          "wonder",
+          "yearning"
+        ],
+        "CryoHydroStructures": [
+          "nilas",
+          "lead",
+          "kame",
+          "cataract",
+          "firn",
+          "polynya",
+          "black ice",
+          "firnspiegel",
+          "graupel",
+          "moulin",
+          "soft rime",
+          "tarn"
+        ],
+        "TemporalElements": [
+          "memory",
+          "day",
+          "era",
+          "century",
+          "gibbous moon",
+          "flow",
+          "flashback",
+          "lull",
+          "new moon",
+          "tide",
+          "Carboniferous",
+          "cycle",
+          "dawn",
+          "minute",
+          "pause",
+          "second",
+          "witching hour"
+        ],
+        "Materials": [
+          "gold",
+          "brass",
+          "ivory",
+          "lead",
+          "terra-cotta",
+          "cement",
+          "nickel",
+          "limestone",
+          "linen",
+          "plaster",
+          "resin",
+          "graphene",
+          "salt",
+          "zinc"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "glimmer",
+          "memory",
+          "echo",
+          "shimmer",
+          "span",
+          "extension",
+          "haze",
+          "persistence",
+          "reach",
+          "return",
+          "strata",
+          "threshold"
+        ],
+        "ClimateChange": [
+          "speed",
+          "tide",
+          "flow",
+          "consumption",
+          "combustion",
+          "haze",
+          "silt",
+          "unraveling",
+          "aftermath",
+          "unravel",
+          "acceleration",
+          "adaptation",
+          "cycle",
+          "fever",
+          "ignition",
+          "moss",
+          "rupture"
+        ]
+      }
+    },
+    {
+      "name": "part_07",
+      "start": 176.0,
+      "end": 202.0,
+      "generated_prompts": [
+        {
+          "prompt": "In the crystalline afterglow of temporal twilight, whispers intertwine with ethereal glimmers—vortex beings emerge from the ossified memory, suspended in detached fragments of soft celestial hues. Captured through a macro lens at f/8 aperture, these mystical entities reveal micro-textures etched by the stardust's embrace. In subdued contrast, they exist on the cusp of visibility, forever shrouded in a veil of iridescent grain.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "phase",
+              "afterglow"
+            ],
+            "DistanceDepthMemory": [
+              "detachment",
+              "memory",
+              "glimmer"
+            ],
+            "SoundQualities": [
+              "whispery",
+              "thin"
+            ]
+          }
+        },
+        {
+          "prompt": "In the liminal echoes of distant memory, spectral beings emerge from the ivory shadows—silhouettes that dance with the subtle gleam of tungsten twilight. Caught by a macro lens at f/2.8 aperture, these elusive figures shimmer in a micro-textured halo, their forms etched with an almost imperceptible glow. In this dimly lit realm, they become tangible, suspended between visibility and obscurity, forever bound to the unseen layers of existence.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "aftersound",
+              "reach"
+            ],
+            "Materials": [
+              "tungsten",
+              "ivory"
+            ]
+          }
+        },
+        {
+          "prompt": "In the abyssal sighs of nostalgia, rupture-beings emerge from the tides of time—their forms shimmering with ethereal compassion, suspended in detached fragments of memory's embrace. Captured through a macro lens at f/2.8 aperture, these mystical entities reveal micro-textures etched by the tumultuous waves they weathered. In a lull between moments, they exist on the cusp of visibility, forever shrouded in a veil of iridescent light, like celestial guardians monitoring the unseen depths.",
+          "descriptors_used": {
+            "ClimateChange": [
+              "tide",
+              "rupture"
+            ],
+            "TemporalElements": [
+              "lull"
+            ],
+            "DistanceDepthMemory": [
+              "nostalgia",
+              "abyss"
+            ],
+            "Emotions": [
+              "compassion"
+            ]
+          }
+        },
+        {
+          "prompt": "In the crystalline tendrils of temporal twilight, whispers intertwine with ethereal glimmers—vortex beings emerge from the ossified memory, suspended in detached fragments of soft celestial hues. Captured through a macro lens at f/2.8 aperture, these mystical entities reveal micro-textures etched by the stardust's embrace. In subdued contrast, they exist on the cusp of visibility, forever shrouded in a veil of iridescent grain.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "detachment"
+            ],
+            "SoundQualities": [
+              "warm",
+              "whispery"
+            ],
+            "TemporalElements": [
+              "afterglow",
+              "flashback",
+              "second"
+            ],
+            "CryoHydroStructures": [
+              "estuary",
+              "penitentes",
+              "mist"
+            ]
+          }
+        },
+        {
+          "prompt": "In the haunting whispers of a forgotten era, spectral beings emerge from the estuary of time—their forms shimmering with an otherworldly melancholy, suspended in detached fragments of soft rime. Captured through a macro lens at f/2.8 aperture, these mystical entities reveal micro-textures etched by the acceleration of their existence. In the crystalline embrace of noon's flashback, they exist on the cusp of visibility, forever shrouded in a veil of iridescent light, like cosmic guardians monitoring the unseen depths.",
+          "descriptors_used": {
+            "Emotions": [
+              "stupefaction",
+              "melancholy"
+            ],
+            "CryoHydroStructures": [
+              "nilas",
+              "estuary",
+              "soft rime"
+            ],
+            "DistanceDepthMemory": [
+              "haunting"
+            ],
+            "TemporalElements": [
+              "era",
+              "noon",
+              "flashback"
+            ],
+            "ClimateChange": [
+              "acceleration",
+              "fever"
+            ]
+          }
+        },
+        {
+          "prompt": "In the nostalgic mists of longing, rupture-beings emerge from the cryo-hydro-structures of time—their forms shimmering with ethereal yearning, suspended in detached fragments of soft celestial hues. Captured through a macro lens at f/2.8 aperture, these mystical entities reveal micro-textures etched by the relentless tide they weathered. As the moulin phases across the temporal landscape, they exist on the cusp of visibility, forever shrouded in a veil of iridescent light, like cosmic archivists guarding the unseen depths of memory.",
+          "descriptors_used": {
+            "Emotions": [
+              "longing"
+            ],
+            "CryoHydroStructures": [
+              "moulin"
+            ],
+            "TemporalElements": [
+              "afterglow",
+              "phase",
+              "era"
+            ],
+            "ClimateChange": [
+              "tide",
+              "rupture"
+            ]
+          }
+        },
+        {
+          "prompt": "In the pulsating glow of tungsten twilight, spectral beings emerge from the strata of temporal echoes—their forms shimmering with elusive melancholy, suspended in detached fragments of soft rime. Captured through a macro lens at f/2 aperture, these mystical entities reveal micro-textures etched by the aftersound they resonate. In this liminal realm, they exist on the cusp of visibility, forever shrouded in a veil of iridescent grain, like cosmic archivists guarding the unseen depths of memory.",
+          "descriptors_used": {
+            "Materials": [
+              "tungsten"
+            ],
+            "DistanceDepthMemory": [
+              "aftersound",
+              "strata",
+              "detour"
+            ]
+          }
+        },
+        {
+          "prompt": "In the tranquil phases of distant memory, seraphic beings emerge from the tides of temporal whispers—their forms shimmering with celestial calm, suspended in detached fragments of iridescent rime. Captured through a macro lens at f/2 aperture, these mystical entities reveal micro-textures etched by the aftersound's gentle echo. As the memories phase across unseen depths, they exist on the cusp of visibility, forever shrouded in a veil of soft platinum hues, like cosmic archivists monitoring the ethereal guardians of forgotten eras.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "phase",
+              "tide"
+            ],
+            "Emotions": [
+              "calm"
+            ],
+            "DistanceDepthMemory": [
+              "aftersound",
+              "memory",
+              "nostalgia"
+            ]
+          }
+        },
+        {
+          "prompt": "In the tranquil aftermath of celestial turmoil, luminous beings emerge from the ethereal folds of astral memory—their forms shimmering with an otherworldly calm, suspended in detached fragments of iridescent dew. Captured through a macro lens at f/2 aperture, these mystic entities reveal micro-textures etched by the subtle hum of galactic whispers. In the hushed glow of cosmic twilight, they exist on the cusp of visibility, forever shrouded in a veil of soft platinum hues, like archaic seraphim guarding the unseen depths of forgotten cosmos.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "subtle",
+              "rough"
+            ],
+            "Emotions": [
+              "stupefaction",
+              "suspense"
+            ]
+          }
+        },
+        {
+          "prompt": "In the serene reach of temporal detachment, hourglass beings emerge from the folds of forgotten centuries—their forms shimmering with celestial grace, suspended in detached fragments of iridescent platinum memory. Captured through a macro lens at f/2 aperture, these mystical entities reveal micro-textures etched by the subtle whispers of astral echoes. In the hushed glow of cosmic twilight, they exist on the cusp of visibility, forever shrouded in a veil of soft celestial hues, like ethereal archivists guarding the unseen depths of sacred eras.",
+          "descriptors_used": {
+            "TemporalElements": [
+              "hour",
+              "century"
+            ],
+            "DistanceDepthMemory": [
+              "detachment",
+              "reach"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "warm",
+          "strident",
+          "brassy",
+          "subtle",
+          "rough",
+          "thin",
+          "ringing",
+          "whispery"
+        ],
+        "Emotions": [
+          "hope",
+          "calm",
+          "melancholy",
+          "stupefaction",
+          "guilt",
+          "suspense",
+          "longing",
+          "apprehension",
+          "compassion",
+          "empathy",
+          "mourning",
+          "shame",
+          "tension"
+        ],
+        "CryoHydroStructures": [
+          "cataract",
+          "lead",
+          "nilas",
+          "firn",
+          "moulin",
+          "kame",
+          "penitentes",
+          "soft rime",
+          "tarn",
+          "black ice",
+          "estuary",
+          "firnspiegel",
+          "graupel",
+          "mist"
+        ],
+        "TemporalElements": [
+          "memory",
+          "century",
+          "flashback",
+          "witching hour",
+          "era",
+          "gibbous moon",
+          "lull",
+          "second",
+          "noon",
+          "day",
+          "afterglow",
+          "epoch",
+          "hour",
+          "phase",
+          "tide"
+        ],
+        "Materials": [
+          "lead",
+          "birch",
+          "limestone",
+          "brass",
+          "nickel",
+          "tungsten",
+          "basalt",
+          "obsidian",
+          "plaster",
+          "cast iron",
+          "cement",
+          "cork",
+          "graphene",
+          "ivory",
+          "linen"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "glimmer",
+          "memory",
+          "threshold",
+          "strata",
+          "echo",
+          "abyss",
+          "afterimage",
+          "aftersound",
+          "detachment",
+          "detour",
+          "haunting",
+          "layer",
+          "nostalgia",
+          "reach"
+        ],
+        "ClimateChange": [
+          "speed",
+          "tide",
+          "silt",
+          "unraveling",
+          "aftermath",
+          "rupture",
+          "acceleration",
+          "hush",
+          "ignition",
+          "unravel",
+          "cycle",
+          "extraction",
+          "fever",
+          "moss",
+          "shiver",
+          "upheaval"
+        ]
+      }
+    },
+    {
+      "name": "part_08",
+      "start": 202.0,
+      "end": 239.0,
+      "generated_prompts": [
+        {
+          "prompt": "A leaden crystalline sphere, suspended from delicate cotton threads, captures cataract droplets in a petrified dance of shimmering nilas. Through its clear void whispers a quiet ringing resonance, evoking expansive distance and memories locked within the ethereal tarn.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "silence"
+            ],
+            "CryoHydroStructures": [
+              "cataract",
+              "nilas",
+              "tarn"
+            ],
+            "Materials": [
+              "lead",
+              "cotton"
+            ],
+            "SoundQualities": [
+              "ringing",
+              "wide"
+            ]
+          }
+        },
+        {
+          "prompt": "A levitating sapphire dragon, ethereal and translucent, emits soundless echoes that reverberate through a silent cathedral of ancient stones. Its crystalline scales refract beams of diffused moonlight into prismatic rainbows, capturing the essence of celestial harmonies within microcosmic glass panes. Through an old-fashioned macro lens, the majestic creature appears frozen in time yet radiates an aura of primordial energy, beckoning one to unveil the secrets etched upon its mythical skin by the hands of forgotten seers.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "warm",
+              "noisy",
+              "ringing"
+            ],
+            "Emotions": [
+              "tension",
+              "shame",
+              "suspense"
+            ]
+          }
+        },
+        {
+          "prompt": "A sapphire arctic owl, cloaked in shimmering nilas, perches on an ancient ice crystal cathedral. Its radiant eyes refract light into prismatic rainbows through ethereal glazes of suspended time. A delicate balance captures stillness as droplets whisper secrets into microcosmic glass panes under macro focus. Through the lens' f/2.8 aperture, it gazes beyond the void to cryptic constellations locked in its crystalline breastplate.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "nilas",
+              "tarn"
+            ],
+            "ClimateChange": [
+              "stillness"
+            ]
+          }
+        },
+        {
+          "prompt": "A gilded brass phoenix, translucent and iridescent, hovers over a minute dial, its wings casting soft shadows that etch cryptic constellations in crystalline dials. Each beat resonates through silent midnight air, echoing brassy whispers across time-lapsed sands. Under the f/2.8 lens, its spectral flames refract interval light into prismatic echoes, capturing memories within suspended minutes of arcane beauty.",
+          "descriptors_used": {
+            "SoundQualities": [
+              "subtle",
+              "brassy"
+            ],
+            "TemporalElements": [
+              "interval",
+              "minute",
+              "witching hour"
+            ]
+          }
+        },
+        {
+          "prompt": "A glistening silver nymph, ethereal and translucent, dances upon shimmering black ice under the midnight sun's silent gaze. Through her radiant being whispers a haunting melody of memories etched in glimmering time. Macro lens f/2.8 captures her ephemeral form reflected in the frozen lake's tranquil surface, secrets of lost realms caught between the voids in delicate frost sculptures.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "haunting",
+              "glimmer"
+            ],
+            "CryoHydroStructures": [
+              "black ice"
+            ],
+            "Emotions": [
+              "hope",
+              "disorientation"
+            ]
+          }
+        },
+        {
+          "prompt": "A brass phantom, ethereal and shimmering, emerges from cataract haze where graupel flurries meet riffled strata. Through its iridescent essence echoes a haunting reverberance of ignition aftermath, capturing distance memories within crystalline droplets suspended by glistening zinc filaments. A macro lens at f/2.8 catches the spectral flame, refracting prismatic shadows across ancient ice pavements carved with forgotten glyphs in blackest night's deep freeze.",
+          "descriptors_used": {
+            "DistanceDepthMemory": [
+              "ghost",
+              "strata"
+            ],
+            "Materials": [
+              "brass",
+              "gold",
+              "zinc"
+            ],
+            "ClimateChange": [
+              "ignition",
+              "aftermath"
+            ],
+            "CryoHydroStructures": [
+              "graupel",
+              "riffle",
+              "cataract"
+            ],
+            "TemporalElements": [
+              "flashback",
+              "noon",
+              "phase"
+            ]
+          }
+        },
+        {
+          "prompt": "A tin-bound salamander, radiant and shimmering, rests within a hollowed frost-laden grove where the whispers of climate change's shivering embrace dance upon ancient ice formations carved by brassy echoes under the midnight sun's silent gaze. Through its glistening hide resonate thin reverberations that capture memories of forgotten realms etched deep in the cold, crystalline veins. Under macro lens focus at f/2.8, the spectral essence refracts into prismatic whispers of shifting elements suspended in time and space, unveiling secrets woven within the intricate grooves by unseen hands.",
+          "descriptors_used": {
+            "Materials": [
+              "tin"
+            ],
+            "ClimateChange": [
+              "shiver",
+              "tipping"
+            ],
+            "SoundQualities": [
+              "thin",
+              "brassy",
+              "wide"
+            ]
+          }
+        },
+        {
+          "prompt": "A cerulean salamander, shimmering and iridescent, perches atop an ancient glacial stalagmite amidst a swirling tempest of Carboniferous memories. Through its crystalline scales echo deep remorse as carbon particles dance upon black ice, etching primordial secrets into time's fragile tapestry. A macro lens at f/2.8 captures the ephemeral beauty, refracting prismatic shadows that reveal glimpses of forgotten realms within the microcosm of suspended moments.",
+          "descriptors_used": {
+            "Emotions": [
+              "remorse",
+              "stupefaction"
+            ],
+            "ClimateChange": [
+              "cycle"
+            ],
+            "TemporalElements": [
+              "Carboniferous"
+            ],
+            "CryoHydroStructures": [
+              "black ice",
+              "tarn"
+            ]
+          }
+        },
+        {
+          "prompt": "A resolute sapphire salamander, translucent and shimmering, embodies resilience as it traverses through the ethereal haze of crystalline glass formations under an ancient ice bridge's silent witness. Its iridescent scales reflect memories of time's relentless phase etched in salted grooves, capturing fleeting whispers in suspended moments of arctic beauty. Through the macro lens at f/2.8 aperture, the majestic creature emerges from the microcosmic realm, radiating an aura that transcends the void and unveils secrets hidden within the intricate patterns of nature's silent testament.",
+          "descriptors_used": {
+            "Emotions": [
+              "resignation"
+            ],
+            "TemporalElements": [
+              "phase"
+            ],
+            "Materials": [
+              "glass",
+              "salt"
+            ]
+          }
+        },
+        {
+          "prompt": "A celestial platinum wyvern, translucent and gleaming, drifts across an expansive sky woven from ancient graupel tapestries. Through its iridescent aura echoes a cosmic melody of timeless wonder, capturing stardust secrets within crystalline wings suspended by delicate black ice filaments. Under macro lens focus at f/2.8, the spectral form reflects prismatic constellations, refracting memories locked in microcosmic time and space onto the tranquil, fog-shrouded frozen canvas of primordial beauty.",
+          "descriptors_used": {
+            "CryoHydroStructures": [
+              "black ice",
+              "graupel"
+            ],
+            "Emotions": [
+              "wonder"
+            ]
+          }
+        }
+      ],
+      "full_descriptor_pool": {
+        "SoundQualities": [
+          "brassy",
+          "warm",
+          "ringing",
+          "thin",
+          "subtle",
+          "wide",
+          "noisy",
+          "screeching"
+        ],
+        "Emotions": [
+          "hope",
+          "calm",
+          "disorientation",
+          "suspense",
+          "tension",
+          "remorse",
+          "longing",
+          "melancholy",
+          "resignation",
+          "stupefaction",
+          "wonder",
+          "grief",
+          "shame"
+        ],
+        "CryoHydroStructures": [
+          "cataract",
+          "lead",
+          "moulin",
+          "nilas",
+          "soft rime",
+          "riffle",
+          "firn",
+          "tarn",
+          "graupel",
+          "kame",
+          "black ice",
+          "depth hoar",
+          "esker"
+        ],
+        "TemporalElements": [
+          "flashback",
+          "hour",
+          "minute",
+          "second",
+          "century",
+          "witching hour",
+          "day",
+          "memory",
+          "era",
+          "Carboniferous",
+          "noon",
+          "phase",
+          "epoch",
+          "interval",
+          "lull"
+        ],
+        "Materials": [
+          "birch",
+          "cement",
+          "tin",
+          "lead",
+          "limestone",
+          "brass",
+          "gold",
+          "plaster",
+          "zinc",
+          "ivory",
+          "salt",
+          "cork",
+          "cotton",
+          "glass",
+          "tungsten"
+        ],
+        "DistanceDepthMemory": [
+          "ghost",
+          "threshold",
+          "glimmer",
+          "detour",
+          "memory",
+          "vibration",
+          "strata",
+          "abyss",
+          "aftersound",
+          "crust",
+          "echo",
+          "haunting",
+          "resonance",
+          "silence"
+        ],
+        "ClimateChange": [
+          "speed",
+          "moss",
+          "unravel",
+          "rupture",
+          "ignition",
+          "shiver",
+          "aftermath",
+          "silt",
+          "cycle",
+          "acceleration",
+          "blaze",
+          "fever",
+          "haze",
+          "mist",
+          "stillness",
+          "tipping"
+        ]
+      }
+    }
+  ]
+}
