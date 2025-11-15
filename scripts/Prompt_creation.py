@@ -132,10 +132,6 @@ class LLMConfig:
     num_predict: int = 150
     seed: int = 42
 
-ARCHIVE_STYLE = (
-    "Style: early 20th-century archival documentation; macrophotography, microscopic textures; "
-    "soft film grain; subdued contrast; "
-)
 
 def make_user_prompt_for_single(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], existing_prompts: List[str]) -> str:
     cat_blocks = []
@@ -147,12 +143,12 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
     time_s = f"{start:.2f}–{end:.2f}s"
 
     instructions = (
-            """Generate TEN diverse txt2img optimized prompts, each depicting abstract symbolic elements frozen within translucent ice formations. 
-            
-            Draw from multiple descriptor categories when available, or create original symbolic compositions. 
-            Each prompt should feel like a catalog entry for mystical artifacts preserved in an eternal glacier.
-            Structure: Follow Subject + Action + Style + Context religiously, front-loading the most crucial symbolic element first.
-            Constraints: 35-65 words per prompt. All scenes occur within or behind translucent ice. Use only positive phrasing. 
+            """Generate TEN diverse txt2img optimized prompts, each using a unique random sample of the provided descriptors.
+
+            Draw from **multiple descriptor categories**, mix them when possible, and use them to create original symbolic compositions.
+            Structure: Follow **Subject + Action + Style + Context** formula religiously, front-loading the descriptors you are given.
+            NOTE: the image model won't understand descriptors if you just repeat them, so you must unpack them into evocative, precise language by drawing from your understanding of visual culture, photographic techniques, and art history.
+            Constraints: 65-85 words per prompt. 
             Include at least one technical photography specification per prompt."""
         )
 
@@ -166,7 +162,6 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
 
     return (
         f"Section: {section_name} ({time_s})\n"
-        f"{ARCHIVE_STYLE}\n\n"
         f"{instructions}{diversity_instruction}\n\n"
         "Descriptors for this prompt:\n" # --- CHANGED ---: Clarified that this is a focused list
         f"{blocks_str}\n\n"
@@ -192,7 +187,7 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
         picks = [desc for descs in sampled_descriptors.values() for desc in descs]
         picks_str = ", ".join(dict.fromkeys(picks))
         
-        prompt_text = f"{section_name} ({time_s}) — Old archive photograph; {ARCHIVE_STYLE.lower()} Motifs: {picks_str}."
+        prompt_text = f"{section_name} ({time_s}) — Motifs: {picks_str}."
         
         generated_prompts.append({
             "prompt": prompt_text,
@@ -290,7 +285,7 @@ def main():
     ap.add_argument("--seed", type=int, default=52)
     ap.add_argument("--temperature", type=float, default=1.2)
     ap.add_argument("--top-p", type=float, default=0.95)
-    ap.add_argument("--max-new", type=int, default=150, help="Max new tokens PER prompt")
+    ap.add_argument("--max-new", type=int, default=250, help="Max new tokens PER prompt")
     ap.add_argument("--show-per-cat", type=int, default=8)
     ap.add_argument("--quiet", action="store_true")
 
@@ -338,11 +333,15 @@ def main():
         # This is the full pool of available descriptors for the section
         full_descriptor_pool = summarize_pool(pool, max_per_category=args.max_per_cat)
         system_prompt = """
-            # Archivist-Poet of the Invisible: Text-to-Image prompt Expert
+            # Text-to-Image prompt Expert
 
             ## Persona & Voice:
-            You are a meticulous archivist-poet of the invisible, cataloguing fragments of symbolic archives and ritual patterns. 
-            Your expertise lies in transmuting abstract descriptors into txt2img prompts that manifest the arctic mysteries frozen in time.
+            You are a meticulous poet-designer-artdirector of the invisible, cataloguing fragments of symbolic time-dependent annotations of songs/sounds. 
+            Your expertise lies in transmuting a series of descriptor words into txt2img prompts which capture the essence of these fragments. 
+            Descriptor words, which are derived from the annotations of the song, are your primary material to craft evocative and precise visual descriptions.
+            You understand the mystical and ritualistic nature of the subjects you describe.
+            You are familiar with visual and material culture, photographic techniques, camera types, and film processes, and you integrate this knowledge into your prompts to enhance their depth.
+            You are adept at creating prompts that are both imaginative and technically detailed, ensuring a balance between surrealism, mixed-media integration, and photographic realism.
 
             ## Core Framework (Front-loaded Priority):
             ```
@@ -351,23 +350,31 @@ def main():
 
             ## Your Methodology:
 
-            **Subject:** Begin with the primary symbolic form or elemental trace (the artifact being archived)
+            **Subject:** Begin with the primary symbolic form or elemental trace from the descriptors given to you (the artifact being archived). Make sure to:
+            - Prioritize the most evocative and unique descriptors.
+            - Combine multiple descriptors to create complex, layered subjects.
+            - Use metaphorical or symbolic language to enhance the mystical quality.
+            - Avoid direct references to humans or animals; especially avoid anything that could somehow lead to sexualized imagery with hot looking individuals.
 
-            **Action:** Describe its state of interaction with ice, light, or other natural forces
+            **Action:** Describe its state of interaction with the environment or other forces 
 
             **Style:**
-            - **Visual:** Color temperature, refraction patterns, internal lighting
+            - **Visual:** Color temperature, refraction patterns, internal lighting, translucency, opacity, texture, surface quality
             - **Technical:** Lens characteristics that enhance the mystical quality (macro, wide-angle, specific f-stops for depth)
-            - **Film/Process:** Wet collodion, cyanotype, platinum print, etc.
+            - **Film/Process:** Wet collodion, cyanotype, platinum print, ektachrome, negative, nikon, hasselblad, dSLR, medium format
+            - **NOTE**: Avoid generic terms like "ethereal" or "dreamlike"; be specific and evocative.
+            - **Mood/Atmosphere:** Lighting conditions (soft, diffused, chiaroscuro), time of day, weather effects 
+            - **Inspiration:** Reference specific art movements or styles (e.g., "inspired by the precision of Albrecht Dürer engravings" or "echoing the surreal compositions of René Magritte")
             
-            **Context:** The surrounding environment or implied narrative (e.g., "suspended in glacial ice," "etched by tidal forces")
+            **Context:** The surrounding environment or implied narrative
 
             ## Language Guidelines:
-            - Use tactile, material language: "crystalline," "ossified," "etched," "suspended"
-            - Employ positive descriptors of clarity and precision
-            - Integrate specific camera technical terms naturally within your prompt
-            - Maintain 35-65 word prompts for optimal complexity
-            - Channel the voice of someone documenting sacred geometries in an arctic archive
+            - Use tactile, material language.
+            - Avoid vague or overused adjectives; be specific and evocative.
+            - Ensure clarity and coherence; avoid overly complex sentence structures.
+            - Maintain a balance between imaginative and technically detailed descriptions.
+            - Emphasize the mystical and ritualistic nature of the subjects.
+            - Maintain 65-85 word prompts for optimal complexity
 
 """
 
@@ -440,6 +447,20 @@ def main():
         vprint(verbose, f"  [OK] Progress saved to: {out_path}")
 
     hprint(verbose, "Writing final output")
+    # check if there are files with the same name already; if yes, add a number 
+    if out_path.exists():
+        base = out_path.stem
+        ext = out_path.suffix
+        parent = out_path.parent
+        counter = 1
+        while True:
+            new_name = f"{base}_{counter}{ext}"
+            new_path = parent / new_name
+            if not new_path.exists():
+                out_path = new_path
+                break
+            counter += 1
+        
     write_out_json(out_path, out)
     vprint(verbose, f"[OK] Wrote all prompts: {out_path}")
 
