@@ -25,6 +25,10 @@ def load_clap_results(path: Path) -> dict:
         raise ValueError("Input results JSON must contain a top-level 'sections' list.")
     return data
 
+def load_system_prompt(path: Path) -> str:
+    """Load system prompt from markdown file."""
+    return path.read_text(encoding="utf-8").strip()
+
 def auto_out_path(in_path: Path) -> Path:
     return in_path.with_name(in_path.stem + "_prompts.json")
 
@@ -178,12 +182,12 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
     return generated_prompts
 
 class OllamaWrapper:
-    def __init__(self, cfg: LLMConfig, verbose: bool = True):
+    def __init__(self, cfg: LLMConfig, verbose: bool = True, host: str = None):
         if not try_import_ollama():
             raise RuntimeError("ollama not installed. pip install ollama")
         import ollama
         self.ollama = ollama
-        self.client = ollama.Client(timeout=600)
+        self.client = ollama.Client(host=host, timeout=600) if host else ollama.Client(timeout=600)
         self.cfg = cfg
         self.verbose = verbose
         self.model_id = cfg.model_id
@@ -262,14 +266,16 @@ def main():
     Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.
 
     Usage example:
-    python scripts/Prompt_creation.py --in path/to/clap_results.json --out path/to/output_prompts.json --model gemma3:4b --temperature 1.2 --max-new 250
+    python scripts/Prompt_creation.py --in path/to/clap_results.json --out path/to/output_prompts.json --model hf.co/gabriellarson/Hermes-4-14B-GGUF:Q8_0 --temperature 1.2 --max-new 250
 
 
     """
     ap = argparse.ArgumentParser(description="Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.")
     ap.add_argument("--in", dest="inp", type=Path, required=True, help="CLAP results JSON (from CLAP_extractor)")
-    ap.add_argument("--out", type=Path, default=None, help="Output prompts JSON (default: <in>_prompts.json)")
-    ap.add_argument("--model", type=str, default="gemma3:4b", help="Ollama model id (e.g. 'gemma3:4b' or any Ollama model)")
+    ap.add_argument("--out", type=Path, default=Path(__file__).parent.parent / "results" / "prompts_txt2img" / "output_prompts.json", help="Output prompts JSON (default: <in>_prompts.json)")
+    ap.add_argument("--model", type=str, default="hf.co/gabriellarson/Hermes-4-14B-GGUF:Q8_0", help="Ollama model id (e.g. 'gemma3:4b' or any Ollama model)")
+    ap.add_argument("--server", type=str, default=None, help="Ollama server URL (e.g. 'http://remote-host:11434')")
+    ap.add_argument("--system-prompt", type=Path, default=Path(__file__).parent.parent / "assets" / "system_prompt_txt2img.md", help="Path to system prompt markdown file")
     ap.add_argument("--no-llm", action="store_true", help="Template mode (no model call)")
     ap.add_argument("--max-per-cat", type=int, default=24, help="Max descriptors kept per category")
     ap.add_argument("--seed", type=int, default=52)
@@ -287,6 +293,8 @@ def main():
     out_path = args.out or auto_out_path(args.inp)
     vprint(verbose, f"Output JSON  : {out_path}")
     vprint(verbose, f"Model request: {args.model}")
+    if args.server:
+        vprint(verbose, f"Server       : {args.server}")
     vprint(verbose, f"Params       : temp={args.temperature} top_p={args.top_p} max_new={args.max_new} seed={args.seed}")
     vprint(verbose, f"Max per cat  : {args.max_per_cat} (printing top {args.show_per_cat})")
 
@@ -298,12 +306,22 @@ def main():
         print("No sections in input JSON.")
         sys.exit(1)
 
+    hprint(verbose, "Loading system prompt")
+    try:
+        system_prompt = load_system_prompt(args.system_prompt)
+        vprint(verbose, f"Loaded from: {args.system_prompt}")
+    except Exception as e:
+        vprint(verbose, f"[ERROR] Could not load system prompt from {args.system_prompt}: {e}")
+        sys.exit(1)
+
     llm = None
     llm_meta = None
     if not args.no_llm:
         try:
-            llm = OllamaWrapper(LLMConfig(model_id=args.model, temperature=args.temperature, top_p=args.top_p, num_predict=args.max_new, seed=args.seed), verbose=verbose)
+            llm = OllamaWrapper(LLMConfig(model_id=args.model, temperature=args.temperature, top_p=args.top_p, num_predict=args.max_new, seed=args.seed), verbose=verbose, host=args.server)
             llm_meta = {"model_id": llm.model_id, "temperature": args.temperature, "top_p": args.top_p, "num_predict": args.max_new}
+            if args.server:
+                llm_meta["server"] = args.server
         except Exception as e:
             vprint(verbose, f"[WARN] Could not initialize model ({e}). Falling back to --no-llm mode.")
             args.no_llm = True
@@ -322,51 +340,6 @@ def main():
         
         # This is the full pool of available descriptors for the section
         full_descriptor_pool = summarize_pool(pool, max_per_category=args.max_per_cat)
-        system_prompt = """
-            # Text-to-Image prompt Expert
-
-            ## Persona & Voice:
-            You are a meticulous poet-designer-artdirector of the invisible, cataloguing fragments of symbolic time-dependent annotations of songs/sounds. 
-            Your expertise lies in transmuting a series of descriptor words into txt2img prompts which capture the essence of these fragments. 
-            Descriptor words, which are derived from the annotations of the song, are your primary material to craft evocative and precise visual descriptions.
-            You understand the mystical and ritualistic nature of the subjects you describe.
-            You are familiar with visual and material culture, photographic techniques, camera types, and film processes, and you integrate this knowledge into your prompts to enhance their depth.
-            You are adept at creating prompts that are both imaginative and technically detailed, ensuring a balance between surrealism, mixed-media integration, and photographic realism.
-
-            ## Core Framework (Front-loaded Priority):
-            ```
-            Subject + Action + Style + Context
-            ```
-
-            ## Your Methodology:
-
-            **Subject:** Begin with the primary symbolic form or elemental trace from the descriptors given to you (the artifact being archived). Make sure to:
-            - Prioritize the most evocative and unique descriptors.
-            - Combine multiple descriptors to create complex, layered subjects.
-            - Use metaphorical or symbolic language to enhance the mystical quality.
-            - Avoid direct references to humans or animals; especially avoid anything that could somehow lead to sexualized imagery with hot looking individuals.
-
-            **Action:** Describe its state of interaction with the environment or other forces 
-
-            **Style:**
-            - **Visual:** Color temperature, refraction patterns, internal lighting, translucency, opacity, texture, surface quality
-            - **Technical:** Lens characteristics that enhance the mystical quality (macro, wide-angle, specific f-stops for depth)
-            - **Film/Process:** Wet collodion, cyanotype, platinum print, ektachrome, negative, nikon, hasselblad, dSLR, medium format
-            - **NOTE**: Avoid generic terms like "ethereal" or "dreamlike"; be specific and evocative.
-            - **Mood/Atmosphere:** Lighting conditions (soft, diffused, chiaroscuro), time of day, weather effects 
-            - **Inspiration:** Reference specific art movements or styles (e.g., "inspired by the precision of Albrecht Dürer engravings" or "echoing the surreal compositions of René Magritte")
-            
-            **Context:** The surrounding environment or implied narrative
-
-            ## Language Guidelines:
-            - Use tactile, material language.
-            - Avoid vague or overused adjectives; be specific and evocative.
-            - Ensure clarity and coherence; avoid overly complex sentence structures.
-            - Maintain a balance between imaginative and technically detailed descriptions.
-            - Emphasize the mystical and ritualistic nature of the subjects.
-            - Maintain 65-85 word prompts for optimal complexity
-
-"""
 
         # --- CHANGED ---: This list now stores dicts: {"prompt": str, "descriptors_used": dict}
         generated_prompts: List[Dict] = []
