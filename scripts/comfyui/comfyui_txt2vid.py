@@ -5,9 +5,9 @@ import os
 import time
 import uuid
 import random
-import argparse # --- NEW: Imported for command-line arguments ---
+import argparse
 
-# --- Helper Functions (unchanged) ---
+# --- Helper Functions ---
 
 def load_json_file(filepath):
     """Loads a JSON file from the given filepath."""
@@ -56,22 +56,31 @@ def save_metadata(filepath, key, data):
     except IOError as e:
         print(f"Error: Could not write to metadata file '{filepath}'. Reason: {e}")
 
+def create_model_hash(workflow):
+    """Creates a hash based on model-related nodes to help with caching."""
+    model_nodes = {}
+    # Include all model loading nodes with consistent IDs
+    for node_id in ["6", "57", "59", "61"]:  # Your video workflow model loading nodes
+        if node_id in workflow:
+            model_nodes[node_id] = workflow[node_id]
+    return hash(json.dumps(model_nodes, sort_keys=True))
+
 # --- Main Script Logic ---
 
 def main():
-    # --- NEW: Argument parser for command-line control ---
     parser = argparse.ArgumentParser(description="Queue ComfyUI video generation prompts and save metadata.")
     parser.add_argument("--server", type=str, default="127.0.0.1:8188", help="Address of the ComfyUI server.")
-    parser.add_argument("--prompts", type=str, default="./assets/song_joey__timeline_joey__chunk1p0s__top5_prompts-macro.json", help="Path to the prompts JSON file.")
-    parser.add_argument("--workflow", type=str, default="./assets/video_wan2_2_14B_t2v_final_api.json", help="Path to the ComfyUI API workflow JSON file.")
+    parser.add_argument("--prompts", type=str, required=True, help="Path to the prompts JSON file.")
+    parser.add_argument("--workflow", type=str, required=True, help="Path to the ComfyUI API workflow JSON file.")
     parser.add_argument("--metadata", type=str, default="./output/video_metadata.json", help="Path to the output metadata JSON file.")
+    parser.add_argument("--output", type=str, required=True, help="Output folder for generated videos.")
     parser.add_argument("--frames", type=int, default=25, help="Number of frames to generate for each video.")
     parser.add_argument("--width", type=int, default=1280, help="Width of the generated video.")
     parser.add_argument("--height", type=int, default=720, help="Height of the generated video.")
     args = parser.parse_args()
 
     client_id = str(uuid.uuid4())
-    print("--- Starting ComfyUI Video Prompt Runner ---")
+    print("--- Starting ComfyUI Video Prompt Runner with Model Caching ---")
     print(f"Settings: {args.frames} frames ({args.width}x{args.height})")
 
     # 1. Load the JSON files using paths from arguments
@@ -87,6 +96,10 @@ def main():
     SAVE_VIDEO_NODE_ID = "61"
     SAMPLER_NODE_ID = "57"
     LATENT_VIDEO_NODE_ID = "59"
+
+    # Create a base model hash for consistency
+    base_model_hash = create_model_hash(api_workflow)
+    print(f"Base model hash: {base_model_hash}")
 
     # 2. Iterate through each section and each prompt
     total_prompts = sum(len(section.get('generated_prompts', [])) for section in prompts_data.get('sections', []))
@@ -110,17 +123,18 @@ def main():
             print(f"  > Prompt: {prompt_text[:100]}...")
 
             current_workflow = json.loads(json.dumps(api_workflow))
-            filename_prefix = f"FontedesGlaces/video_output/{section_name}_{index + 1:02d}"
+            filename_prefix = f"{args.output}/{section_name}/{section_name}_{index + 1:02d}"
             noise_seed = random.randint(0, 2**64 - 1)
 
             # 4. Modify the workflow with the current settings
+            # IMPORTANT: Only modify the nodes that need to change
+            # Don't modify model loading nodes unnecessarily
             if POSITIVE_PROMPT_NODE_ID in current_workflow:
                 current_workflow[POSITIVE_PROMPT_NODE_ID]["inputs"]["text"] = prompt_text
             
             if LATENT_VIDEO_NODE_ID in current_workflow:
                 current_workflow[LATENT_VIDEO_NODE_ID]["inputs"]["width"] = args.width
                 current_workflow[LATENT_VIDEO_NODE_ID]["inputs"]["height"] = args.height
-                # --- NEW: Set the number of frames from the command-line argument ---
                 current_workflow[LATENT_VIDEO_NODE_ID]["inputs"]["length"] = args.frames
                 current_workflow[LATENT_VIDEO_NODE_ID]["inputs"]["batch_size"] = 1
             
@@ -149,7 +163,8 @@ def main():
             else:
                 print("  > Failed to queue prompt.")
             
-            time.sleep(1)
+            # Shorter delay between prompts to maintain model in memory
+            time.sleep(0.5)
 
     print("\n--- All prompts have been queued. ---")
 

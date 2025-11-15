@@ -5,16 +5,7 @@ import os
 import time
 import uuid
 import random
-import click
-
-# --- Configuration ---
-COMFYUI_ADDRESS = "127.0.0.1:8188"
-PROMPTS_FILE_PATH = "./results/song_simon_cut__timeline_simon__chunk1p0s__top5_prompts-creatures.json"
-API_WORKFLOW_FILE_PATH = "./assets/txt2img_flux-dev-lorastack_api.json"
-METADATA_FILE_PATH = "./output/image_metadata.json"
-CLIENT_ID = str(uuid.uuid4())
-
-
+import argparse
 
 # --- Helper Functions ---
 def load_json_file(filepath):
@@ -29,17 +20,18 @@ def load_json_file(filepath):
         print(f"Error: The file '{filepath}' is not a valid JSON file.")
         return None
 
-def queue_prompt(prompt_workflow):
+def queue_prompt(prompt_workflow, client_id, server_address):
     """Queues a prompt workflow to the ComfyUI server using urllib."""
-    payload = {"prompt": prompt_workflow, "client_id": CLIENT_ID}
+    payload = {"prompt": prompt_workflow, "client_id": client_id}
     data = json.dumps(payload).encode('utf-8')
-    req = urllib.request.Request(f"http://{COMFYUI_ADDRESS}/prompt", data=data)
+    req = urllib.request.Request(f"http://{server_address}/prompt", data=data)
     
     try:
         with urllib.request.urlopen(req) as response:
             return json.loads(response.read())
     except urllib.error.HTTPError as e:
         print(f"Error communicating with ComfyUI server: HTTP {e.code} {e.reason}")
+        print(f"  Response: {e.read().decode('utf-8')}")
         return None
     except urllib.error.URLError as e:
         print(f"Error communicating with ComfyUI server: {e.reason}")
@@ -66,7 +58,6 @@ def save_metadata(filepath, key, data):
     except IOError as e:
         print(f"Error: Could not write to metadata file '{filepath}'. Reason: {e}")
 
-# NEW: Function to create a stable model hash
 def create_model_hash(workflow):
     """Creates a hash based on model-related nodes to help with caching."""
     model_nodes = {}
@@ -76,14 +67,25 @@ def create_model_hash(workflow):
             model_nodes[node_id] = workflow[node_id]
     return hash(json.dumps(model_nodes, sort_keys=True))
 
-@click.command()
-@click.argument('output_folder', type=str)
-def main(output_folder):
+def main():
     """Main function with model caching optimization."""
-    print("--- Starting ComfyUI Prompt Runner with Model Caching ---")
+    parser = argparse.ArgumentParser(description="Queue ComfyUI image generation prompts and save metadata.")
+    parser.add_argument("--server", type=str, default="127.0.0.1:8188", help="Address of the ComfyUI server.")
+    parser.add_argument("--prompts", type=str, default="./results/song_simon_cut__timeline_simon__chunk1p0s__top5_prompts-creatures.json", help="Path to the prompts JSON file.")
+    parser.add_argument("--workflow", type=str, default="./assets/txt2img_flux-dev-lorastack_api.json", help="Path to the ComfyUI API workflow JSON file.")
+    parser.add_argument("--metadata", type=str, default="./output/image_metadata.json", help="Path to the output metadata JSON file.")
+    parser.add_argument("--output", type=str, required=True, help="Output folder for generated images.")
+    parser.add_argument("--width", type=int, default=1280, help="Width of the generated image.")
+    parser.add_argument("--height", type=int, default=720, help="Height of the generated image.")
+    parser.add_argument("--batch", type=int, default=3, help="Number of images to generate per prompt.")
+    args = parser.parse_args()
 
-    prompts_data = load_json_file(PROMPTS_FILE_PATH)
-    api_workflow = load_json_file(API_WORKFLOW_FILE_PATH)
+    client_id = str(uuid.uuid4())
+    print("--- Starting ComfyUI Prompt Runner with Model Caching ---")
+    print(f"Settings: {args.width}x{args.height}, batch size: {args.batch}")
+
+    prompts_data = load_json_file(args.prompts)
+    api_workflow = load_json_file(args.workflow)
 
     if not prompts_data or not api_workflow:
         print("Aborting due to file loading errors.")
@@ -123,7 +125,7 @@ def main(output_folder):
             # Create workflow copy
             current_workflow = json.loads(json.dumps(api_workflow))
 
-            filename_prefix = f"{output_folder}/{section_name}/{section_name}_{index + 1:02d}"
+            filename_prefix = f"{args.output}/{section_name}/{section_name}_{index + 1:02d}"
             noise_seed = random.randint(0, 2**64 - 1)
 
             # IMPORTANT: Only modify the nodes that need to change
@@ -133,9 +135,9 @@ def main(output_folder):
                 current_workflow[CLIP_TEXT_ENCODE_NODE_ID]["inputs"]["t5xxl"] = prompt_text
 
             if LATENT_NODE_ID in current_workflow:
-                current_workflow[LATENT_NODE_ID]["inputs"]["width"] = 1280
-                current_workflow[LATENT_NODE_ID]["inputs"]["height"] = 720
-                current_workflow[LATENT_NODE_ID]["inputs"]["batch_size"] = 3
+                current_workflow[LATENT_NODE_ID]["inputs"]["width"] = args.width
+                current_workflow[LATENT_NODE_ID]["inputs"]["height"] = args.height
+                current_workflow[LATENT_NODE_ID]["inputs"]["batch_size"] = args.batch
                 
             if SAVE_IMAGE_NODE_ID in current_workflow:
                 current_workflow[SAVE_IMAGE_NODE_ID]["inputs"]["filename_prefix"] = filename_prefix
@@ -147,13 +149,16 @@ def main(output_folder):
             print(f"  > Saving metadata. Seed: {noise_seed}")
             image_metadata = {
                 "prompt": prompt_text,
-                "seed": noise_seed
+                "seed": noise_seed,
+                "width": args.width,
+                "height": args.height,
+                "batch_size": args.batch
             }
-            save_metadata(METADATA_FILE_PATH, filename_prefix, image_metadata)
+            save_metadata(args.metadata, filename_prefix, image_metadata)
 
             # Queue the prompt
             print("  > Submitting to ComfyUI...")
-            response = queue_prompt(current_workflow)
+            response = queue_prompt(current_workflow, client_id, args.server)
             if response:
                 prompt_id = response.get('prompt_id', 'N/A')
                 print(f"  > Successfully queued prompt. Prompt ID: {prompt_id}")

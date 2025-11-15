@@ -1,21 +1,3 @@
-# Prompt_creation.py — Ollama chat-based prompt generator; generates 10 prompts per section
-# ---------------------------------------------------------------------------------
-# Usage:
-#   python Prompt_creation.py --in ../results/<clap_results>.json
-#     [--out <out.json>]
-#     [--model gemma3:4b]                       # Ollama model id (e.g. 'gemma3:4b' or any Ollama model)
-#     [--no-llm]                                # offline template mode
-#     [--max-per-cat 24] [--temperature 0.9] [--top-p 0.95] [--max-new 700]
-#     [--seed 42] [--show-per-cat 8] [--quiet]
-#
-# Example:
-# python Prompt_creation.py \
-#   --in ../results/song_joey__timeline_joey__chunk1p0s__top5.json \
-#   --model gemma3:4b
-#
-# Ollama runs inference and manages device placement (GPU/CPU) itself; no local torch or device configuration is required.
-# ---------------------------------------------------------------------------------
-
 from __future__ import annotations
 
 import argparse, json, random, sys, time
@@ -276,6 +258,14 @@ class OllamaWrapper:
 
 # ---------- main ----------
 def main():
+    """
+    Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.
+
+    Usage example:
+    python scripts/Prompt_creation.py --in path/to/clap_results.json --out path/to/output_prompts.json --model gemma3:4b --temperature 1.2 --max-new 250
+
+
+    """
     ap = argparse.ArgumentParser(description="Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.")
     ap.add_argument("--in", dest="inp", type=Path, required=True, help="CLAP results JSON (from CLAP_extractor)")
     ap.add_argument("--out", type=Path, default=None, help="Output prompts JSON (default: <in>_prompts.json)")
