@@ -90,6 +90,21 @@ def main():
     if not prompts_data or not api_workflow:
         print("Aborting due to file loading errors.")
         return
+    # if args.metadata already exists, add number suffix to avoid overwriting
+    base_metadata_path = args.metadata
+    counter = 1
+    while os.path.exists(args.metadata):
+        name, ext = os.path.splitext(base_metadata_path)
+        args.metadata = f"{name}_{counter:02d}{ext}"
+        counter += 1
+    if counter > 1:
+        print(f"  > Metadata file exists. Using new file: {args.metadata}")
+    
+    save_metadata(args.metadata, "settings", { 
+        "width": args.width,
+        "height": args.height,
+        "frames": args.frames
+    })
 
     # Node IDs for the video workflow
     POSITIVE_PROMPT_NODE_ID = "6"
