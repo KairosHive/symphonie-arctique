@@ -1,21 +1,3 @@
-# Prompt_creation.py — Ollama chat-based prompt generator; generates 10 prompts per section
-# ---------------------------------------------------------------------------------
-# Usage:
-#   python Prompt_creation.py --in ../results/<clap_results>.json
-#     [--out <out.json>]
-#     [--model gemma3:4b]                       # Ollama model id (e.g. 'gemma3:4b' or any Ollama model)
-#     [--no-llm]                                # offline template mode
-#     [--max-per-cat 24] [--temperature 0.9] [--top-p 0.95] [--max-new 700]
-#     [--seed 42] [--show-per-cat 8] [--quiet]
-#
-# Example:
-# python Prompt_creation.py \
-#   --in ../results/song_joey__timeline_joey__chunk1p0s__top5.json \
-#   --model gemma3:4b
-#
-# Ollama runs inference and manages device placement (GPU/CPU) itself; no local torch or device configuration is required.
-# ---------------------------------------------------------------------------------
-
 from __future__ import annotations
 
 import argparse, json, random, sys, time
@@ -42,6 +24,10 @@ def load_clap_results(path: Path) -> dict:
     if "sections" not in data or not isinstance(data["sections"], list):
         raise ValueError("Input results JSON must contain a top-level 'sections' list.")
     return data
+
+def load_system_prompt(path: Path) -> str:
+    """Load system prompt from markdown file."""
+    return path.read_text(encoding="utf-8").strip()
 
 def auto_out_path(in_path: Path) -> Path:
     return in_path.with_name(in_path.stem + "_prompts.json")
@@ -132,11 +118,6 @@ class LLMConfig:
     num_predict: int = 150
     seed: int = 42
 
-ARCHIVE_STYLE = (
-    "Style: early 20th-century archival documentation; macrophotography, microscopic textures; "
-    "soft film grain; subdued contrast; "
-    "wet collodion process"
-)
 
 def make_user_prompt_for_single(section_name: str, start: float, end: float, by_category: Dict[str, List[str]], existing_prompts: List[str]) -> str:
     cat_blocks = []
@@ -148,10 +129,14 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
     time_s = f"{start:.2f}–{end:.2f}s"
 
     instructions = (
-            "Given the descriptor lists per category, compose TEN diverse image prompts that each feel like a "
-            "abstract textures of the natural world, mixed with symbolic elements. Combine elements from multiple categories in each prompt. "
-            "Every prompt should represent a scene happening inside a bloc of transluscent ice. Keep each prompt 25–60 words. "
-            "Avoid first-person. If there are no descriptors, still produce ten creative prompts guided by the section name and time window."
+            """Generate TEN diverse txt2img optimized prompts, each using a unique random sample of the provided descriptors.
+
+            Draw from **multiple descriptor categories**, mix them when possible, and use them to create original symbolic compositions.
+            Use varied visual styles, photographic techniques, and film processes to ensure each prompt has a distinct aesthetic feel. 
+            FEEL FREE TO EXPAND upon the descriptors to create rich, evocative imagery using detailed language and suprising combinations of techniques.
+            Structure: Follow **Subject + Action + Style + Context** formula , front-loading the descriptors you are given.
+            NOTE: the image model won't understand descriptors if you just repeat them, so you must unpack them into evocative, precise language by drawing from your understanding of visual culture, photographic techniques, and art history.
+            Constraints: 65-85 words per prompt. """
         )
 
     diversity_instruction = ""
@@ -164,7 +149,6 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
 
     return (
         f"Section: {section_name} ({time_s})\n"
-        f"{ARCHIVE_STYLE}\n\n"
         f"{instructions}{diversity_instruction}\n\n"
         "Descriptors for this prompt:\n" # --- CHANGED ---: Clarified that this is a focused list
         f"{blocks_str}\n\n"
@@ -190,7 +174,7 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
         picks = [desc for descs in sampled_descriptors.values() for desc in descs]
         picks_str = ", ".join(dict.fromkeys(picks))
         
-        prompt_text = f"{section_name} ({time_s}) — Old archive photograph; {ARCHIVE_STYLE.lower()} Motifs: {picks_str}."
+        prompt_text = f"{section_name} ({time_s}) — Motifs: {picks_str}."
         
         generated_prompts.append({
             "prompt": prompt_text,
@@ -199,12 +183,12 @@ def template_10_prompts(section_name: str, start: float, end: float, by_category
     return generated_prompts
 
 class OllamaWrapper:
-    def __init__(self, cfg: LLMConfig, verbose: bool = True):
+    def __init__(self, cfg: LLMConfig, verbose: bool = True, host: str = None):
         if not try_import_ollama():
             raise RuntimeError("ollama not installed. pip install ollama")
         import ollama
         self.ollama = ollama
-        self.client = ollama.Client(timeout=600)
+        self.client = ollama.Client(host=host, timeout=600) if host else ollama.Client(timeout=600)
         self.cfg = cfg
         self.verbose = verbose
         self.model_id = cfg.model_id
@@ -279,16 +263,26 @@ class OllamaWrapper:
 
 # ---------- main ----------
 def main():
+    """
+    Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.
+
+    Usage example:
+    python scripts/Prompt_creation.py --in path/to/clap_results.json --out path/to/output_prompts.json --model hf.co/gabriellarson/Hermes-4-14B-GGUF:Q8_0 --temperature 1.2 --max-new 250
+
+
+    """
     ap = argparse.ArgumentParser(description="Generate 10 image prompts per section from CLAP descriptor results using an Ollama chat model.")
     ap.add_argument("--in", dest="inp", type=Path, required=True, help="CLAP results JSON (from CLAP_extractor)")
-    ap.add_argument("--out", type=Path, default=None, help="Output prompts JSON (default: <in>_prompts.json)")
-    ap.add_argument("--model", type=str, default="gemma3:4b", help="Ollama model id (e.g. 'gemma3:4b' or any Ollama model)")
+    ap.add_argument("--out", type=Path, default=Path(__file__).parent.parent / "results" / "prompts_txt2img" / "output_prompts.json", help="Output prompts JSON (default: <in>_prompts.json)")
+    ap.add_argument("--model", type=str, default="hf.co/gabriellarson/Hermes-4-14B-GGUF:Q8_0", help="Ollama model id (e.g. 'gemma3:4b' or any Ollama model)")
+    ap.add_argument("--server", type=str, default=None, help="Ollama server URL (e.g. 'http://remote-host:11434')")
+    ap.add_argument("--system-prompt", type=Path, default=Path(__file__).parent.parent / "assets" / "system_prompt_txt2img.md", help="Path to system prompt markdown file")
     ap.add_argument("--no-llm", action="store_true", help="Template mode (no model call)")
     ap.add_argument("--max-per-cat", type=int, default=24, help="Max descriptors kept per category")
     ap.add_argument("--seed", type=int, default=52)
     ap.add_argument("--temperature", type=float, default=1.2)
     ap.add_argument("--top-p", type=float, default=0.95)
-    ap.add_argument("--max-new", type=int, default=150, help="Max new tokens PER prompt")
+    ap.add_argument("--max-new", type=int, default=250, help="Max new tokens PER prompt")
     ap.add_argument("--show-per-cat", type=int, default=8)
     ap.add_argument("--quiet", action="store_true")
 
@@ -300,6 +294,8 @@ def main():
     out_path = args.out or auto_out_path(args.inp)
     vprint(verbose, f"Output JSON  : {out_path}")
     vprint(verbose, f"Model request: {args.model}")
+    if args.server:
+        vprint(verbose, f"Server       : {args.server}")
     vprint(verbose, f"Params       : temp={args.temperature} top_p={args.top_p} max_new={args.max_new} seed={args.seed}")
     vprint(verbose, f"Max per cat  : {args.max_per_cat} (printing top {args.show_per_cat})")
 
@@ -311,12 +307,22 @@ def main():
         print("No sections in input JSON.")
         sys.exit(1)
 
+    hprint(verbose, "Loading system prompt")
+    try:
+        system_prompt = load_system_prompt(args.system_prompt)
+        vprint(verbose, f"Loaded from: {args.system_prompt}")
+    except Exception as e:
+        vprint(verbose, f"[ERROR] Could not load system prompt from {args.system_prompt}: {e}")
+        sys.exit(1)
+
     llm = None
     llm_meta = None
     if not args.no_llm:
         try:
-            llm = OllamaWrapper(LLMConfig(model_id=args.model, temperature=args.temperature, top_p=args.top_p, num_predict=args.max_new, seed=args.seed), verbose=verbose)
+            llm = OllamaWrapper(LLMConfig(model_id=args.model, temperature=args.temperature, top_p=args.top_p, num_predict=args.max_new, seed=args.seed), verbose=verbose, host=args.server)
             llm_meta = {"model_id": llm.model_id, "temperature": args.temperature, "top_p": args.top_p, "num_predict": args.max_new}
+            if args.server:
+                llm_meta["server"] = args.server
         except Exception as e:
             vprint(verbose, f"[WARN] Could not initialize model ({e}). Falling back to --no-llm mode.")
             args.no_llm = True
@@ -335,7 +341,6 @@ def main():
         
         # This is the full pool of available descriptors for the section
         full_descriptor_pool = summarize_pool(pool, max_per_category=args.max_per_cat)
-        system_prompt = "You are a meticulous archivist-poet of the invisible. Turn descriptor lists into concise, evocative prompts that focus on textures, symbols, and abstract forms rather than scenes. Write as if cataloguing artifacts of a world infused with cosmogony and animate forces of nature. Favor tactile surfaces, patterns, elemental traces, and ice etchings, and dreamlike geometries. The results should feel like fragments of symbolic archives, diagrams of spirits, or ritual patterns carved into snow, stone, or skin."
 
         # --- CHANGED ---: This list now stores dicts: {"prompt": str, "descriptors_used": dict}
         generated_prompts: List[Dict] = []
@@ -406,6 +411,20 @@ def main():
         vprint(verbose, f"  [OK] Progress saved to: {out_path}")
 
     hprint(verbose, "Writing final output")
+    # check if there are files with the same name already; if yes, add a number 
+    if out_path.exists():
+        base = out_path.stem
+        ext = out_path.suffix
+        parent = out_path.parent
+        counter = 1
+        while True:
+            new_name = f"{base}_{counter}{ext}"
+            new_path = parent / new_name
+            if not new_path.exists():
+                out_path = new_path
+                break
+            counter += 1
+        
     write_out_json(out_path, out)
     vprint(verbose, f"[OK] Wrote all prompts: {out_path}")
 

@@ -1,14 +1,14 @@
 {
   "3": {
     "inputs": {
-      "noise_seed": 364325357777862,
-      "steps": 25,
+      "noise_seed": 980113984376816,
+      "steps": 30,
       "timestep_to_start_cfg": 1,
       "true_gs": 3.5,
       "image_to_image_strength": 0,
       "denoise_strength": 1,
       "model": [
-        "49",
+        "64",
         0
       ],
       "conditioning": [
@@ -43,8 +43,8 @@
   },
   "5": {
     "inputs": {
-      "clip_l": "cinematic high res photo from above of magical lichens,   violet blue  lichens, raw textured lichen decomposing on grainy irridescent  daying dead wood mushroom surfaces, lichen with an electric current running through it,  iridescent sheen ,  penumbra , rule of thirds, leading lines composition, serene mysterious dynamic whimsical mood",
-      "t5xxl": "cinematic high res photo from above of magical lichens,   bioluminescent  lichens, raw textured lichen decomposing on grainy irridescent  daying dead wood mushroom surfaces, lichen with an electric current running through it,  iridescent sheen ,  moonlight , rule of thirds, leading lines composition, serene mysterious dynamic whimsical mood",
+      "clip_l": "A grainy macrophotograph captures the textured surface of a waxen kame, as tidal bore harpoon sparks lie dormant upon its silky skin. In the subdued light, shadows dance with the subtle movements, hinting at moments of contentment veiled in placid stillness, while the viewer struggles to decipher the deeper secrets etched into its smooth surface. ral-dissolve",
+      "t5xxl": "A grainy macrophotograph captures the textured surface of a waxen kame, as tidal bore harpoon sparks lie dormant upon its silky skin. In the subdued light, shadows dance with the subtle movements, hinting at moments of contentment veiled in placid stillness, while the viewer struggles to decipher the deeper secrets etched into its smooth surface. ral-dissolve",
       "guidance": 4,
       "clip": [
         "4",
@@ -123,7 +123,7 @@
   "49": {
     "inputs": {
       "lora_name": "mjv6_lora_comfy_converted.safetensors",
-      "strength_model": 0.7000000000000002,
+      "strength_model": 0.8000000000000002,
       "model": [
         "57",
         0
@@ -136,11 +136,25 @@
   },
   "57": {
     "inputs": {
-      "unet_name": "flux1-schnell-Q4_K_S.gguf"
+      "unet_name": "FLUX1\\flux1-dev-Q8_0.gguf"
     },
     "class_type": "UnetLoaderGGUF",
     "_meta": {
       "title": "Unet Loader (GGUF)"
+    }
+  },
+  "64": {
+    "inputs": {
+      "lora_name": "AlbumenPrintStyle.safetensors",
+      "strength_model": 0.6000000000000001,
+      "model": [
+        "49",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
     }
   }
 }

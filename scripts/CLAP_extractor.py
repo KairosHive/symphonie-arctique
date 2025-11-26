@@ -54,9 +54,9 @@ except Exception:
 SCRIPT_DIR = Path(__file__).resolve().parent
 ASSETS_DIR = (SCRIPT_DIR / ".." / "assets").resolve()
 
-DEFAULT_AUDIO       = ASSETS_DIR / "song_joey.mp3"
-DEFAULT_SECTIONS    = ASSETS_DIR / "timeline_joey.json"
-DEFAULT_DESCRIPTORS = ASSETS_DIR / "descriptors.json"
+DEFAULT_AUDIO       = ASSETS_DIR / "song_simon_cut.wav"
+DEFAULT_SECTIONS    = ASSETS_DIR / "timeline_simon.json"
+DEFAULT_DESCRIPTORS = ASSETS_DIR / "descriptors-simon.json"
 DEFAULT_RESULTS_DIR = (SCRIPT_DIR / "../results").resolve()
 
 

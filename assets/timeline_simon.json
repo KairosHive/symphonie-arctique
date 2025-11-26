@@ -1,0 +1,14 @@
+{
+  "duration_seconds": 239.0,
+  "note": "3m59s split into 8 unequal sections.",
+  "sections": [
+    { "name": "part_01", "start": 0.0,   "end": 36.0   },
+    { "name": "part_02", "start": 36.0,   "end": 63.0  },
+    { "name": "part_03", "start": 63.0,  "end": 73.0  },
+    { "name": "part_04", "start": 73.0,  "end": 100.0  },
+    { "name": "part_05", "start": 100.0,  "end": 145.0  },
+    { "name": "part_06", "start": 145.0,  "end": 176.0  },
+    { "name": "part_07", "start": 176.0,  "end": 202.0 },
+    { "name": "part_08", "start": 202.0, "end": 239.0 }
+  ]
+}

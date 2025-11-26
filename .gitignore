@@ -1,3 +1,4 @@
 .aider*
 .vscode/
 outputs/
+*.wav
