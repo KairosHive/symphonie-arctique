@@ -40,9 +40,9 @@ def _require_ollama():
         print("ERROR: ollama not installed. `pip install ollama` (and run the Ollama daemon).", file=sys.stderr)
         raise
 
-def _init_client(timeout_s: int = 600):
+def _init_client(timeout_s: int = 600, host: str = None):
     import ollama
-    return ollama.Client(timeout=timeout_s)
+    return ollama.Client(host=host, timeout=timeout_s) if host else ollama.Client(timeout=timeout_s)
 
 
 # ---------- utils ----------
@@ -197,6 +197,7 @@ def main():
     ap.add_argument("--root", type=Path, required=True, help="Root folder to scan for images (recursive).")
     ap.add_argument("--out", type=Path, default=Path("prompts.jsonl"), help="Output JSONL file (one result per line).")
     ap.add_argument("--model", type=str, default="gemma3:8b", help="Ollama model id (e.g., 'gemma3:8b').")
+    ap.add_argument("--server", type=str, default=None, help="Ollama server URL (e.g. 'http://remote-host:11434')")
     ap.add_argument("--extensions", type=str, default=",".join(DEFAULT_EXTS),
                     help=f"Comma-separated image extensions (default: {','.join(DEFAULT_EXTS)})")
     ap.add_argument("--temperature", type=float, default=1.2)
@@ -215,12 +216,15 @@ def main():
 
     # Validate Ollama
     _require_ollama()
-    client = _init_client()
+    client = _init_client(host=args.server)
 
     if not args.root.exists():
         print(f"ERROR: root path not found: {args.root}", file=sys.stderr)
         sys.exit(1)
 
+    if args.server:
+        vprint(verbose, f"Server       : {args.server}")
+    
     exts = set([e.strip().lower().lstrip(".") for e in args.extensions.split(",") if e.strip()])
     images = list(iter_images(args.root, exts))
     if args.max > 0:

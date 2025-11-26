@@ -132,10 +132,11 @@ def make_user_prompt_for_single(section_name: str, start: float, end: float, by_
             """Generate TEN diverse txt2img optimized prompts, each using a unique random sample of the provided descriptors.
 
             Draw from **multiple descriptor categories**, mix them when possible, and use them to create original symbolic compositions.
-            Structure: Follow **Subject + Action + Style + Context** formula religiously, front-loading the descriptors you are given.
+            Use varied visual styles, photographic techniques, and film processes to ensure each prompt has a distinct aesthetic feel. 
+            FEEL FREE TO EXPAND upon the descriptors to create rich, evocative imagery using detailed language and suprising combinations of techniques.
+            Structure: Follow **Subject + Action + Style + Context** formula , front-loading the descriptors you are given.
             NOTE: the image model won't understand descriptors if you just repeat them, so you must unpack them into evocative, precise language by drawing from your understanding of visual culture, photographic techniques, and art history.
-            Constraints: 65-85 words per prompt. 
-            Include at least one technical photography specification per prompt."""
+            Constraints: 65-85 words per prompt. """
         )
 
     diversity_instruction = ""

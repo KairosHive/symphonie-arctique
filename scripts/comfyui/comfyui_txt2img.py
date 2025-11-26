@@ -71,7 +71,7 @@ def main():
     """Main function with model caching optimization."""
     parser = argparse.ArgumentParser(description="Queue ComfyUI image generation prompts and save metadata.")
     parser.add_argument("--server", type=str, default="127.0.0.1:8188", help="Address of the ComfyUI server.")
-    parser.add_argument("--prompts", type=str, default="./results/song_simon_cut__timeline_simon__chunk1p0s__top5_prompts-creatures.json", help="Path to the prompts JSON file.")
+    parser.add_argument("--prompts", type=str, required=True, help="Path to the prompts JSON file.")
     parser.add_argument("--workflow", type=str, default="./assets/txt2img_flux-dev-lorastack_api.json", help="Path to the ComfyUI API workflow JSON file.")
     parser.add_argument("--metadata", type=str, default="./output/image_metadata.json", help="Path to the output metadata JSON file.")
     parser.add_argument("--output", type=str, required=True, help="Output folder for generated images.")
