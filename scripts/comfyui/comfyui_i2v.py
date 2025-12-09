@@ -104,34 +104,40 @@ def clean_motion_prompt(text: str) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Queue ComfyUI image-to-video generation prompts.")
     parser.add_argument("--server", type=str, default="127.0.0.1:8188", help="Address of the ComfyUI server.")
-    parser.add_argument("--prompts", type=str, default="assets/fine-tuned_prompts-06.jsonl", help="Path to the motion prompts JSONL file.")
-    parser.add_argument("--workflow", type=str, default="assets/video_wan2_2_14B_i2v.json", help="Path to the ComfyUI I2V API workflow.")
+    parser.add_argument("--prompts", type=str, required=True, help="Path to the motion prompts JSONL file.")
+    parser.add_argument("--workflow", type=str, required=True, help="Path to the ComfyUI I2V API workflow.")
     parser.add_argument("--footage_dir", type=str, required=True, help="Absolute path to the 'footage' directory on the ComfyUI server's filesystem.")
+    parser.add_argument("--output_dir", type=str, required=True, help="Directory to save generated videos. Can be a single string")
     parser.add_argument("--metadata", type=str, default="./output/i2v_metadata.json", help="Path for the output metadata file.")
     parser.add_argument("--frames", type=int, default=25, help="Number of frames to generate for each video.")
+    parser.add_argument("--fps", type=int, default=16, help="Frames per second for the output video.")
     parser.add_argument("--width", type=int, default=1280, help="Width of the generated video.")
     parser.add_argument("--height", type=int, default=720, help="Height of the generated video.")
     args = parser.parse_args()
 
     client_id = str(uuid.uuid4())
     print("--- Starting ComfyUI Image-to-Video Prompt Runner ---")
-    print(f"Settings: {args.frames} frames ({args.width}x{args.height})")
+    print(f"Settings: {args.frames} frames @ {args.fps}fps ({args.width}x{args.height})")
 
     # 1. Load the prompt and workflow files
     prompts_data = load_jsonl_file(args.prompts)
     api_workflow = load_json_file(args.workflow)
+    output_dir = args.output_dir
 
     if not prompts_data or not api_workflow:
         print("Aborting due to file loading errors.")
         return
 
-    # --- Node IDs for the Image-to-Video workflow ---
-    MOTION_PROMPT_NODE_ID = "6"
-    LOAD_IMAGE_NODE_ID = "62"
-    SAVE_VIDEO_NODE_ID = "61"
-    SAMPLER_NODE_ID_1 = "57" # First sampler
-    SAMPLER_NODE_ID_2 = "58" # Second sampler
-    I2V_SETTINGS_NODE_ID = "63" # Node that controls dimensions and length
+    # --- Node IDs for the Wan2.2 I2V workflow (video_wan2_2_14B_i2v.json) ---
+    # These IDs must match the workflow JSON. Update if workflow changes.
+    POSITIVE_PROMPT_NODE_ID = "6"   # CLIPTextEncode (Positive Prompt)
+    NEGATIVE_PROMPT_NODE_ID = "7"   # CLIPTextEncode (Negative Prompt)
+    LOAD_IMAGE_NODE_ID = "62"       # LoadImage - source image for I2V
+    I2V_NODE_ID = "63"              # WanImageToVideo - controls width, height, length
+    SAVE_VIDEO_NODE_ID = "61"       # SaveVideo
+    CREATE_VIDEO_NODE_ID = "60"     # CreateVideo - controls FPS
+    SAMPLER_NODE_ID_1 = "57"        # KSamplerAdvanced (high noise, first pass)
+    SAMPLER_NODE_ID_2 = "58"        # KSamplerAdvanced (low noise, second pass)
 
     # 2. Iterate through each prompt in the JSONL file
     total_prompts = len(prompts_data)
@@ -161,45 +167,61 @@ def main():
 
         # Use a deep copy of the workflow for each iteration
         current_workflow = json.loads(json.dumps(api_workflow))
-        filename_prefix = f"i2v_output/{os.path.splitext(image_name)[0]}"
+        filename_prefix = f"FontedesGlaces/i2v/{output_dir}/{os.path.splitext(image_name)[0]}"
         noise_seed = random.randint(0, 2**64 - 1)
 
         # 3. Modify the workflow with the current data
-        # --- FIX: Added checks to prevent crashes if workflow changes ---
-        if MOTION_PROMPT_NODE_ID in current_workflow:
-            current_workflow[MOTION_PROMPT_NODE_ID]["inputs"]["text"] = motion_prompt
+        # --- Set motion prompt in the positive prompt node ---
+        if POSITIVE_PROMPT_NODE_ID in current_workflow:
+            current_workflow[POSITIVE_PROMPT_NODE_ID]["inputs"]["text"] = motion_prompt
         else:
-            print(f"Warning: Node {MOTION_PROMPT_NODE_ID} not found in workflow. Skipping motion prompt.")
+            print(f"Warning: Node {POSITIVE_PROMPT_NODE_ID} (Positive Prompt) not found in workflow.")
 
+        # --- Load source image ---
         if LOAD_IMAGE_NODE_ID in current_workflow:
             current_workflow[LOAD_IMAGE_NODE_ID]["inputs"]["image"] = server_image_path
         else:
-            print(f"Warning: Node {LOAD_IMAGE_NODE_ID} not found in workflow. Cannot load image.")
-            continue # Skip if we can't load the source image
+            print(f"Warning: Node {LOAD_IMAGE_NODE_ID} (LoadImage) not found in workflow. Cannot load image.")
+            continue  # Skip if we can't load the source image
 
-        if I2V_SETTINGS_NODE_ID in current_workflow:
-            current_workflow[I2V_SETTINGS_NODE_ID]["inputs"]["width"] = args.width
-            current_workflow[I2V_SETTINGS_NODE_ID]["inputs"]["height"] = args.height
-            current_workflow[I2V_SETTINGS_NODE_ID]["inputs"]["length"] = args.frames
+        # --- Set dimensions and length in WanImageToVideo node ---
+        if I2V_NODE_ID in current_workflow:
+            current_workflow[I2V_NODE_ID]["inputs"]["width"] = args.width
+            current_workflow[I2V_NODE_ID]["inputs"]["height"] = args.height
+            current_workflow[I2V_NODE_ID]["inputs"]["length"] = args.frames
+        else:
+            print(f"Warning: Node {I2V_NODE_ID} (WanImageToVideo) not found. Cannot set dimensions/length.")
         
         if SAVE_VIDEO_NODE_ID in current_workflow:
             current_workflow[SAVE_VIDEO_NODE_ID]["inputs"]["filename_prefix"] = filename_prefix
+        else:
+            print(f"Warning: Node {SAVE_VIDEO_NODE_ID} (SaveVideo) not found.")
+        
+        if CREATE_VIDEO_NODE_ID in current_workflow:
+            current_workflow[CREATE_VIDEO_NODE_ID]["inputs"]["fps"] = args.fps
+        else:
+            print(f"Warning: Node {CREATE_VIDEO_NODE_ID} (CreateVideo) not found. Cannot set FPS.")
         
         # Set a random seed for both samplers for variety
         if SAMPLER_NODE_ID_1 in current_workflow:
             current_workflow[SAMPLER_NODE_ID_1]["inputs"]["noise_seed"] = noise_seed
+        else:
+            print(f"Warning: Node {SAMPLER_NODE_ID_1} (KSamplerAdvanced #1) not found.")
         if SAMPLER_NODE_ID_2 in current_workflow:
             # The second sampler's seed is often ignored if "add_noise" is disabled, but we set it for consistency.
             current_workflow[SAMPLER_NODE_ID_2]["inputs"]["noise_seed"] = noise_seed
+        else:
+            print(f"Warning: Node {SAMPLER_NODE_ID_2} (KSamplerAdvanced #2) not found.")
 
 
         # 4. Save metadata and queue the prompt
-        print(f"  > Saving metadata. Seed: {noise_seed}, Frames: {args.frames}")
+        print(f"  > Saving metadata. Seed: {noise_seed}, Frames: {args.frames}, FPS: {args.fps}")
         video_metadata = {
             "source_image": server_image_path,
             "motion_prompt": motion_prompt,
             "seed": noise_seed,
             "frames": args.frames,
+            "fps": args.fps,
             "width": args.width,
             "height": args.height
         }
