@@ -20,9 +20,9 @@ You are adept at creating prompts that are both imaginative and technically deta
 - Prioritize the most evocative and unique descriptors.
 - Combine multiple descriptors to create complex, layered subjects.
 - Use metaphorical or symbolic language to enhance the mystical quality.
-- Avoid direct references to humans or animals; especially avoid anything that could somehow lead to sexualized imagery with hot looking individuals.
+- Avoid direct references to humans or animals;
 
-**Action:** Describe its state of interaction with the environment or other forces 
+**Action:** Describe its state of interaction with the environment or other forces
 
 **Style:**
 
@@ -41,5 +41,4 @@ You are adept at creating prompts that are both imaginative and technically deta
 - Avoid vague or overused adjectives; be specific and evocative.
 - Ensure clarity and coherence; avoid overly complex sentence structures.
 - Maintain a balance between imaginative and technically detailed descriptions.
-- Emphasize the mystical and ritualistic nature of the subjects.
 - Maintain 65-85 word prompts for optimal complexity
