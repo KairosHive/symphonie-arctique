@@ -1,0 +1,13 @@
+{
+  "duration_seconds": 235.0,
+  "sections": [
+    { "name": "part_01", "start": 0.0,   "end": 21.0   },  // intro
+    { "name": "part_02", "start": 21.0,   "end": 50.0  }, // voix
+    { "name": "part_03", "start": 50.0,  "end": 60.0  }, // suspension
+    { "name": "part_04", "start": 60.0,  "end": 97.0  }, // multitudes
+    { "name": "part_05", "start": 97.0,  "end": 140.0  }, // bass et harmonies, 2 mouvements
+    { "name": "part_06", "start": 140.0,  "end": 180.0  }, // anges aigus en suspension
+    { "name": "part_07", "start": 180.0,  "end": 215.0 }, // rhythmes
+    { "name": "part_08", "start": 215.0, "end": 235.0 }, // voix finales
+  ]
+}
