@@ -92,5 +92,23 @@
 	"burn","fever","haze","horizon","aftermath","ember","dusk","season","cycle","slowness",
 	"horizon","tide","tundra","moss","meltwater","permafrost","mist","silt","shore","flow",
 	"hush","breath","tremor","shiver","stillness","ache","veil"
+],
+
+  "BiologicalAnatomical": [
+	"cell","membrane","nucleus","cytoplasm","mitochondria","chloroplast","vacuole","ribosome","chromosome","DNA",
+	"tissue","epithelium","connective tissue","muscle","cartilage","bone","marrow","nerve","neuron","synapse",
+	"organ","heart","lung","liver","kidney","stomach","intestine","brain","eye","ear",
+	"skin","epidermis","dermis","hair","fur","feather","scale","shell","carapace","exoskeleton",
+	"wing","fin","flipper","tail","claw","talon","hoof","paw","tentacle","antenna",
+	"proboscis","trunk","beak","bill","snout","muzzle","jaw","tooth","fang","tusk",
+	"horn","antler","spine","quill","barbel","whisker","gill","spiracle","trachea","lung",
+	"vein","artery","capillary","vessel","blood","plasma","hemoglobin","lymph","sap","resin",
+	"root","stem","branch","twig","leaf","blade","petal","sepal","stamen","pistil",
+	"seed","spore","pollen","fruit","berry","nut","pod","bulb","tuber","rhizome",
+	"bark","cambium","phloem","xylem","wood","grain","fiber","filament","tendril","thorn",
+	"coral","polyp","medusa","siphon","mantle","radula","foot","arm","sucker","segment",
+	"abdomen","thorax","head","thorax","mandible","maxilla","proboscis","ovipositor","stinger","compound eye",
+	"vertebra","skull","pelvis","femur","tibia","radius","ulna","phalanx","joint",
+	"ligament","tendon","muscle fiber","fascia","diaphragm","valve","chamber","ventricle","atrium","aorta"
 ]
 }
