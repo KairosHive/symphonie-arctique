@@ -10,3 +10,7 @@ prompts.py
 progression_v5.py
 progression_v7.py
 make_report_pdf.py
+
+# Python bytecode cache
+__pycache__/
+*.pyc
