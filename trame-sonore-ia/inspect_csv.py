@@ -3,10 +3,11 @@ Inspect the soil temperature CSV: time axis, per-depth NaN coverage, value range
 and continuity. Outputs a textual summary to stdout.
 """
 import sys
+from pathlib import Path
 import pandas as pd
 import numpy as np
 
-CSV = r"C:\Users\skite\Downloads\temperature_curves_by_depth_Tasiujaq.csv"
+CSV = Path(__file__).parent / "data" / "temperature_curves_by_depth_Tasiujaq.csv"
 
 df = pd.read_csv(CSV)
 print(f"=== File: {CSV}")

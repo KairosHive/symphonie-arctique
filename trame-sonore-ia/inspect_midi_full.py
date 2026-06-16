@@ -6,7 +6,7 @@ from collections import Counter
 from pathlib import Path
 import mido
 
-MIDI = Path(r"C:\Users\skite\Downloads\depth_chords_microtonal.mid")
+MIDI = Path(__file__).parent / "data" / "depth_chords_microtonal.mid"
 mid = mido.MidiFile(MIDI)
 
 print(f"Type {mid.type}, ticks_per_beat {mid.ticks_per_beat}, tracks {len(mid.tracks)}")

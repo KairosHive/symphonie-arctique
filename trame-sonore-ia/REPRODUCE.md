@@ -156,8 +156,8 @@ python mix.py \
 
 | File | Used by | Purpose |
 |---|---|---|
-| `temperature_curves_by_depth_Tasiujaq.csv` (in `~/Downloads`) | both | Source temperature data |
-| `depth_chords_microtonal.mid` (in `~/Downloads`) | V2 only | EMD-derived microtonal chord per depth |
+| `data/temperature_curves_by_depth_Tasiujaq.csv` | both | Source temperature data (1.1 MB, tracked in repo) |
+| `data/depth_chords_microtonal.mid` | V2 only | EMD-derived microtonal chord per depth (897 B, tracked in repo) |
 | `soil_data.py` | both | CSV loader + envelope extraction |
 | `parse_midi.py` | V2 only | Parses MIDI into `outputs/depth_harmonies.json` |
 | `synthesize_chord.py` | V2 only | Additive-sine chord synthesis from harmonies JSON |

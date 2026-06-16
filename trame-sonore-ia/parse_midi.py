@@ -21,7 +21,7 @@ import json
 from pathlib import Path
 import mido
 
-DEFAULT_MIDI = Path(r"C:\Users\skite\Downloads\depth_chords_microtonal.mid")
+DEFAULT_MIDI = Path(__file__).parent / "data" / "depth_chords_microtonal.mid"
 DEFAULT_DEPTHS = [200, 300, 400, 500, 700, 900, 1100]  # cm, in MIDI order
 PITCH_BEND_RANGE_SEMITONES = 2.0
 NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]

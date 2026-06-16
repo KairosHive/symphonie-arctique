@@ -5,7 +5,7 @@ their actual (microtonally-detuned) frequencies, and try to detect groupings.
 from pathlib import Path
 import mido
 
-MIDI_PATH = Path(r"C:\Users\skite\Downloads\depth_chords_microtonal.mid")
+MIDI_PATH = Path(__file__).parent / "data" / "depth_chords_microtonal.mid"
 PITCH_BEND_RANGE_SEMITONES = 2.0
 
 

@@ -16,7 +16,7 @@ from typing import Iterable
 import numpy as np
 import pandas as pd
 
-DEFAULT_CSV = Path(r"C:\Users\skite\Downloads\temperature_curves_by_depth_Tasiujaq.csv")
+DEFAULT_CSV = Path(__file__).parent / "data" / "temperature_curves_by_depth_Tasiujaq.csv"
 META_COLS = ["Year", "Month", "Measurement Index"]
 
 # Depths with ≥80% coverage in Tasiujaq, sorted shallow → deep
