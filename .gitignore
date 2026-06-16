@@ -2,3 +2,15 @@
 .vscode/
 outputs/
 *.wav
+
+# trame-sonore-ia: allow small derived artefacts to be tracked.
+# All audio (wav) stays ignored via the *.wav rule above; only the
+# JSON of EMD-derived chords, the report figures, and the delivered PDFs
+# are committed alongside the source code.
+!trame-sonore-ia/outputs/
+trame-sonore-ia/outputs/*
+!trame-sonore-ia/outputs/depth_harmonies.json
+!trame-sonore-ia/outputs/report_figs/
+!trame-sonore-ia/outputs/report_figs/*.png
+!trame-sonore-ia/outputs/Symphonie_Arctique_Trame_Sonore_IA_v1.pdf
+!trame-sonore-ia/outputs/Soil_Audio_Methods_Report_v4.pdf

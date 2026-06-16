@@ -1,0 +1,12 @@
+# First-iteration / superseded scripts.
+# These are kept locally for reference and historical context but are not
+# part of the delivered Version 1 / Version 2 pipelines documented in
+# REPRODUCE.md. The pipelines use generate_3min.py + rebuild_envelope.py
+# + the progression_v8 / progression_v15 / progression_v15_2 modules.
+generate.py
+generate_per_depth.py
+apply_envelope.py
+prompts.py
+progression_v5.py
+progression_v7.py
+make_report_pdf.py
